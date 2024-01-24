@@ -1,4 +1,4 @@
-import './globals.css';
+import './styles/application.scss';
 
 export const metadata = {
   title: "World Arts Foundation Inc.",

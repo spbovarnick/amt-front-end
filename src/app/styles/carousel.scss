@@ -1,0 +1,150 @@
+@import "variables";
+
+.carousel__heading {
+    margin-bottom: 20px;
+}
+
+.cmpt-carousel {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    .swiper-wrapper {
+        padding: 0;
+        height: max-content;
+    }
+}
+
+.form-CTA {
+    background-color: #fff;
+    color: black;
+    padding: 8px;
+    border-radius: 5px;
+    width: fit-content;
+    margin-bottom: 20px;
+    line-height: 120%;
+
+    .CTA-link {
+        text-decoration: underline;
+        color: $purple-6;
+
+        &:hover {
+            color: $purple-4;
+        }
+    }
+
+    @media (max-width: $bp-sm) {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+}
+
+.carousel-item {
+    display: block;
+    width: 100%;
+    height: 300px;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        .carousel-image {
+            opacity: 0.8;
+        }
+    }
+}
+
+.carousel-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.carousel-text {
+    position: absolute;
+    width: calc(100% - 160px);
+    left :80px;
+    bottom: 20px;
+    background: rgba(0,0,0,0.8);
+    text-align: left;
+    padding: 30px;
+    line-height: 1.4em;
+}
+
+.carousel-item-title {
+    margin-bottom: 20px;
+}
+
+.carousel-item-description {
+    font-size: 14px;
+}
+
+a.carousel-item-link {
+    font-size: 14px;
+    color: $purple-5;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+@media (max-width: 1025px) {
+    .carousel-item {
+        padding-bottom: 70%;
+
+        .carousel-text {
+            left: 75px;
+            top: 10px;
+            bottom: initial;
+            padding: 10px;
+            line-height: 1.3em;
+            width: 80%;
+            height: fit-content;
+    
+            .carousel-item-title {
+                margin-bottom: 10px;
+            }
+    
+            .carousel-item-description {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+@media (max-width: $bp-md) {
+    .carousel-item {
+        padding-bottom: 60%;
+
+        .carousel-text {
+            height: fit-content;
+            width: fit-content;
+            right: initial;
+            left: 20px;
+            top: 20px;
+
+            .carousel-item-title {
+                margin-bottom: 0px;
+            }
+
+            .carousel-item-description {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: $bp-sm) {
+
+    .carousel-text {
+        left: 10px;
+        top: 10px;
+
+        .carousel-item-title {
+            font-size: 14px
+        }
+    }
+}
+
+@media (max-width: $bp-xs) {
+    .carousel-item-title {
+        font-size: 12px!important;
+    }
+}

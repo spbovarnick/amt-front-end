@@ -1,0 +1,129 @@
+@import "variables";
+
+.cmpt-work-block {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  margin-bottom: 60px;
+
+  @media (min-width: $bp-md) {
+    flex-direction: row;
+    margin-top: 140px;
+    margin-bottom: 140px;
+  }
+
+  &.--image-left {
+    justify-content: flex-start;
+
+    .cmpt-work-block__side-text {
+      left: 0px;
+    }
+
+    .cmpt-work-block__content {
+      @media (min-width: $bp-md) {
+        margin-left: 120px;
+      }
+    }
+  }
+
+  &.--image-right {
+    justify-content: flex-end;
+
+    .cmpt-work-block__side-text {
+      right: 0px;
+    }
+
+    .cmpt-work-block__image-wrapper {
+      @media (min-width: $bp-md) {
+        order: 2;
+      }
+    }
+
+    .cmpt-work-block__content {
+      @media (min-width: $bp-md) {
+        margin-right: 120px;
+      }
+    }
+  }
+}
+
+.cmpt-work-block__side-text {
+  display: none;
+
+  @media (min-width: $bp-md) {
+    display: block;
+    color: #656e7b;
+    font-size: 18px;
+    font-family: "Newsreader", serif;
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 50%;
+  }
+}
+
+.cmpt-work-block__image-wrapper {
+  width: 100%;
+
+  @media (min-width: $bp-md) {
+    width: 45%;
+  }
+}
+
+.cmpt-work-block__image {
+  width: 100%;
+}
+
+.cmpt-work-block__content {
+  width: 100%;
+  margin-top: 20px;
+
+  @media (min-width: $bp-md) {
+    margin-top: 0;
+    width: 45%;
+    max-width: 386px;
+  }
+
+  .cmpt-gesture-underline {
+    margin-bottom: 40px;
+    margin-right: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.cmpt-work-block__number {
+  color: #656e7b;
+  font-size: 18px;
+  font-family: "Newsreader", serif;
+  margin-bottom: 0px;
+
+  @media (min-width: $bp-md) {
+    margin-bottom: 12px;
+  }
+}
+
+.cmpt-work-block__heading {
+  font-size: 28px;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+
+  @media (min-width: $bp-md) {
+    margin-bottom: 60px;
+    font-size: 36px;
+  }
+}
+
+.cmpt-work-block__text {
+  font-size: 18px;
+  line-height: 1.6em;
+  color: #656e7b;
+
+  @media (min-width: $bp-md) {
+    margin-bottom: 60px;
+  }
+}

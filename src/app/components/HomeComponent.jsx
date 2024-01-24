@@ -3,7 +3,6 @@
 // import NewsBlock from './NewsBlock';
 // import Footer from "./Footer"
 import Nav from "./Nav"
-import '../styles/util.scss'
 
 const HomeComponent = () => {
     const leftText = "<p>Through community events and educational programming, we amplify regional contributions to arts and culture. Our media archive highlights the cultural heritage of Portland's historic Albina District.</p>";

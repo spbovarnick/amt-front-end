@@ -1,0 +1,29 @@
+@import "variables";
+
+.swiper {
+    .swiper-button-next, .swiper-button-prev {
+        width: 50px;
+        height: 50px;
+        background: $purple-6;
+        color: #ffffff;
+        border-radius: 99px;
+
+        &:after {
+            font-size: 20px;
+        }
+    }
+}
+
+
+@media (max-width: $bp-sm) {
+    .swiper {
+        .swiper-button-next, .swiper-button-prev {
+            width: 30px;
+            height: 30px;
+    
+            &:after {
+                font-size: 12px;
+            }
+        }
+    }
+}

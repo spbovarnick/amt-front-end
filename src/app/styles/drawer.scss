@@ -1,0 +1,62 @@
+@import "variables";
+
+.cmpt-drawer {
+    margin-bottom: 30px;
+
+    .button-scroll {
+        max-height: 155px;
+        overflow: auto;
+    }
+    .button-scroll::-webkit-scrollbar {
+        width: 12px;
+        border-radius: 8px;
+    }
+    .button-scroll::-webkit-scrollbar-track {
+        background: $white-1;
+        border-radius: 10px;
+    }
+    .button-scroll::-webkit-scrollbar-thumb {
+        background: $black-6;
+        border: 2px solid $white-1;
+        border-radius: 8px;
+    }
+    .button-scroll::-webkit-scrollbar-thumb:hover {
+        background: #757575;
+    }
+
+    .cmpt-drawer-separator {
+        display: none;
+    }
+}
+
+@media (max-width: $bp-sm) {
+    .archive__label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .cmpt-drawer-toggle {
+            display: block;
+            background: none;
+            border: none;
+        }
+    }
+    .cmpt-drawer {
+        margin-bottom: 8px;
+
+        .button-scroll {
+            display: none;
+        }
+
+        .button-scroll.open-drawer {
+            display: block;
+            max-height: none;
+        }
+
+        .cmpt-drawer-separator {
+            display: block;
+            background: $black-3;
+            height: 1px;
+        }
+    }
+}

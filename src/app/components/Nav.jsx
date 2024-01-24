@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import classNames from 'classnames';
-import '../styles/global-nav.scss';
 
 const Nav = (props) => {
 
