@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-drawer {
     margin-bottom: 30px;
@@ -12,12 +12,12 @@
         border-radius: 8px;
     }
     .button-scroll::-webkit-scrollbar-track {
-        background: $white-1;
+        background: variables.$white-1;
         border-radius: 10px;
     }
     .button-scroll::-webkit-scrollbar-thumb {
-        background: $black-6;
-        border: 2px solid $white-1;
+        background: variables.$black-6;
+        border: 2px solid variables.$white-1;
         border-radius: 8px;
     }
     .button-scroll::-webkit-scrollbar-thumb:hover {
@@ -29,7 +29,7 @@
     }
 }
 
-@media (max-width: $bp-sm) {
+@media (max-width: variables.$bp-sm) {
     .archive__label {
         display: flex;
         justify-content: space-between;
@@ -55,7 +55,7 @@
 
         .cmpt-drawer-separator {
             display: block;
-            background: $black-3;
+            background: variables.$black-3;
             height: 1px;
         }
     }

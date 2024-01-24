@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-work-block {
   width: 100%;
@@ -8,7 +8,7 @@
   margin-top: 60px;
   margin-bottom: 60px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     flex-direction: row;
     margin-top: 140px;
     margin-bottom: 140px;
@@ -22,7 +22,7 @@
     }
 
     .cmpt-work-block__content {
-      @media (min-width: $bp-md) {
+      @media (min-width: variables.$bp-md) {
         margin-left: 120px;
       }
     }
@@ -36,13 +36,13 @@
     }
 
     .cmpt-work-block__image-wrapper {
-      @media (min-width: $bp-md) {
+      @media (min-width: variables.$bp-md) {
         order: 2;
       }
     }
 
     .cmpt-work-block__content {
-      @media (min-width: $bp-md) {
+      @media (min-width: variables.$bp-md) {
         margin-right: 120px;
       }
     }
@@ -52,7 +52,7 @@
 .cmpt-work-block__side-text {
   display: none;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     display: block;
     color: #656e7b;
     font-size: 18px;
@@ -66,7 +66,7 @@
 .cmpt-work-block__image-wrapper {
   width: 100%;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     width: 45%;
   }
 }
@@ -79,7 +79,7 @@
   width: 100%;
   margin-top: 20px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-top: 0;
     width: 45%;
     max-width: 386px;
@@ -101,7 +101,7 @@
   font-family: "Newsreader", serif;
   margin-bottom: 0px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-bottom: 12px;
   }
 }
@@ -112,7 +112,7 @@
   text-transform: uppercase;
   margin-bottom: 20px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-bottom: 60px;
     font-size: 36px;
   }
@@ -123,7 +123,7 @@
   line-height: 1.6em;
   color: #656e7b;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-bottom: 60px;
   }
 }

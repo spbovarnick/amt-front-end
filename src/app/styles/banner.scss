@@ -1,23 +1,23 @@
-@import "variables";
+@use "variables";
 
 .cmpt-banner {
   width: 100%;
   display: inline-block;
 
   &.--is-light {
-    background: $purple-1;
-    color: $black-1;
+    background: variables.$purple-1;
+    color: variables.$black-1;
   }
 
   &.--is-dark {
-    background: $black-1;
-    color: $white-1;
+    background: variables.$black-1;
+    color: variables.$white-1;
   }
 
   &.--is-left {
     clip-path: polygon(0 0, 100% 0%, 100% 84%, 0% 100%);
 
-    @media (max-width: $bp-sm){
+    @media (max-width: variables.$bp-sm){
       clip-path: none;
     }
   }
@@ -28,35 +28,35 @@
   }
 
   &.--has-graphic {
-    background: $black-1 url('/public/hero-default.jpg') top center
+    background: variables.$black-1 url('/public/hero-default.jpg') top center
       no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-about {
-    background: $black-1 url("/public/hero-about.jpg") top center no-repeat;
+    background: variables.$black-1 url("/public/hero-about.jpg") top center no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-archive {
-    background: $black-1 url("/public/hero-archive-black-fill.jpg") top center
+    background: variables.$black-1 url("/public/hero-archive-black-fill.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-donate {
-    background: $black-1 url("/public/hero-donate.jpg") top center no-repeat;
+    background: variables.$black-1 url("/public/hero-donate.jpg") top center no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-leadership {
-    background: $black-1 url("/public/hero-leadership.jpg") top center
+    background: variables.$black-1 url("/public/hero-leadership.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-our-work {
-    background: $black-1 url("/public/hero-our-work.jpg") top center
+    background: variables.$black-1 url("/public/hero-our-work.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }
@@ -71,7 +71,7 @@
 
 .cmpt-banner__content {
   width: 100%;
-  max-width: $grid-width;
+  max-width: variables.$grid-width;
   padding: 130px 46px 50px 46px;
   display: flex;
   flex-direction: column;
@@ -85,13 +85,13 @@
   border-radius: 5px;
   z-index: 2;
 
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     font-size: 14px;
   } 
 }
 
 .cmpt-banner__donate-cta {
-  background: $purple-3;
+  background: variables.$purple-3;
   border-radius: 4px;
   padding: 12px 18px;
   color: #fff;
@@ -100,7 +100,7 @@
   border: none;
   cursor: pointer;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     padding: 16px 24px;
     font-size: 20px;
     margin-top: 35px;

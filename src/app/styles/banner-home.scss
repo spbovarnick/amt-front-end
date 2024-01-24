@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-banner-home {
   width: 100%;
@@ -12,14 +12,14 @@
   &:after {
     content: "";
     width: 50%;
-    background: linear-gradient(98.24deg, $purple-7 30%, $purple-1 70%);
+    background: linear-gradient(98.24deg, variables.$purple-7 30%, variables.$purple-1 70%);
     position: absolute;
     right: 0;
     transform: skewY(-10deg);
     height: 150px;
     bottom: -50px;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       height: 220px;
       bottom: -100px;
     }
@@ -28,18 +28,18 @@
 
 .cmpt-banner-home__content {
   width: 100%;
-  max-width: $content-width;
+  max-width: variables.$content-width;
   padding: 0px 40px;
   margin-top: 40px;
   display: flex;
   justify-content: space-between;
   pointer-events: all;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     padding: 0px 120px;
   }
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: variables.$bp-lg) {
     margin-top: 80px;
   }
 }
@@ -48,7 +48,7 @@
   width: 48%;
   display: none;
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: variables.$bp-lg) {
     display: block;
   }
 }
@@ -56,7 +56,7 @@
 .cmpt-banner-home__right {
   width: 100%;
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: variables.$bp-lg) {
     width: 48%;
   }
 }
@@ -64,11 +64,11 @@
 .cmpt-banner-home__wrapper {
   display: flex;
   justify-content: center;
-  background: $purple-1;
+  background: variables.$purple-1;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 78%);
   padding-bottom: 130px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     padding-top: 100px;
   }
 }
@@ -79,7 +79,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: $purple-1 url("/public/map.svg") center center no-repeat;
+  background: variables.$purple-1 url("/public/map.svg") center center no-repeat;
 }
 
 .cmpt-banner-home-graphic-wrapper {
@@ -92,12 +92,12 @@
   pointer-events: none;
   display: none;
 
-  @media (min-width: $bp-lg) {
+  @media (min-width: variables.$bp-lg) {
     display: block;
     bottom: 62px;
   }
 
-  @media (min-width: $bp-xl) {
+  @media (min-width: variables.$bp-xl) {
     bottom: 20px;
   }
 }
@@ -116,7 +116,7 @@
   display: flex;
   justify-content: center;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-top: -170px;
     padding-top: 600px;
     padding-bottom: 100px;
@@ -131,7 +131,7 @@
     bottom: 0;
     background: linear-gradient(transparent, #000);
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       height: 600px;
     }
   }
@@ -147,7 +147,7 @@
     font-size: 34px;
     line-height: 1.2em;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       width: 390px;
       font-size: 64px;
     }
@@ -163,7 +163,7 @@
   max-width: 100%;
   margin-bottom: 60px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     font-size: 32px;
     margin-bottom: 117px;
   }

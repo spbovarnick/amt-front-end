@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .carousel__heading {
     margin-bottom: 20px;
@@ -26,14 +26,14 @@
 
     .CTA-link {
         text-decoration: underline;
-        color: $purple-6;
+        color: variables.$purple-6;
 
         &:hover {
-            color: $purple-4;
+            color: variables.$purple-4;
         }
     }
 
-    @media (max-width: $bp-sm) {
+    @media (max-width: variables.$bp-sm) {
         margin-top: 20px;
         font-size: 14px;
     }
@@ -80,7 +80,7 @@
 
 a.carousel-item-link {
     font-size: 14px;
-    color: $purple-5;
+    color: variables.$purple-5;
     text-decoration: underline;
     font-weight: 500;
 }
@@ -109,7 +109,7 @@ a.carousel-item-link {
     }
 }
 
-@media (max-width: $bp-md) {
+@media (max-width: variables.$bp-md) {
     .carousel-item {
         padding-bottom: 60%;
 
@@ -131,7 +131,7 @@ a.carousel-item-link {
     }
 }
 
-@media (max-width: $bp-sm) {
+@media (max-width: variables.$bp-sm) {
 
     .carousel-text {
         left: 10px;
@@ -143,7 +143,7 @@ a.carousel-item-link {
     }
 }
 
-@media (max-width: $bp-xs) {
+@media (max-width: variables.$bp-xs) {
     .carousel-item-title {
         font-size: 12px!important;
     }

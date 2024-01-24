@@ -1,8 +1,8 @@
-@import "variables";
+@use "variables";
 
 .cmpt-drawer-button {
-    background: $white-1;
-    color: $black-1;
+    background: variables.$white-1;
+    color: variables.$black-1;
     border: none;
     padding: 10px 14px 10px 30px;
     border-radius: 33px;
@@ -13,7 +13,7 @@
     margin-bottom: 5px;
 
     &:hover {
-        background: $white-2;
+        background: variables.$white-2;
     }
 
     &:before {
@@ -28,8 +28,8 @@
     }
 
     &.active {
-        background: $black-4;
-        color: $white-1;
+        background: variables.$black-4;
+        color: variables.$white-1;
 
         &:before {
             background: url("/public/close.svg") center center no-repeat;
@@ -38,7 +38,7 @@
     }
 }
 
-@media (max-width: $bp-sm) {
+@media (max-width: variables.$bp-sm) {
     .cmpt-drawer-button {
         padding: 10px 14px 10px 26px;
         font-size: 14px;

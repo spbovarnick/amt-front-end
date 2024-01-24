@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 a.cmpt-gesture-circle {
   font-family: "Newsreader", serif;
@@ -10,7 +10,7 @@ a.cmpt-gesture-circle {
   position: relative;
   align-self: flex-start;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     font-size: 24px;
   }
 
@@ -25,7 +25,7 @@ a.cmpt-gesture-circle {
     background: url("/public/gesture-02-purple.svg") center bottom no-repeat;
     background-size: contain;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       bottom: -14px;
       width: 244px;
     }

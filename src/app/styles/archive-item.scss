@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-archive-item__button {
   width: 100%;
@@ -9,7 +9,7 @@
   cursor: pointer;
 
   &:focus {
-    box-shadow: 0 0 10px 6px $purple-1;
+    box-shadow: 0 0 10px 6px variables.$purple-1;
     .cmpt-archive-item__meta {
       padding: 5px;
     }
@@ -43,7 +43,7 @@
 
 .cmpt-archive-item__year {
   margin-top: 5px;
-  color: $purple-1;
+  color: variables.$purple-1;
 }
 
 .modalArchiveItem {
@@ -82,7 +82,7 @@
   color: rgba(255,255,255, 0.7);
 
   span {
-    border-bottom: solid 2px $purple-6;
+    border-bottom: solid 2px variables.$purple-6;
     display: inline-block;
     margin-bottom: 5px;
     padding-bottom: 2px;
@@ -121,7 +121,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: $purple-6;
+  background-color: variables.$purple-6;
 }
 
 .pulse-bubble-1 {
@@ -156,7 +156,7 @@
   font-size: 22px;
 }
 
-@media (max-width: $bp-sm) {
+@media (max-width: variables.$bp-sm) {
   .modalArchiveItem {
     flex-direction: column;
     overflow: auto;

@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .carousel-content {
   position: relative;
@@ -34,16 +34,16 @@
     }
     
     &:hover {
-      background-color: $white-2;
+      background-color: variables.$white-2;
     }
 
-    @media (max-width: $bp-md) {
+    @media (max-width: variables.$bp-md) {
       display: none;
     }
   }
 
   button.fullscreenBtn.enterFullscreen:hover {
-    background-color: $white-2;
+    background-color: variables.$white-2;
 
   }
 

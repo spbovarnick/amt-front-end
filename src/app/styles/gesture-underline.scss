@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-gesture-underline {
   font-family: "Newsreader", serif;
@@ -13,7 +13,7 @@
   background: none;
   border: none;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     font-size: 24px;
   }
 
@@ -28,7 +28,7 @@
     background: url("/public/gesture-01.svg") center bottom no-repeat;
     background-size: contain;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       bottom: -24px;
       height: 30px;
       width: 190px;
@@ -54,10 +54,10 @@
     font-size: 28px;
     font-weight: 300;
     text-transform: uppercase;
-    color: $purple-3;
+    color: variables.$purple-3;
     margin-top: 20px;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       margin-top: 0;
       font-size: 48px;
     }
@@ -68,7 +68,7 @@
         no-repeat;
       background-size: contain;
 
-      @media (min-width: $bp-md) {
+      @media (min-width: variables.$bp-md) {
         width: 330px;
       }
     }
@@ -98,7 +98,7 @@
     background: url("/public/gesture-01-purple.svg") center bottom no-repeat;
     background-size: contain;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       bottom: -24px;
       height: 30px;
       width: 330px;

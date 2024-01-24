@@ -1,7 +1,7 @@
-@import "variables";
+@use "variables";
 
 .cmpt-gallery {
-  background: $black-7;
+  background: variables.$black-7;
 }
 
 .cmpt-gallery__wrapper, .cmpt-gallery-staff {
@@ -31,7 +31,7 @@
 .swiper-wrapper {
   align-items: center;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     padding: 160px 0;
   }
 }
@@ -59,13 +59,13 @@
     outline: none;
   }
   
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     padding: 80px;
     width: calc(100vw - 80px);
     height: calc(100vh - 80px);
   }
 
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     width:  calc(90vw - 20px);
     height: calc(90vh - 20px);
   }
@@ -108,14 +108,14 @@
     transform: scale(.9);
   }
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     right: 80px;
     top: 80px;
     width: 50px;
     height: 50px;
   }
 
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     right: 20px;
     top: 20px;
   }
@@ -125,12 +125,12 @@
   width: 50vw;
   height: 100%;
 
-  @media (min-width: $bp-sm) and (max-width: $bp-md) {
+  @media (min-width: variables.$bp-sm) and (max-width: variables.$bp-md) {
     height: 80%;
     width: 100%;
   }
 
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     width: 100%;
     height: 100%;
   }
@@ -189,7 +189,7 @@
       background: #fff;
       z-index: 11 !important;
 
-      @media (min-width: $bp-sm) {
+      @media (min-width: variables.$bp-sm) {
         padding: 8px !important;
         border-radius: 10px !important;
       }
@@ -204,13 +204,13 @@
       background: #d3d3d3 !important;
     }
 
-    @media (max-width: $bp-sm) {
+    @media (max-width: variables.$bp-sm) {
       padding: 7px;
       font-size: 14px;
       border-radius: 10px;
     }
 
-    @media (max-width: $bp-sm) {
+    @media (max-width: variables.$bp-sm) {
       font-size: 12px;
 
       &#media-tab {
@@ -287,14 +287,14 @@
       overflow-wrap: break-word;
     }
     
-    @media (max-width: $bp-sm) {
+    @media (max-width: variables.$bp-sm) {
       audio {
         width: 245px;
         height: 30px;
       }
     }
 
-    @media (max-width: $bp-xs) {
+    @media (max-width: variables.$bp-xs) {
       audio {
         width: 200px;
       }

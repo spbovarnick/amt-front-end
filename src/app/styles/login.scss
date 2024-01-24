@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .login__wrapper {
     width: 100%;
@@ -20,22 +20,22 @@
 
     input[type="email"], input[type="password"] {
         border: solid 1px transparent;
-        background: $black-4;
+        background: variables.$black-4;
         padding: 8px;
         border-radius: 4px;
         margin-top: 4px;
-        color: $white-1;
+        color: variables.$white-1;
         width: 100%;        
 
         &:focus {
             outline: none;
-            border: solid 1px $purple-1;
+            border: solid 1px variables.$purple-1;
         }
     }    
 
     input[type="checkbox"] {
         &:focus {
-            outline: solid 1px $purple-1;
+            outline: solid 1px variables.$purple-1;
         }
     }
 
@@ -47,17 +47,17 @@
             padding: 10px;
             border-radius: 33px;
             border: solid 1px transparent;
-            background: $white-1;
-            color: $black-1;
+            background: variables.$white-1;
+            color: variables.$black-1;
             cursor: pointer;
 
             &:hover {
-                background: $white-2;
+                background: variables.$white-2;
             }
 
             &:focus {
                 outline: none;
-                border: solid 1px $purple-1;
+                border: solid 1px variables.$purple-1;
             }
         }
     }
@@ -75,6 +75,6 @@
     margin-top: 30px;
 
     a {
-        color: $black-5;
+        color: variables.$black-5;
     }
 }

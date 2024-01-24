@@ -1,9 +1,9 @@
-@import "variables";
+@use "variables";
 
 .cmpt-donate-block {
   margin: 80px 0;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin: 160px 0;
   }
 }
@@ -13,13 +13,13 @@
   flex-direction: column;
   align-items: flex-start;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     flex-direction: row;
   }
 }
 
 .cmpt-donate-block__text {
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     width: 66%; // 8 columns
   }
 }
@@ -29,7 +29,7 @@
   font-size: 28px;
   font-weight: 300;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     font-size: 48px;
   }
 }
@@ -41,12 +41,12 @@
 }
 
 .cmpt-donate-block__link {
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-left: 4.15%; // 0.5 column
   }
 }
 
 a.cmpt-donate-link {
   text-decoration: underline;
-  color: $purple-6;
+  color: variables.$purple-6;
 }

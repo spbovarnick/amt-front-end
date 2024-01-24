@@ -1,9 +1,9 @@
-@import "variables";
+@use "variables";
 
 .give-guide-wrapper {
     flex-direction: column;
     width: 100%;
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         width: calc(100% - 100px);
     }
 
@@ -23,7 +23,7 @@
     flex-direction: column;
     align-items: center;
 
-    @media (max-width: $bp-md) {
+    @media (max-width: variables.$bp-md) {
         padding-top: 60px;
     }
 }
@@ -35,7 +35,7 @@
     border: solid 3px white;
     vertical-align: top;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         width: 48%;
         margin-bottom: 2%;
 
@@ -61,7 +61,7 @@
     font-size: 18px;
     line-height: 1.7em;
     font-weight: bold;
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         font-size: 24px;
         padding: 0 10%;
     }

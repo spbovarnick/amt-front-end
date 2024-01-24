@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .map {
   width: 100%;
@@ -9,7 +9,7 @@
 
 .cluster-marker {
   color: #fff;
-  background: $purple-6;
+  background: variables.$purple-6;
   border-radius: 50%;
   padding: 10px;
   display: flex;

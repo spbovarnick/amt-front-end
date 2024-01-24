@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .cmpt-text-block {
   display: flex;
@@ -11,29 +11,29 @@
   &.--padding-lg {
     padding: 90px 0;
 
-    @media (max-width: $bp-md) {
+    @media (max-width: variables.$bp-md) {
       padding: 0;
     }
 
-    @media (max-width: $bp-sm) {
+    @media (max-width: variables.$bp-sm) {
       padding: 30px 0 0 0;
     }
   }
 
   &.--is-light {
-    color: $black-2;
+    color: variables.$black-2;
 
     .cmpt-text-block__heading {
-      color: $black-3;
+      color: variables.$black-3;
     }
   }
 
   &.--is-dark {
-    background: $black-1;
-    color: $white-1;
+    background: variables.$black-1;
+    color: variables.$white-1;
 
     .cmpt-text-block__heading {
-      color: $purple-2;
+      color: variables.$purple-2;
     }
   }
 
@@ -57,7 +57,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     flex-direction: row;
   }
 
@@ -76,11 +76,11 @@
   line-height: 1.45em;
   margin-bottom: 20px;
   
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     font-size: 14px !important;
   }
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-bottom: 0;
     width: 41.66%; // 5 columns
     font-size: 32px;
@@ -93,7 +93,7 @@
   font-size: 18px;
   line-height: 1.5em;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     font-size: 24px;
     width: 50%; // 6 columns
   }
@@ -103,7 +103,7 @@
   .cmpt-text-block__left {
     width: 100%;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
       width: 66.66%; // 8 columns
     }
   }

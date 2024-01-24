@@ -1,8 +1,8 @@
-@import "variables";
+@use "variables";
 
 .--is-leadership {
   .cmpt-text-block {
-    @media (max-width: $bp-md) {
+    @media (max-width: variables.$bp-md) {
       padding: 20px 0;
     }
   }
@@ -13,7 +13,7 @@
   flex-direction: column;
   padding-top: 80px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     flex-direction: row;
     padding-top: 160px;
   }
@@ -32,7 +32,7 @@
 .cmpt-gallery-staff__heading {
   padding: 0 40px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     width: 450px;
     padding: 0;
     padding-left: 120px;
@@ -40,7 +40,7 @@
   }
 
   .heading-m {
-    color: $black-3;
+    color: variables.$black-3;
   }
 }
 
@@ -98,7 +98,7 @@
 .team-text {
   margin-top: 80px;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
     margin-top: 160px;
   }
 }

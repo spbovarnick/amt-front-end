@@ -1,4 +1,23 @@
+import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import './styles/application.scss';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  display: 'swap',
+})
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+})
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  variable: '--font-newsreader',
+  display: 'swap',
+})
 
 export const metadata = {
   title: "World Arts Foundation Inc.",

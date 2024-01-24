@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 .archive-wrapper {
   text-align: center;
@@ -47,8 +47,8 @@
 }
 
 .archive-load-more-btn {
-  background: $white-1;
-  color: $black-1;
+  background: variables.$white-1;
+  color: variables.$black-1;
   border: none;
   padding: 10px 30px;
   border-radius: 33px;
@@ -57,7 +57,7 @@
   cursor: pointer;
 
   &:hover {
-    background: $white-2;
+    background: variables.$white-2;
   }
 }
 
@@ -96,7 +96,7 @@
     background-color: #d9d6d6;
 
     &:hover {
-      background-color: $black-6;
+      background-color: variables.$black-6;
     }
 
     #clear-search-x {
@@ -128,7 +128,7 @@
   right: 0;
   top: 0;
   
-  @media (max-width: $bp-sm) {
+  @media (max-width: variables.$bp-sm) {
     padding: 4px 8px !important;
   }
 }
@@ -153,13 +153,13 @@
   display: none;
 }
 
-@media (min-width: $bp-sm) {
+@media (min-width: variables.$bp-sm) {
   .advanced-search__drawer {
     transition: height 200ms ease-in-out;
   }
 }
 
-@media (min-width: $bp-md) {
+@media (min-width: variables.$bp-md) {
   .archive-filters {
     justify-content: normal;
   }
@@ -169,7 +169,7 @@
   }
 }
 
-@media (max-width: $bp-sm) {
+@media (max-width: variables.$bp-sm) {
   .archive__search-field {
     padding: 8px !important;
     font-size: 16px !important;

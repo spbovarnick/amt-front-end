@@ -1,14 +1,14 @@
-@import "variables";
+@use "variables";
 
 .cmpt-news-block {
     display: flex;
     justify-content: center;
-    background: $black-1;
-    color: $white-1;
+    background: variables.$black-1;
+    color: variables.$white-1;
     padding: 32px 0 64px 0;
 
     .cmpt-news-block__heading {
-        color: $purple-2;
+        color: variables.$purple-2;
     }
 
     .cmpt-news-block__left {
@@ -29,7 +29,7 @@
     flex-direction: column;
     justify-content: space-between;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         flex-direction: row;
     }
 
@@ -46,7 +46,7 @@
     display: flex;
     flex-direction: column;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         flex-direction: row;
         justify-content: space-between;
     }
@@ -55,7 +55,7 @@
 .cmpt-news-block__item {
     margin-bottom: 40px;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         margin-bottom: 0;
         width: 45%;
     }
@@ -67,7 +67,7 @@
     line-height: 1.3em;
     margin-bottom: 15px;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         font-size: 24px;
     }
 }
@@ -99,6 +99,6 @@
     margin-top: 15px;
 
     &:hover {
-        border-color: $purple-2;
+        border-color: variables.$purple-2;
     }
 }
