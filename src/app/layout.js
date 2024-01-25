@@ -5,18 +5,21 @@ const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
   display: 'swap',
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 })
 
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
   variable: '--font-roboto-mono',
   display: 'swap',
+  weight: "variable",
 })
 
 const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-newsreader',
   display: 'swap',
+  weight: "variable",
 })
 
 export const metadata = {
@@ -26,7 +29,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable}`}>
       <body>{children}</body>
     </html>
   );

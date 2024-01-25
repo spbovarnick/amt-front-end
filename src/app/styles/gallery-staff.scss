@@ -80,7 +80,7 @@
 
 .cmpt-gallery-staff__item-name {
   margin-top: 28px;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 21px;
   font-weight: 400;
   text-align: left;
@@ -88,7 +88,7 @@
 
 .cmpt-gallery-staff__item-role {
   margin-top: 6px;
-  font-family: "Newsreader", serif;
+  font-family: var(--font-newsreader), serif;
   font-style: italic;
   font-size: 16px;
   text-align: left;

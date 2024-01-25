@@ -1,7 +1,7 @@
 @use "variables";
 
 .cmpt-gesture-underline {
-  font-family: "Newsreader", serif;
+  font-family: var(--font-newsreader), serif;
   font-size: 20px;
   line-height: 1.3em;
   color: #000;
@@ -50,7 +50,7 @@
   }
 
   &.is-donate {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-poppins), sans-serif;
     font-size: 28px;
     font-weight: 300;
     text-transform: uppercase;

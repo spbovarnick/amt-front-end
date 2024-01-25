@@ -1,7 +1,7 @@
 @use "variables";
 
 a.cmpt-gesture-circle {
-  font-family: "Newsreader", serif;
+  font-family: var(--font-newsreader), serif;
   font-size: 20px;
   line-height: 1.3em;
   color: #fff;

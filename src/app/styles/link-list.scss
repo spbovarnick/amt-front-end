@@ -38,7 +38,7 @@
   ol li::before {
     content: "0" counter(list-counter);
     color: variables.$purple-6;
-    font-family: "Newsreader", serif;
+    font-family: var(--font-newsreader), serif;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
