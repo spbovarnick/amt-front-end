@@ -90,6 +90,19 @@
   } 
 }
 
+.cmpt-banner__page-donate-cta {
+  font-size: 14px;
+  margin-top: 15px;
+  padding: 5px 10px;
+  border: solid 1px #fff;
+
+  @media (min-width: variables.$bp-md) {
+    font-size: 18px;
+    margin-top: 30px;
+    padding: 15px;
+  }
+}
+
 .cmpt-banner__donate-cta {
   background: variables.$purple-3;
   border-radius: 4px;
