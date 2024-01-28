@@ -180,6 +180,10 @@
     opacity: 0;
     transition: opacity .3s ease-in;
     border-radius: 3px;
+
+    &.date_is_approx {
+      border-bottom: variables.$black-6 solid 4px;
+    }
   }
   
   .timeline-point {
@@ -203,6 +207,10 @@
     font-size: 20px;
     padding: 4px;
     border-radius: 4px;
+
+    &.date_is_approx {
+      background-color: variables.$black-6;
+    }
   
     .approx-date {
       font-size: 20px;
