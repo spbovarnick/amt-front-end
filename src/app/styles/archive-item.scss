@@ -63,8 +63,15 @@
 }
 
 .modalMetaItem {
-  display: flex;
-  flex-direction: column;
+  .rights-links {
+    display: inline;
+    font-weight: bold;
+    transition: color .3s ease-in-out;
+
+    &:hover {
+      color: $purple-3;
+    }
+  }
 
   .comment-form {
     textarea {
