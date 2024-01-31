@@ -1,4 +1,6 @@
 @use "variables";
+$slideHeight: 250px;
+$slideHeightShort: 150px;
 
 .carousel__heading {
     margin-bottom: 20px;
@@ -39,10 +41,36 @@
     }
 }
 
+.carousel__slides-container {
+    width: 100%;
+    min-height: $slideHeight;
+
+    &:not(.--loaded) {
+        animation-duration: 700ms;
+        animation-name: loading;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: linear;
+    }
+
+    &.--short {
+        min-height: $slideHeightShort;
+
+        .carousel-item {
+            height: $slideHeightShort;
+        }
+
+        .carousel-text {
+            padding: 10px;
+            max-width: calc(100% - 60px);
+        }
+    }
+}
+
 .carousel-item {
     display: block;
     width: 100%;
-    height: 300px;
+    height: $slideHeight;
     position: relative;
     cursor: pointer;
 
@@ -61,17 +89,18 @@
 
 .carousel-text {
     position: absolute;
-    width: calc(100% - 160px);
-    left :80px;
-    bottom: 20px;
+    max-width: calc(100% - 160px);
+    min-width: 40%;
+    right: 0px;
+    bottom: 0px;
     background: rgba(0,0,0,0.8);
     text-align: left;
-    padding: 30px;
+    padding: 20px 40px 20px 20px;
     line-height: 1.4em;
 }
 
 .carousel-item-title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .carousel-item-description {
@@ -146,5 +175,15 @@ a.carousel-item-link {
 @media (max-width: variables.$bp-xs) {
     .carousel-item-title {
         font-size: 12px!important;
+    }
+}
+
+@keyframes loading {
+    from {
+        background-color: rgb(24, 24, 24);
+    }
+
+    to {
+        background-color: rgb(33, 33, 33);
     }
 }

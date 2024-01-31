@@ -1,0 +1,12 @@
+@use "variables";
+
+.cmpt-mission-statement {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    line-height: 1.4em;
+}
+
+.cmpt-mission-statement__wrapper {
+    width: 80%;
+}

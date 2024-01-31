@@ -286,14 +286,14 @@ swiper-container:not(.swiper-watch-progress) .swiper-lazy-preloader {
 .swiper-button-prev.swiper-button-disabled {
     opacity: .35;
     cursor: auto;
-    pointer-events: none
+    pointer-events: auto !important;
 }
 
 .swiper-button-next.swiper-button-hidden,
 .swiper-button-prev.swiper-button-hidden {
     opacity: 0;
     cursor: auto;
-    pointer-events: none
+    pointer-events: none;
 }
 
 .swiper-navigation-disabled .swiper-button-next,

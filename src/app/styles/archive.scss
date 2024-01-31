@@ -17,14 +17,41 @@
 
 .archive-filters {
   margin-bottom: 30px;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: flex-start;
-  grid-column-gap: 15px;
+  display: flex;
+  grid-gap: 15px;
+  flex-wrap: wrap;
+  
+  @media (min-width: $bp-md) {
+    flex-wrap: nowrap;
+  }
 }
 
 .archive-filters__col {
-  min-width: 100px;
+  flex: 1 1 auto;
+  
+  @media (min-width: $bp-md) {
+    flex: 1 1 auto;
+  }
+
+  &.--clear {
+      width: 100%;
+      display: flex;
+      align-items: center;
+  
+      @media (min-width: $bp-md) {
+        width: auto;
+        padding-top: 18px;
+      }
+
+      .button-round {
+        width: 100%;
+        align-self: center;
+        
+        @media (min-width: $bp-md) {
+            width: auto;
+          }
+      }
+    }
 }
 
 .archive__label {
@@ -124,9 +151,6 @@
 .clear-filters {
   font-size: 14px;
   background: #d9d6d6;
-  position: absolute;
-  right: 0;
-  top: 0;
   
   @media (max-width: variables.$bp-sm) {
     padding: 4px 8px !important;
@@ -164,10 +188,6 @@
   .archive-filters {
     justify-content: normal;
   }
-
-  .archive-filters__col {
-    max-width: 300px;
-  }
 }
 
 @media (max-width: variables.$bp-sm) {
@@ -203,6 +223,7 @@
   }
 
   .archive-tags {
+
     &.advanced-search-open{ 
       position: fixed;
       top: 0;
