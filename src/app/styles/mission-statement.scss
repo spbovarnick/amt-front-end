@@ -8,14 +8,14 @@
 
     font-size: 14px;
     
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         margin-top: 30px;
         font-size: 16px;
     }
 }
 
 .cmpt-mission-statement__wrapper {
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         width: 80%;
     }
 }

@@ -54,7 +54,7 @@
 
 .copyright {
 
-  @media (max-width: $bp-md) {
+  @media (max-width: variables.$bp-md) {
     margin-top: 60px;
   }
 }

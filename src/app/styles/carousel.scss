@@ -98,7 +98,7 @@ $slideHeightShort: 150px;
     padding: 15px 15px 15px 25px;
     line-height: 1.4em;
 
-    @media (min-width: $bp-lg) {
+    @media (min-width: variables.$bp-lg) {
         max-width: calc(100% - 160px);
         text-align: left;
         padding: 20px 40px 20px 20px;
@@ -110,11 +110,11 @@ $slideHeightShort: 150px;
     line-height: 1.3em;
     font-size: 14px;
 
-    @media (min-width: $bp-md) {
+    @media (min-width: variables.$bp-md) {
         font-size: 16px;
     }
 
-    @media (min-width: $bp-lg) {
+    @media (min-width: variables.$bp-lg) {
         margin-bottom: 10px;
         font-size: 18px;
     }
@@ -124,7 +124,7 @@ $slideHeightShort: 150px;
     display: none;
     font-size: 14px;
 
-    @media (min-width: $bp-lg) {
+    @media (min-width: variables.$bp-lg) {
         display: block;
     }
 }

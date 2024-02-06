@@ -78,7 +78,7 @@
   justify-content: center;
   align-items: flex-start;
 
-  @media (min-width: $bp-md) {
+  @media (min-width: variables.$bp-md) {
       padding: 130px 46px 50px 46px;
     }
 }
