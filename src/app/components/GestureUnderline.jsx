@@ -22,7 +22,7 @@ const GestureUnderline = ({ text, url, isLight, isSmall, isDonate, onClickFn, is
       {!onClickFn && !isExternal &&
         <Link
           className={cmptClasses}
-          to={url}
+          href={url}
         >
           {text}
         </Link>

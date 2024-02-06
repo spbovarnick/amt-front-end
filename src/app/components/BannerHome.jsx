@@ -2,7 +2,8 @@ import React from "react";
 import GestureUnderline from "./GestureUnderline";
 import classNames from 'classnames';
 
-import graphic from "/public/images/home-graphic-combined-2.svg";
+// import graphic from "/public/images/home-graphic-combined-2.svg";
+import graphic from "../../../public/images/home-graphic-combined-2.svg"
 
 const BannerHome = () => {
     const cmptClasses = classNames({
@@ -13,7 +14,11 @@ const BannerHome = () => {
         <div className={cmptClasses}>
             <div className="cmpt-banner-home__top">
                 <div className="cmpt-banner-home-graphic-wrapper">
-                    <img src={graphic} className="cmpt-banner-home__graphic" />
+                    <img 
+                        src={graphic.src} 
+                        className="cmpt-banner-home__graphic" 
+                        
+                    />
                 </div>
                 <div className="cmpt-banner-home__wrapper">
                     <div className="cmpt-banner-home__content">

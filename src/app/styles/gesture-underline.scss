@@ -25,7 +25,7 @@
     bottom: -15px;
     height: 14px;
     width: 120px;
-    background: url("/public/gesture-01.svg") center bottom no-repeat;
+    background: url("../../../public/images/gesture-01-purple.svg") center bottom no-repeat;
     background-size: contain;
 
     @media (min-width: variables.$bp-md) {
@@ -43,7 +43,7 @@
     color: #fff;
 
     &:after {
-      background: url("/public/gesture-01-yellow.svg") center bottom
+      background: url("../../../public/images/gesture-01-yellow.svg") center bottom
         no-repeat;
       background-size: contain;
     }
@@ -64,7 +64,7 @@
 
     &:after {
       width: 170px;
-      background: url("/public/gesture-01-purple.svg") center bottom
+      background: url("../../../public/images/gesture-01-purple.svg") center bottom
         no-repeat;
       background-size: contain;
 
@@ -95,7 +95,7 @@
     left: 0;
     bottom: -17px;
     width: 170px;
-    background: url("/public/gesture-01-purple.svg") center bottom no-repeat;
+    background: url("../../../public/images/gesture-01-purple.svg") center bottom no-repeat;
     background-size: contain;
 
     @media (min-width: variables.$bp-md) {
