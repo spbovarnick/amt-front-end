@@ -89,22 +89,44 @@ $slideHeightShort: 150px;
 
 .carousel-text {
     position: absolute;
-    max-width: calc(100% - 160px);
+    max-width: calc(100% - 20px);
     min-width: 40%;
     right: 0px;
     bottom: 0px;
     background: rgba(0,0,0,0.8);
-    text-align: left;
-    padding: 20px 40px 20px 20px;
+    text-align: right;
+    padding: 15px 15px 15px 25px;
     line-height: 1.4em;
+
+    @media (min-width: $bp-lg) {
+        max-width: calc(100% - 160px);
+        text-align: left;
+        padding: 20px 40px 20px 20px;
+    }
 }
 
 .carousel-item-title {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    line-height: 1.3em;
+    font-size: 14px;
+
+    @media (min-width: $bp-md) {
+        font-size: 16px;
+    }
+
+    @media (min-width: $bp-lg) {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
 }
 
 .carousel-item-description {
+    display: none;
     font-size: 14px;
+
+    @media (min-width: $bp-lg) {
+        display: block;
+    }
 }
 
 a.carousel-item-link {
@@ -117,24 +139,6 @@ a.carousel-item-link {
 @media (max-width: 1025px) {
     .carousel-item {
         padding-bottom: 70%;
-
-        .carousel-text {
-            left: 75px;
-            top: 10px;
-            bottom: initial;
-            padding: 10px;
-            line-height: 1.3em;
-            width: 80%;
-            height: fit-content;
-    
-            .carousel-item-title {
-                margin-bottom: 10px;
-            }
-    
-            .carousel-item-description {
-                font-size: 13px;
-            }
-        }
     }
 }
 

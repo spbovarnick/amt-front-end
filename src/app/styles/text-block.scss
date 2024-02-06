@@ -52,6 +52,13 @@
   }
 }
 
+.copyright {
+
+  @media (max-width: $bp-md) {
+    margin-top: 60px;
+  }
+}
+
 .cmpt-text-block__text {
   display: flex;
   flex-direction: column;

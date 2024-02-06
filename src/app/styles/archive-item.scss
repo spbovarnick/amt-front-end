@@ -63,13 +63,14 @@
 }
 
 .modalMetaItem {
-  .rights-links {
-    display: inline;
-    font-weight: bold;
-    transition: color .3s ease-in-out;
+  line-height: 1.5em;
+  font-weight: 300;
+  
+  a {
+    font-weight: 300;
 
     &:hover {
-      color: $purple-3;
+      color: variables.$black-6;
     }
   }
 
