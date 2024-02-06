@@ -16,8 +16,7 @@ const BannerHome = () => {
                 <div className="cmpt-banner-home-graphic-wrapper">
                     <img 
                         src={graphic.src} 
-                        className="cmpt-banner-home__graphic" 
-                        
+                        className="cmpt-banner-home__graphic"     
                     />
                 </div>
                 <div className="cmpt-banner-home__wrapper">
