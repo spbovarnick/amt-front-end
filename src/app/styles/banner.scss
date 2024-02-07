@@ -34,7 +34,7 @@
   }
 
   &.--is-about {
-    background: variables.$black-1 url("/public/hero-about.jpg") top center no-repeat;
+    background: variables.$black-1 url("../../../public/images/hero-about.jpg") top center no-repeat;
     background-size: 100vw auto;
   }
 

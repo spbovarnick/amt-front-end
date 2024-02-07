@@ -9,7 +9,8 @@
     width: 5000%;
 
       &:hover {
-        cursor: url("/public/cursor-drag.svg") 45 45, grab;
+        // cursor: url("../../../public/cursor-drag.svg") 45 45, grab;
+        cursor: url("../../../public//images/cursor-drag.svg") 45 45, grab;
       }
     }
 
@@ -18,7 +19,7 @@
           border: 0;
 
           &:hover {
-            cursor: url("/public/cursor-view.svg") 45 45, grab;
+            cursor: url("../../../public/images/cursor-view.svg") 45 45, grab;
           }
         }
 }
