@@ -2,7 +2,6 @@ import React from "react";
 import GestureUnderline from "./GestureUnderline";
 import classNames from 'classnames';
 
-// import graphic from "/public/images/home-graphic-combined-2.svg";
 import graphic from "../../../public/images/home-graphic-combined-2.svg"
 
 const BannerHome = () => {

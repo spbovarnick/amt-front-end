@@ -16,7 +16,6 @@ const NewsBlock = () => {
         })();
     }, []);
 
-    console.log(newsItems)
     return (
         <>
             {newsItems?.length > 0 && (
