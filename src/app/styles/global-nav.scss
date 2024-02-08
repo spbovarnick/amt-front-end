@@ -200,3 +200,29 @@ $navbarHeight: 60px;
       }
     }
 }
+
+.page-nav__links {
+  display: flex;
+  grid-gap: 5px;
+  align-items: center;
+  font-size: 11px;
+
+  @media (min-width: variables.$bp-md) {
+    font-size: 16px;
+    grid-gap: 8px;
+  }
+
+  .global-nav__home-link {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 0;
+  }
+}
+
+.page-nav__arrow {
+  width: 15px;
+
+  @media (min-width: variables.$bp-md) {
+    width: 20px;
+  }
+}
