@@ -45,18 +45,18 @@
   }
 
   &.--is-donate {
-    background: variables.$black-1 url("/public/hero-donate.jpg") top center no-repeat;
+    background: variables.$black-1 url("../../../public/images/hero-donate.jpg") top center no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-leadership {
-    background: variables.$black-1 url("/public/hero-leadership.jpg") top center
+    background: variables.$black-1 url("../../../public/images/hero-leadership.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }
 
   &.--is-our-work {
-    background: variables.$black-1 url("/public/hero-our-work.jpg") top center
+    background: variables.$black-1 url("../../../public/images/hero-our-work.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }
