@@ -141,7 +141,7 @@ export default function OurWorkPage() {
   
 
   return (
-    <div className="page-wrapper">
+    <>
       <Nav />
       <Banner themeLight={false} alignLeft={true} headline="Our Work" className="--has-graphic --is-our-work" />
       <WorkBlock
@@ -277,6 +277,6 @@ export default function OurWorkPage() {
         <Video videoSrc={videoSrc} themeLight={false} text="" poster={posterSrc} autoPlay />
         <button className="modalClose" onClick={() => { setIsOpen(false) }}></button>
       </Modal>
-    </div >
+    </>
   );
 }

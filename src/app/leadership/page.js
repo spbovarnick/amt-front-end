@@ -94,7 +94,7 @@ export default function LeadershipPage() {
   const advisoryText = `Jasmine Wadsworth, Cedric Berry, Anne Morin, Lavern Davis, Charles Hunter, Chisao Hata, Richard Donin, Cottrell White`;
 
   return ( 
-    <div className="page-wrapper --is-leadership">
+    <>
       <Nav />
       <Banner themeLight={false} alignLeft={true} headline="Leadership" className="--has-graphic --is-leadership" />
       <GalleryStaff slides={boardItems} headline="Our Board" />
@@ -102,6 +102,6 @@ export default function LeadershipPage() {
       <TextBlock className="team-text" themeLight={true} heading="Executive Team" leftText={executiveText} singleCol />
       <TextBlock themeLight={true} heading="Advisory Council" leftText={advisoryText} vPadding="lg" singleCol />
       <Footer />
-    </div >
+    </>
   )
 }

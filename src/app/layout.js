@@ -34,7 +34,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable}`}>
       <body>
-        {children}
+        <div className="page-wrapper">
+          {children}
+        </div>
       </body>
     </html>
   );
