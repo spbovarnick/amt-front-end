@@ -28,7 +28,7 @@
   }
 
   &.--has-graphic {
-    background: variables.$black-1 url('/public/hero-default.jpg') top center
+    background: variables.$black-1 url('../../../public/images/hero-default.jpg') top center
       no-repeat;
     background-size: 100vw auto;
   }
@@ -39,7 +39,7 @@
   }
 
   &.--is-archive {
-    background: variables.$black-1 url("/public/hero-archive-black-fill.jpg") top center
+    background: variables.$black-1 url("../../../public/images/hero-archive-black-fill.jpg") top center
       no-repeat;
     background-size: 100vw auto;
   }

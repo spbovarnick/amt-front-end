@@ -6,6 +6,7 @@ const poppins = Poppins({
   variable: '--font-poppins',
   display: 'swap',
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  adjustFontFallback: false,
 })
 
 const roboto_mono = Roboto_Mono({
@@ -13,6 +14,7 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
   display: 'swap',
   weight: "variable",
+  adjustFontFallback: false,
 })
 
 const newsreader = Newsreader({
@@ -20,6 +22,7 @@ const newsreader = Newsreader({
   variable: '--font-newsreader',
   display: 'swap',
   weight: "variable",
+  adjustFontFallback: false,
 })
 
 export const metadata = {

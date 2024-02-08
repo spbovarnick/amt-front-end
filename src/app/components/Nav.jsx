@@ -59,7 +59,7 @@ const Nav = (props) => {
                     <Link className="global-nav__home-link" href="/">WORLD ARTS FOUNDATION INC.</Link>
                     <ul className="global-nav__links">
                         <li><Link className={pathname === "/about" ? '--is-active' : ''} href="/about">About</Link></li>
-                        <li><Link className={pathname === "/archive" ? '--is-active' : ''} href="/archive">Cultural Archive</Link></li>
+                        <li><Link className={pathname === "/albina-community-archive" ? '--is-active' : ''} href="/albina-community-archive">Cultural Archive</Link></li>
                         <li><Link className={pathname === "/our-work" ? '--is-active' : ''} href="/our-work">Our Work</Link></li>
                         <li><Link className={pathname === "/leadership" ? '--is-active' : ''} href="/leadership">Leadership</Link></li>
                     </ul>
