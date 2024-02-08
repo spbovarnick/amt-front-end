@@ -20,6 +20,7 @@
     "react-responsive-masonry": "^2.1.7",
     "react-select": "^5.8.0",
     "react-window": "^1.8.10",
+    "react-zoom-pan-pinch": "^3.4.2",
     "swiper": "^11.0.6",
     "use-supercluster": "^1.1.0"
   },
