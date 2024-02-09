@@ -20,13 +20,13 @@
     transition: opacity .3s ease;
     
     &.enterFullscreen {
-      background: url("/public/full-screen.svg") center center no-repeat rgba(256, 256, 256, .9);
+      background: url("../../../public/images/full-screen.svg") center center no-repeat rgba(256, 256, 256, .9);
       bottom: 0;
       right: 0;
     }
     
     &.exitFullscreen {
-      background: url("/public/off-screen.svg") center center no-repeat rgba(256, 256, 256, .9);
+      background: url("../../../public/images/off-screen.svg") center center no-repeat rgba(256, 256, 256, .9);
       transition: opacity .5s ease;
       bottom: 20px;
       right: 20px;

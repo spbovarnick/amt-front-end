@@ -20,7 +20,7 @@
         content: "";
         width: 20px;
         height: 20px;
-        background: url("/public/tag-dot.svg") center center no-repeat;
+        background: url("../../../public/images/tag-dot.svg") center center no-repeat;
         position: absolute;
         left: 8px;
         top: 50%;
@@ -32,7 +32,7 @@
         color: variables.$white-1;
 
         &:before {
-            background: url("/public/close.svg") center center no-repeat;
+            background: url("../../../public/images/close.svg") center center no-repeat;
         }
 
     }
