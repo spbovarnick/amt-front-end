@@ -1,17 +1,18 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect, useRef } from 'react';
 import Banner from "../components/Banner"
 import Carousel from "../components/Carousel"
 import MissionStatement from "../components/MissionStatement"
 import Nav from "../components/Nav"
-import { fetchAssociatedData, yearOptions, mediumOptions, updateArchiveItems, getData, clearAllFilters } from '@/utils/api';
+import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters } from '@/utils/api';
 import searchIcon from "../../../public/images/search-icon.svg";
-import Select from "react-select";
 import Drawer from '../components/Drawer';
 import ArchiveGallery from '../components/ArchiveGallery';
 import Footer from '../components/Footer';
-import ArchiveItemModal from '../components/ArchiveItemModal';
+import SelectUI from '../components/SelectUI';
+// import ArchiveItemModal from '../components/ArchiveItemModal';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function AlbinaCommunityArchivePage() {
@@ -59,7 +60,7 @@ export default function AlbinaCommunityArchivePage() {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [userLoadsMore, setUserLoadsMore] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -261,7 +262,6 @@ export default function AlbinaCommunityArchivePage() {
     // set 'search' param with searchTerm
     params.set("search", searchTerm);
     const searchPath = params.toString();
-    console.log(searchPath)
     router.push(`/albina-community-archive?${searchPath}`, {scroll: false});
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
     setAdvancedDrawerHeight(0);
@@ -277,7 +277,6 @@ export default function AlbinaCommunityArchivePage() {
   function clearSearch() {
     setSearchTerm('')
     params.delete("search");
-    console.log(params)
     router.push(`/albina-community-archive?${params.toString()}`, {scroll: false});
   }
 
@@ -337,27 +336,21 @@ export default function AlbinaCommunityArchivePage() {
             <div className="archive-filters">
               <div className="archive-filters__col">
                 <div className="archive__label">Year</div>
-                <Select
-                  placeholder="Select years..."
-                  value={filterYear}
-                  className="react-select-container"
-                  classNamePrefix="react-select"
-                  options={yearOptions}
-                  isSearchable={false}
-                  onChange={handleYearSelect}
+                <SelectUI
+                  placeholderText="Select years..."
+                  val={filterYear}
+                  year={true}
+                  changeHandler={handleYearSelect}
                 />
               </div>
               <div className="archive-filters__col">
                 <div className="archive__label">Medium</div>
-                <Select
-                  placeholder="Select medium..."
-                  value={filterMedium}
-                  className="react-select-container"
-                  classNamePrefix="react-select"
-                  options={mediumOptions}
-                  isSearchable={false}
-                  onChange={handleMediumSelect}
-                />
+                  <SelectUI
+                    placeholderText="Select years..."
+                    val={filterMedium}
+                    medium={true}
+                    changeHandler={handleYearSelect}
+                  />
               </div>
               <div className="archive-filters__col --clear">
                 {Object.values(filters).some(filter => filter.length > 0 || filter > 0) &&
