@@ -71,7 +71,7 @@ export async function fetchPageData(slug) {
 }
 
 export async function getData(url, itemsPerLoad) {
-  const res = await axios.get(url);
+  const res = await axios.get(ROOT_URL + url);
   const data = await res.data;
   const hasMore = data.length > itemsPerLoad;
   const adjustedResults = hasMore ? data.splice(0, data.length - 1) : data;
@@ -121,7 +121,7 @@ export async function updateArchiveItems(
     : "";
   if (!slug) {
     // always request one more than will be shown to check if more are available
-    url = `${ROOT_URL}/api/v1/archive_items/index?limit=${
+    url = `/api/v1/archive_items/index?limit=${
       itemsPerLoad + 1
     }&offset=${offset}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
   } else {
@@ -135,7 +135,7 @@ export async function updateArchiveItems(
 
     // always request one more than will be shown to check if more are available
     // endpoint for api queries from pages is to `archive_items/pages_index`
-    url = `${ROOT_URL}/api/v1/archive_items/pages_index?limit=${
+    url = `/api/v1/archive_items/pages_index?limit=${
       itemsPerLoad + 1
     }&offset=${offset}${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
   }

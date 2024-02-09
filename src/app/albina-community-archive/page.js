@@ -5,7 +5,14 @@ import Banner from "../components/Banner"
 import Carousel from "../components/Carousel"
 import MissionStatement from "../components/MissionStatement"
 import Nav from "../components/Nav"
-import { fetchAssociatedData } from '@/utils/api';
+import { fetchAssociatedData, yearOptions, mediumOptions, updateArchiveItems, getData, clearAllFilters } from '@/utils/api';
+import searchIcon from "../../../public/images/search-icon.svg";
+import Select from "react-select";
+import Drawer from '../components/Drawer';
+import ArchiveGallery from '../components/ArchiveGallery';
+import Footer from '../components/Footer';
+import ArchiveItemModal from '../components/ArchiveItemModal';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function AlbinaCommunityArchivePage() {
   const itemsPerLoad = 20;
@@ -13,19 +20,18 @@ export default function AlbinaCommunityArchivePage() {
   const mobileDrawerRef = useRef(null);
   const focusedRef = useRef(null);
   const archiveGalleryEl = useRef(null);
-  // let navigate = useNavigate();
-  // let location = useLocation();
-  // let searchParams = new URLSearchParams(location.search)
-
-
-  // const [search, setSearch] = useState(searchParams.get("search"));
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const router = useRouter();
+  
+  const [search, setSearch] = useState(searchParams.get("search"));
   // const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(searchParams.getAll("comm_groups"));
   // const [peopleSearchParams, setPeopleSearchParams] = useState(searchParams.getAll("people"));
   // const [locationsSearchParams, setLocationsSearchParams] = useState(searchParams.getAll("locations"));
   // const [tagsSearchParams, setTagsSearchParams] = useState(searchParams.getAll("tags"));
   // const [collectionsSearchParams, setCollectionsSearchParams] = useState(searchParams.getAll("collections"));
   // const [yearSearchParams, setYearSearchParams] = useState(searchParams.get("year"));
-  // const [mediumSearchParams, setMediumSearchParams] = useState(searchParams.get("medium"));
+  // const [mediumSearchParams, setMediumSearchParams] = useState(params.get("medium"));
 
   const [archiveResults, setArchiveResults] = useState([]);
   const [carouselSlides, setCarouselSlides] = useState([]);
@@ -116,18 +122,18 @@ export default function AlbinaCommunityArchivePage() {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   // if 'search' URL param present, set isSearching to true and searchTerm to 'search' URL param string
-  //   if (search) {
-  //     setIsSearching(true)
-  //     setSearchTerm(search)
-  //     archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
-  //   } else {
-  //     setIsSearching(false)
-  //   }
-  // }, [search]);
+  useEffect(() => {
+    // if 'search' URL param present, set isSearching to true and searchTerm to 'search' URL param string
+    if (search) {
+      setIsSearching(true)
+      setSearchTerm(search)
+      archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
+    } else {
+      setIsSearching(false)
+    }
+  }, [search]);
 
-  // hook sets filters based on URL params
+  // // hook sets filters based on URL params
   // useEffect(() => {
   //   // .filter depends upon all associated data being hydrated, thus the if... block
   //   if (!assocDataIsLoading) {
@@ -141,22 +147,22 @@ export default function AlbinaCommunityArchivePage() {
   //     setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1))
   //   }
   // }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams, assocDataIsLoading]);
-
+  
   useEffect(() => {
     isFiltering > 0 && archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
   }, [isFiltering])
 
-  // // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
-  // useEffect(() => {
-  //   setCommGroupsSearchParams(searchParams.getAll("comm_groups"));
-  //   setTagsSearchParams(searchParams.getAll("tags"));
-  //   setLocationsSearchParams(searchParams.getAll("locations"));
-  //   setPeopleSearchParams(searchParams.getAll("people"));
-  //   setCollectionsSearchParams(searchParams.getAll("collections"));
-  //   setYearSearchParams(searchParams.get("year"));
-  //   setMediumSearchParams(searchParams.get("medium"));
-  //   setSearch(searchParams.get("search"));
-  // }, [location.search]);
+  // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
+  useEffect(() => {
+  //   setCommGroupsSearchParams(params.getAll("comm_groups"));
+  //   setTagsSearchParams(params.getAll("tags"));
+  //   setLocationsSearchParams(params.getAll("locations"));
+  //   setPeopleSearchParams(params.getAll("people"));
+  //   setCollectionsSearchParams(params.getAll("collections"));
+  //   setYearSearchParams(params.get("year"));
+  //   setMediumSearchParams(params.get("medium"));
+    setSearch(params.get("search"));
+  }, [searchParams]);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutsideMenu);
@@ -209,20 +215,14 @@ export default function AlbinaCommunityArchivePage() {
     // if "Any" selected, 'medium' param cleared from URL
     if (val.value == "") {
       // deletes 'medium' URLSearchParam
-      searchParams.delete('medium')
+      params.delete('medium')
       // navigates to updated URL
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString()
-      })
+      router.push(`/albina-community-archive?${params.toString()}`, {scroll: false});
     } else {
       // sets 'medium' URLSearchParam
-      searchParams.set('medium', val.value)
+      params.set('medium', val.value)
       // navigates to updated URL
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString()
-      })
+      router.push(`/albina-community-archive?${params.toString()}`, {scroll: false})
     }
   }
 
@@ -259,15 +259,11 @@ export default function AlbinaCommunityArchivePage() {
   async function handleSubmitSearch(e) {
     e.preventDefault();
     // set 'search' param with searchTerm
-    searchParams.set("search", searchTerm);
-    // navigate to new URL based on updated params
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString()
-    });
+    params.set("search", searchTerm);
+    const searchPath = params.toString();
+    console.log(searchPath)
+    router.push(`/albina-community-archive?${searchPath}`, {scroll: false});
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
-    clearAllFilters(searchParams);
-    // close advanced drawer if open
     setAdvancedDrawerHeight(0);
     setCurrentPage(0);
     setIsSearching(true);
@@ -280,11 +276,9 @@ export default function AlbinaCommunityArchivePage() {
 
   function clearSearch() {
     setSearchTerm('')
-    searchParams.delete("search");
-    navigate({
-      pathname: location.pathname,
-      search: searchParams.toString()
-    });
+    params.delete("search");
+    console.log(params)
+    router.push(`/albina-community-archive?${params.toString()}`, {scroll: false});
   }
 
   function handleClickOutsideMenu(event) {
@@ -294,7 +288,7 @@ export default function AlbinaCommunityArchivePage() {
   }
 
   return (
-    <>
+    <div className="page-wrapper --is-dark">
       <Nav />
       <Banner 
         themeLight={false}
@@ -310,7 +304,156 @@ export default function AlbinaCommunityArchivePage() {
         slides={carouselSlides}
         onPage={false}
       />
-      
-    </>
+      <section className="archive-wrapper">
+        <div className="archive-content global-container">
+          <div className="archive-search" id="archive-search">
+            <div className="archive__label">Search</div>
+            <form onSubmit={(e) => {
+              handleSubmitSearch(e)
+            }
+            }
+              className="archive__search-form"
+            >
+              <div className="search-field-container">
+                <input value={searchTerm} type="text" name="search" className="archive__search-field" onChange={e => setSearchTerm(e.target.value)} />
+                {searchTerm &&
+                  <button
+                    type='button'
+                    id='clear-search'
+                    onClick={clearSearch}
+                  >
+                    <span id='clear-search-text'>clear</span>
+                    <span id='clear-search-x'>x</span>
+                  </button>
+                }
+              </div>
+              <div>
+                <button type="submit" className="archive__search-submit button-round --secondary"><img className='search-button-icon' src={searchIcon} /><span className='search-button-text'>Search</span></button>
+              </div>
+            </form>
+          </div>
+
+          <div className={`archive-tags ${advancedSearchOpen ? "advanced-search-open" : ""}`}>
+            <div className="archive-filters">
+              <div className="archive-filters__col">
+                <div className="archive__label">Year</div>
+                <Select
+                  placeholder="Select years..."
+                  value={filterYear}
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  options={yearOptions}
+                  isSearchable={false}
+                  onChange={handleYearSelect}
+                />
+              </div>
+              <div className="archive-filters__col">
+                <div className="archive__label">Medium</div>
+                <Select
+                  placeholder="Select medium..."
+                  value={filterMedium}
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  options={mediumOptions}
+                  isSearchable={false}
+                  onChange={handleMediumSelect}
+                />
+              </div>
+              <div className="archive-filters__col --clear">
+                {Object.values(filters).some(filter => filter.length > 0 || filter > 0) &&
+                  <button
+                    className='clear-filters button-round sml'
+                    onClick={() => {
+                      clearAllFilters(params);
+                      router.push(`/albina-community-archive`, {scroll: false})
+                    }}
+                  >Clear Filters</button>
+                }
+              </div>
+            </div>
+            <div className='toggle-clear-ui'>
+              <button
+                onClick={handleToggleAdvancedDrawer} className="advanced-search__toggle"
+              >
+                {advancedDrawerHeight > 0 ? "Hide advanced search options" : "Show advanced search options"}
+              </button>
+              <button
+                onClick={() => {
+                  setAdvancedSearchOpen(!advancedSearchOpen)
+                }}
+                className={`advanced-search__toggle-mobile ${advancedSearchOpen ? "advanced-search-open" : ""}`}
+              >
+                {advancedSearchOpen ? "Hide advanced search options" : "Show advanced search options"}
+              </button>
+            </div>
+            <div ref={mobileDrawerRef} className={`advanced-search__drawer ${advancedSearchOpen ? "advanced-search-open" : ""}`} style={{ height: `${advancedDrawerHeight}px` }}>
+              <div ref={advancedDrawerRef}>
+                <Drawer
+                  label="Community Groups"
+                  data={commGroups}
+                  pageReset={pageReset}
+                  archiveGallery={archiveGalleryEl.current}
+                  filterCateogry="comm_groups"
+                  // filterSearchParams={commGroupsSearchParams}
+                />
+                <Drawer
+                  label="People"
+                  data={people}
+                  pageReset={pageReset}
+                  archiveGallery={archiveGalleryEl.current}
+                  filterCateogry="people"
+                  // filterSearchParams={peopleSearchParams}
+                />
+                <Drawer
+                  label="Location"
+                  data={locations}
+                  pageReset={pageReset}
+                  archiveGallery={archiveGalleryEl.current}
+                  filterCateogry="locations"
+                  // filterSearchParams={locationsSearchParams}
+                />
+                <Drawer
+                  label="Tagged with"
+                  data={tags}
+                  pageReset={pageReset}
+                  archiveGallery={archiveGalleryEl.current}
+                  filterCateogry="tags"
+                  // filterSearchParams={tagsSearchParams}
+                />
+                <Drawer
+                  label="Collections"
+                  data={collections}
+                  pageReset={pageReset}
+                  archiveGallery={archiveGalleryEl.current}
+                  filterCateogry="collections"
+                  // filterSearchParams={collectionsSearchParams}
+                />
+              </div>
+            </div>
+
+          </div>
+          <div id="archive-gallery" ref={archiveGalleryEl} className={`${advancedSearchOpen ? "advanced-search-open" : ""}`}>
+            <ArchiveGallery
+              isLoaded={isLoaded}
+              isFiltering={isFiltering}
+              isSearching={isSearching}
+              archiveResults={archiveResults}
+              showLoadMore={showLoadMore}
+              showMoreItems={showMoreItems}
+              searchTerm={searchTerm}
+              isFocused={isFocused}
+              setIsFocused={setIsFocused}
+              focusedRef={focusedRef}
+            />
+          </div>
+        </div>
+      </section>
+      <Footer archive={true} />
+      {/* <ArchiveItemModal
+        focusedRef={focusedRef}
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+      /> */}
+    </div>
   )
 }
