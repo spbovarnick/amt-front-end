@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import chevronRight from '../../../public/images/chevron-right.svg'
-import chevronLeft from '../../../public/images/chevron-left.svg'
+import chevronRight from 'public/images/chevron-right.svg'
+import chevronLeft from 'public/images/chevron-left.svg'
 import FullscreenImg from './FullscreenImg';
 
 const ModalCarousel = ({item}) => {

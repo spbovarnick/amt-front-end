@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DrawerButton from "./DrawerButton";
 // import { useLocation, useNavigate } from "react-router-dom";
-import chevronDown from '../../../public/images/chevron-down.svg'
-import chevronUp from '../../../public/images/chevron-up.svg'
+import chevronDown from 'public/images/chevron-down.svg'
+import chevronUp from 'public/images/chevron-up.svg'
 
 const Drawer = ({ label, data, pageReset, archiveGallery, filterCateogry, filterSearchParams }) => {
     // let navigate = useNavigate();

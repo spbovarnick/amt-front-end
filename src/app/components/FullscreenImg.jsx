@@ -1,11 +1,11 @@
 import React, {useState, useRef, useEffect} from "react";
 import { getCloudfrontUrl } from "@/utils/helpers";
 import { TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
-import zoomInIcon from '../../../public/images/zoom-in.svg';
-import zoomOutIcon from '../../../public/images/zoom-out.svg';
-import zoomResetIcon from '../../../public/images/zoom-reset.svg';
-import chevronRight from '../../../public/images/chevron-right_fs.svg'
-import chevronLeft from '../../../public/images/chevron-left_fs.svg'
+import zoomInIcon from 'public/images/zoom-in.svg';
+import zoomOutIcon from 'public/images/zoom-out.svg';
+import zoomResetIcon from 'public/images/zoom-reset.svg';
+import chevronRight from 'public/images/chevron-right_fs.svg'
+import chevronLeft from 'public/images/chevron-left_fs.svg'
 
 const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex }) => {
     const [isFullscreen, setIsFullscreen] = useState(false);

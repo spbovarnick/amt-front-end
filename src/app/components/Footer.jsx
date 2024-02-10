@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import icon_fb from "../../../public/images/icons/fb.svg"
-import icon_insta from '../../../public/images/icons/insta.svg';
-import icon_youtube from '../../../public/images/icons/youtube.svg';
+import icon_fb from "public/images/icons/fb.svg"
+import icon_insta from 'public/images/icons/insta.svg';
+import icon_youtube from 'public/images/icons/youtube.svg';
 
 const Footer = ({ archive = false, mailListLink = null, mailListName = null }) => {
 

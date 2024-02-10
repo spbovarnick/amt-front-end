@@ -5,17 +5,17 @@ import Gallery from "../components/Gallery";
 import CollageWork from "../components/CollageWork";
 import Footer from "../components/Footer";
 
-import galleryImage01 from '../../../public/images/about-gallery/01.jpg';
-import galleryImage02 from '../../../public/images/about-gallery/02.jpg';
-import galleryImage03 from '../../../public/images/about-gallery/03.jpg';
-import galleryImage04 from '../../../public/images/about-gallery/04.jpg';
-import galleryImage05 from '../../../public/images/about-gallery/05.jpg';
-import galleryImage06 from '../../../public/images/about-gallery/06.jpg';
-import galleryImage07 from '../../../public/images/about-gallery/07.jpg';
-import galleryImage08 from '../../../public/images/about-gallery/08.jpg';
-import galleryImage09 from '../../../public/images/about-gallery/09.jpg';
-import galleryImage10 from '../../../public/images/about-gallery/10.jpg';
-import galleryImage11 from '../../../public/images/about-gallery/11.jpg';
+import galleryImage01 from 'public/images/about-gallery/01.jpg';
+import galleryImage02 from 'public/images/about-gallery/02.jpg';
+import galleryImage03 from 'public/images/about-gallery/03.jpg';
+import galleryImage04 from 'public/images/about-gallery/04.jpg';
+import galleryImage05 from 'public/images/about-gallery/05.jpg';
+import galleryImage06 from 'public/images/about-gallery/06.jpg';
+import galleryImage07 from 'public/images/about-gallery/07.jpg';
+import galleryImage08 from 'public/images/about-gallery/08.jpg';
+import galleryImage09 from 'public/images/about-gallery/09.jpg';
+import galleryImage10 from 'public/images/about-gallery/10.jpg';
+import galleryImage11 from 'public/images/about-gallery/11.jpg';
 
 export default function About(){
   const leftText = "<p>World Arts Foundation Inc. celebrates and preserves African-American contributions in American culture.</p>";

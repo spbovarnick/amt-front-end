@@ -7,7 +7,7 @@ import MissionStatement from "../components/MissionStatement"
 import Nav from "../components/Nav"
 import ArchiveItemModal from '../components/ArchiveItemModal';
 import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions } from '@/utils/api';
-import searchIcon from "../../../public/images/search-icon.svg";
+import searchIcon from "public/images/search-icon.svg";
 import Drawer from '../components/Drawer';
 import ArchiveGallery from '../components/ArchiveGallery';
 import Footer from '../components/Footer';

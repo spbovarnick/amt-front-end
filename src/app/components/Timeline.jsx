@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef, memo} from "react";
 // import { useNavigate, useLocation } from 'react-router-dom';
 import { FixedSizeList as List } from "react-window";
 import { InView } from "react-intersection-observer";
-import audioIcon from '../../../public/images/timeline-audio-icon.jpg';
-import videoIcon from '../../../public/images/timeline-video-icon.jpg';
-import pdfIcon from '../../../public/images/timeline-pdf-icon.jpg';
-import zoomInIcon from '../../../public/images/zoom-in.svg';
-import zoomOutIcon from '../../../public/images/zoom-out.svg';
+import audioIcon from 'public/images/timeline-audio-icon.jpg';
+import videoIcon from 'public/images/timeline-video-icon.jpg';
+import pdfIcon from 'public/images/timeline-pdf-icon.jpg';
+import zoomInIcon from 'public/images/zoom-in.svg';
+import zoomOutIcon from 'public/images/zoom-out.svg';
 
 const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane }) => {
     // let navigate = useNavigate();

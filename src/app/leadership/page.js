@@ -8,14 +8,14 @@ import TextBlock from "../components/TextBlock"
 import Footer from "../components/Footer"
 import Nav from "../components/Nav"
 
-import galleryImage01 from '../../../public/images/board/boardmember_01.jpg';
-import galleryImage02 from '../../../public/images/board/boardmember_02.jpg';
-import galleryImage03 from '../../../public/images/board/boardmember_03.jpg';
-import galleryImage04 from '../../../public/images/board/boardmember_04.jpg';
-import galleryImage05 from '../../../public/images/board/boardmember_05.jpg';
-import galleryImage06 from '../../../public/images/board/boardmember_06.jpg';
-import galleryImage07 from '../../../public/images/board/boardmember_07.jpg';
-import galleryImage08 from '../../../public/images/board/boardmember_08.jpg';
+import galleryImage01 from 'public/images/board/boardmember_01.jpg';
+import galleryImage02 from 'public/images/board/boardmember_02.jpg';
+import galleryImage03 from 'public/images/board/boardmember_03.jpg';
+import galleryImage04 from 'public/images/board/boardmember_04.jpg';
+import galleryImage05 from 'public/images/board/boardmember_05.jpg';
+import galleryImage06 from 'public/images/board/boardmember_06.jpg';
+import galleryImage07 from 'public/images/board/boardmember_07.jpg';
+import galleryImage08 from 'public/images/board/boardmember_08.jpg';
 
 export default function LeadershipPage() { 
   const [boardItems, setBoardItems] = useState(null);

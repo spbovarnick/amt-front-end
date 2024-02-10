@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import dreamFlyer from '../../../public/images/dream-flyer-updated.jpeg';
+import dreamFlyer from 'public/images/dream-flyer-updated.jpeg';
 
 const PopUp = () => {
     const [modalIsOpen, setIsOpen] = useState(false);

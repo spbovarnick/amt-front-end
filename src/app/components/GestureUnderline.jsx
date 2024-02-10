@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import classNames from 'classnames';
 import "../styles/gesture-underline.scss";
-import underline from '../../../public/images/gesture-01-purple.svg'
+import underline from 'public/images/gesture-01-purple.svg'
 
 const GestureUnderline = ({ text, url, isLight, isSmall, isDonate, onClickFn, isExternal }) => {
   const cmptClasses = classNames({

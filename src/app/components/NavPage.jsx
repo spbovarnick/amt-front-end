@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import classNames from 'classnames';
-import chevronRight from '../../../public/images/chevron-right.svg'
+import chevronRight from 'public/images/chevron-right.svg'
 
 const NavPage = ({themeLight, pageName}) => {
 
