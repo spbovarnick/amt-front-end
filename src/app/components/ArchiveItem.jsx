@@ -1,14 +1,17 @@
-import React from "react";
 import { getCloudfrontUrl } from "@/utils/helpers";
-// import { useNavigate, useLocation } from "react-router-dom";
+import { useParams, useRouter, useSearchParams, usePathname } from "next/navigation";
 import audioIcon from '../../../public/images/audio-icon-2.svg';
 import videoIcon from '../../../public/images/video-icon.svg';
 import pdfIcon from '../../../public/images/pdf-icon.svg';
 import printedMaterialIcon from '../../../public/images/printed-material-icon.svg'
 
 const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
-    // const navigate = useNavigate();
-    // const location = useLocation();
+    const pathname = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams);
+    const modalParams = `?modal=true&id=${item.id}&${params.toString()}`;
+
 
     function get_url_extension( url ) {
         return url.split(/[#?]/)[0].split('.').pop().trim();
@@ -17,7 +20,9 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
     function handleClick(e) {
         e.preventDefault();
-        navigate(`${location.pathname}/${item.id}${location.search}`);
+        const url = `${pathname}${modalParams}`
+
+        router.push(url, {scroll: false})
         setIsFocused(item.id)
     }
 

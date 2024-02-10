@@ -1,20 +1,23 @@
 'use client';
 
 import React, { Fragment, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Modal from 'react-modal';
 import { useEffect, useState} from 'react';
-// import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getItem, getLocations, sendArchiveItemFeedback, fetchTimelineItems } from '@/utils/api';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import ModalCarousel from './ModalCarousel';
 import Map from './Map';
 import Timeline from './Timeline.jsx';
 
 const ArchiveItemModal = ({ pageTag, focusedRef }) => {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const params = new URLSearchParams(searchParams);
+    const id = params.get('id');
+    const modalIsOpen = params.get('modal') === 'true' ? true : false;
+    // const [isOpen, setIsOpen] = useState(false);
     const [modalItem, setModalItem] = useState(null);
     const [viewContent, setViewContent] = useState(true)
     const [viewMap, setViewMap] = useState(false);
@@ -26,20 +29,24 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const viewPaneRef = useRef();
     const tabRef = useRef();
 
-    const currentUrl = new URL(window.location.href);
-    const currentPathArr = currentUrl.pathname.split('/');
-    currentPathArr.pop();
-    const currentPath = currentPathArr.join('/');
+    const currentUrl = usePathname();
+    const currentPathArr = currentUrl?.split('/');
+    currentPathArr?.pop();
+    const currentPath = currentPathArr?.join('/');
+
+    useEffect(() => {
+        Modal.setAppElement(document.getElementsByClassName('page-wrapper')[0]);
+    }, [])
 
     useEffect(() => {
         if (id) {
-            setIsOpen(true);
+            // setIsOpen(true);
             (async () => {
                 const fetchedItem = await getItem(id)
                 setModalItem(fetchedItem)
             })();
         } else {
-            setIsOpen(false);
+            // setIsOpen(false);
         }
     }, [id]);
 
@@ -67,11 +74,11 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
 
     const handleClose = (e) => {
         e.preventDefault();
-        setIsOpen(false);
-        navigate({
-            pathname: location.pathname.substring(0, location.pathname.lastIndexOf('/')),
-            search: location.search
-        });
+        // router.back();
+        params.delete('modal')
+        params.delete('id')
+        const newParams = params.toString();
+        router.push(`${pathname}?${newParams}`, {scroll: false})
         setModalItem(null);
         setLocations(null);
         setViewContent(true);
@@ -119,18 +126,18 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
         }
     }
 
-    Modal.setAppElement(document.getElementsByClassName('page-wrapper')[0]);
-
-    return isOpen ? (
+    return (
+        // <div className='overlay'>
         <>
         <Modal
-            isOpen={isOpen}
+            isOpen={modalIsOpen}
             onRequestClose={(e) => handleClose(e)}
             className="modal"
             overlayClassName="overlay"
             contentLabel="Archive Modal"
             onAfterClose={afterModalClose}
         >
+        <div className='modal'>
             <button className="modalClose" onClick={handleClose}></button>
             <div className="modalContent">
                 <div className="modalArchiveItem">
@@ -213,7 +220,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>LOCATION:</span></div>
                                 {modalItem.locations.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <a href={`${currentPath}?locations=${encodeURIComponent(i.name)}`}>{i.name}</a>
+                                        <Link href={`${currentPath}?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.locations.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -225,7 +232,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>TAGS:</span></div>
                                 {modalItem.tags.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <a href={`${currentPath}?tags=${encodeURIComponent(i.name)}`}>{i.name}</a>
+                                        <Link href={`${currentPath}?tags=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.tags.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -237,7 +244,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>COMMUNITY GROUPS:</span></div>
                                 {modalItem.comm_groups.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <a href={`${currentPath}?comm_groups=${encodeURIComponent(i.name)}`}>{i.name}</a>
+                                        <Link href={`${currentPath}?comm_groups=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.comm_groups.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -249,7 +256,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>PEOPLE:</span></div>
                                 {modalItem.people.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <a href={`${currentPath}?people=${encodeURIComponent(i.name)}`}>{i.name}</a>
+                                        <Link href={`${currentPath}?people=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.people.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -261,7 +268,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>COURTESY OF:</span></div>
                                 {modalItem.collections.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <a href={`${currentPath}?collections=${encodeURIComponent(i.name)}`}>{i.name}</a>
+                                        <Link href={`${currentPath}?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.collections.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -277,7 +284,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
 
                         <div className="modalMetaItem">
                             <div className="modalMetaLabel"><span>RIGHTS:</span></div>
-                                See <Link className='rights-links' to="/albina-community-archive/terms-of-use">Copyright, Terms of Use & Policies</Link> for more information. For all rights holder inquiries, please contact us <a className='rights-links' href='mailto:albinacommunityarchive@gmail.com' target='_blank'>here.</a>
+                                See <Link className='rights-links' href="/albina-community-archive/terms-of-use">Copyright, Terms of Use & Policies</Link> for more information. For all rights holder inquiries, please contact us <a className='rights-links' href='mailto:albinacommunityarchive@gmail.com' target='_blank'>here.</a>
                         </div>
 
                         <div className="modalMetaItem">
@@ -299,9 +306,11 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                     </div>
                 </div>
             </div>
+        </div>
         </Modal>
+        {/* </div> */}
         </>
-    ) : null
+    )
 }
 
 export default ArchiveItemModal
