@@ -394,7 +394,7 @@ export default function AlbinaCommunityArchivePage() {
                   pageReset={pageReset}
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="people"
-                  // filterSearchParams={peopleSearchParams}
+                  filterSearchParams={peopleSearchParams}
                 />
                 <Drawer
                   label="Location"
@@ -402,7 +402,7 @@ export default function AlbinaCommunityArchivePage() {
                   pageReset={pageReset}
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="locations"
-                  // filterSearchParams={locationsSearchParams}
+                  filterSearchParams={locationsSearchParams}
                 />
                 <Drawer
                   label="Tagged with"
@@ -410,7 +410,7 @@ export default function AlbinaCommunityArchivePage() {
                   pageReset={pageReset}
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="tags"
-                  // filterSearchParams={tagsSearchParams}
+                  filterSearchParams={tagsSearchParams}
                 />
                 <Drawer
                   label="Collections"
@@ -418,7 +418,7 @@ export default function AlbinaCommunityArchivePage() {
                   pageReset={pageReset}
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="collections"
-                  // filterSearchParams={collectionsSearchParams}
+                  filterSearchParams={collectionsSearchParams}
                 />
               </div>
             </div>
