@@ -1,11 +1,11 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import React, { useState, useEffect, useRef } from 'react';
 import Banner from "../components/Banner"
 import Carousel from "../components/Carousel"
 import MissionStatement from "../components/MissionStatement"
 import Nav from "../components/Nav"
+import ArchiveItemModal from '../components/ArchiveItemModal';
 import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters } from '@/utils/api';
 import searchIcon from "../../../public/images/search-icon.svg";
 import Drawer from '../components/Drawer';
@@ -24,6 +24,9 @@ export default function AlbinaCommunityArchivePage() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const router = useRouter();
+  // console.log(params.get('search'))
+  // const modalIsOpen = params.get('modal');
+  // const modalIsOpen = params.get('id') === "true";
   
   const [search, setSearch] = useState(searchParams.get("search"));
   // const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(searchParams.getAll("comm_groups"));
@@ -442,11 +445,9 @@ export default function AlbinaCommunityArchivePage() {
         </div>
       </section>
       <Footer archive={true} />
-      {/* <ArchiveItemModal
+      <ArchiveItemModal
         focusedRef={focusedRef}
-        modalIsOpen={modalIsOpen}
-        setModalIsOpen={setModalIsOpen}
-      /> */}
+      />
     </div>
   )
 }
