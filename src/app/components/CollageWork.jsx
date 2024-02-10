@@ -2,10 +2,10 @@ import React from "react";
 import GestureCircle from "./GestureCircle";
 
 // Image assets
-import img_00 from '../../../public/images/our-work-00.jpg';
-import img_01 from '../../../public/images/our-work-01.png';
-import img_02 from '../../../public/images/our-work-02.jpg';
-import img_03 from '../../../public/images/our-work-03.jpg';
+import img_00 from 'public/images/our-work-00.jpg';
+import img_01 from 'public/images/our-work-01.png';
+import img_02 from 'public/images/our-work-02.jpg';
+import img_03 from 'public/images/our-work-03.jpg';
 
 const CollageWork = (props) => {
 

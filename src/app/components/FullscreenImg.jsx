@@ -73,7 +73,7 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                             className='zoom-button_fs button-round'
                             onClick={() => zoomIn()}
                         >
-                            <img src={zoomInIcon} />
+                            <img src={zoomInIcon.src} />
                             {err}
                         </button>
                         <button
@@ -81,14 +81,14 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                             className='zoom-button_fs button-round'
                             onClick={() => zoomOut()}
                         >
-                            <img src={zoomOutIcon} />
+                            <img src={zoomOutIcon.src} />
                         </button>
                         <button
                             type="button"
                             className="zoom-button_fs button-round"
                             onClick={() => resetTransform()}
                         >
-                            <img src={zoomResetIcon} />
+                            <img src={zoomResetIcon.src} />
                         </button>
                         { carouselItems.length > 1 && 
                             <>
@@ -97,14 +97,14 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                                 className="zoom-button_fs button-round"
                                 onClick={prevImg}
                             >
-                                <img src={chevronLeft} />
+                                <img src={chevronLeft.src} />
                             </button>
                             <button
                                 type="button"
                                 className="zoom-button_fs button-round"
                                 onClick={nextImg}
                             >
-                                <img src={chevronRight} />
+                                <img src={chevronRight.src} />
                             </button>
                             </>
                         }
