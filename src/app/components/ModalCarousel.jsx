@@ -98,7 +98,7 @@ const ModalCarousel = ({item}) => {
     let carousel
     if (carouselItems.length) {
         carousel = <div className='modal-carousel' >
-            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronLeft} onClick={prevImg} />}
+            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronLeft.src} onClick={prevImg} />}
             <div className='carousel-content' ref={carouselRef}>
                 {carouselContentTypes[fileIndex] === "image" &&
                     <FullscreenImg 
@@ -137,7 +137,7 @@ const ModalCarousel = ({item}) => {
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
             </div>
-            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronRight} onClick={nextImg} />}
+            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronRight.src} onClick={nextImg} />}
         </div>
     } else {
         carousel = <span>Archive item loading...</span>

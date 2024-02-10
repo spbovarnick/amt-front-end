@@ -51,13 +51,13 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "printed material" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
-                            <img src={printedMaterialIcon} className="cmpt-archive-item__icon" draggable="false" />
+                            <img src={printedMaterialIcon.src} className="cmpt-archive-item__icon" draggable="false" />
                         </div>
                     )}
 
                     {item.medium === "article" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
-                            <img src={pdfIcon} className="cmpt-archive-item__icon" draggable="false" />
+                            <img src={pdfIcon.src} className="cmpt-archive-item__icon" draggable="false" />
                         </div>
                     )}
 
@@ -69,7 +69,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "audio" && item.content_files[0] && !item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <img src={audioIcon} className="cmpt-archive-item__icon" draggable="false" />
+                            <img src={audioIcon.src} className="cmpt-archive-item__icon" draggable="false" />
                         </div>
                     )}
 
@@ -81,7 +81,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "film" && item.content_files[0] && !item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <img src={videoIcon} className="cmpt-archive-item__icon" draggable="false" />
+                            <img src={videoIcon.src} className="cmpt-archive-item__icon" draggable="false" />
                         </div>
                     )}
 
