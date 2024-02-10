@@ -187,7 +187,6 @@ export default function AlbinaCommunityArchivePage() {
     setUserLoadsMore(false);
     setIsLoaded(false);
   }
-  console.log(pathname)
 
   function handleYearSelect(val) {
     pageReset();
@@ -215,12 +214,14 @@ export default function AlbinaCommunityArchivePage() {
       // deletes 'medium' URLSearchParam
       params.delete('medium')
       // navigates to updated URL
-      router.push(`/albina-community-archive?${params.toString()}`, {scroll: false});
+      const newParams = params.toString();
+      router.push(`/albina-community-archive?${newParams}`, {scroll: false});
     } else {
       // sets 'medium' URLSearchParam
       params.set('medium', val.value)
       // navigates to updated URL
-      router.push(`/albina-community-archive?${params.toString()}`, {scroll: false})
+      const newParams = params.toString();
+      router.push(`/albina-community-archive?${newParams}`, {scroll: false})
     }
   }
 
@@ -346,7 +347,7 @@ export default function AlbinaCommunityArchivePage() {
                     placeholderText="Select years..."
                     val={filterMedium}
                     medium={true}
-                    changeHandler={handleYearSelect}
+                    changeHandler={handleMediumSelect}
                   />
               </div>
               <div className="archive-filters__col --clear">
