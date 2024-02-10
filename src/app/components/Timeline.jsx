@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef, memo} from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+// import { useNavigate, useLocation } from 'react-router-dom';
 import { FixedSizeList as List } from "react-window";
 import { InView } from "react-intersection-observer";
-import audioIcon from '../../assets/images/timeline-audio-icon.jpg';
-import videoIcon from '../../assets/images/timeline-video-icon.jpg';
-import pdfIcon from '../../assets/images/timeline-pdf-icon.jpg';
-import zoomInIcon from '../../assets/images/zoom-in.svg';
-import zoomOutIcon from '../../assets/images/zoom-out.svg';
+import audioIcon from '../../../public/images/timeline-audio-icon.jpg';
+import videoIcon from '../../../public/images/timeline-video-icon.jpg';
+import pdfIcon from '../../../public/images/timeline-pdf-icon.jpg';
+import zoomInIcon from '../../../public/images/zoom-in.svg';
+import zoomOutIcon from '../../../public/images/zoom-out.svg';
 
 const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane }) => {
-    let navigate = useNavigate();
-    let location = useLocation();
+    // let navigate = useNavigate();
+    // let location = useLocation();
     const activeItemRef = useRef(null)
     const [activeItemIndex, setActiveItemIndex] = useState(null);
     const [screenSize, setScreenSize] = useState(getCurrentWindowWidth());
@@ -417,12 +417,12 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                             className="zoom-button button-round" 
                             onClick={handleZoomIn}
                             disabled={zoom === 0 ? true : false}
-                            ><img src={zoomInIcon} /></button>
+                            ><img src={zoomInIcon.src} /></button>
                         <button 
                             className="zoom-button button-round" 
                             onClick={handleZoomOut}
                             disabled={zoom === 3 ? true : false}
-                        ><img src={zoomOutIcon} /></button>
+                        ><img src={zoomOutIcon.src} /></button>
                     </div>
                     <div className="decades-menu">
                         {createDecadeButtons()}
