@@ -6,7 +6,7 @@ import Carousel from "../components/Carousel"
 import MissionStatement from "../components/MissionStatement"
 import Nav from "../components/Nav"
 import ArchiveItemModal from '../components/ArchiveItemModal';
-import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters } from '@/utils/api';
+import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions } from '@/utils/api';
 import searchIcon from "../../../public/images/search-icon.svg";
 import Drawer from '../components/Drawer';
 import ArchiveGallery from '../components/ArchiveGallery';
@@ -21,21 +21,19 @@ export default function AlbinaCommunityArchivePage() {
   const mobileDrawerRef = useRef(null);
   const focusedRef = useRef(null);
   const archiveGalleryEl = useRef(null);
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const router = useRouter();
-  // console.log(params.get('search'))
-  // const modalIsOpen = params.get('modal');
-  // const modalIsOpen = params.get('id') === "true";
-  
+  const router = useRouter();  
+
   const [search, setSearch] = useState(searchParams.get("search"));
-  // const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(searchParams.getAll("comm_groups"));
-  // const [peopleSearchParams, setPeopleSearchParams] = useState(searchParams.getAll("people"));
-  // const [locationsSearchParams, setLocationsSearchParams] = useState(searchParams.getAll("locations"));
-  // const [tagsSearchParams, setTagsSearchParams] = useState(searchParams.getAll("tags"));
-  // const [collectionsSearchParams, setCollectionsSearchParams] = useState(searchParams.getAll("collections"));
-  // const [yearSearchParams, setYearSearchParams] = useState(searchParams.get("year"));
-  // const [mediumSearchParams, setMediumSearchParams] = useState(params.get("medium"));
+  const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(params.getAll("comm_groups"));
+  const [peopleSearchParams, setPeopleSearchParams] = useState(params.getAll("people"));
+  const [locationsSearchParams, setLocationsSearchParams] = useState(params.getAll("locations"));
+  const [tagsSearchParams, setTagsSearchParams] = useState(params.getAll("tags"));
+  const [collectionsSearchParams, setCollectionsSearchParams] = useState(params.getAll("collections"));
+  const [yearSearchParams, setYearSearchParams] = useState(params.get("year"));
+  const [mediumSearchParams, setMediumSearchParams] = useState(params.get("medium"));
 
   const [archiveResults, setArchiveResults] = useState([]);
   const [carouselSlides, setCarouselSlides] = useState([]);
@@ -63,7 +61,6 @@ export default function AlbinaCommunityArchivePage() {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [userLoadsMore, setUserLoadsMore] = useState(false);
-  // const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -137,20 +134,20 @@ export default function AlbinaCommunityArchivePage() {
     }
   }, [search]);
 
-  // // hook sets filters based on URL params
-  // useEffect(() => {
-  //   // .filter depends upon all associated data being hydrated, thus the if... block
-  //   if (!assocDataIsLoading) {
-  //     setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
-  //     setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
-  //     setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
-  //     setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
-  //     setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
-  //     yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
-  //     mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
-  //     setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1))
-  //   }
-  // }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams, assocDataIsLoading]);
+  // hook sets filters based on URL params
+  useEffect(() => {
+    // .filter depends upon all associated data being hydrated, thus the if... block
+    if (!assocDataIsLoading) {
+      setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
+      setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
+      setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
+      setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
+      setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
+      yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
+      mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
+      setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1))
+    }
+  }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams, assocDataIsLoading]);
   
   useEffect(() => {
     isFiltering > 0 && archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
@@ -158,13 +155,13 @@ export default function AlbinaCommunityArchivePage() {
 
   // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
   useEffect(() => {
-  //   setCommGroupsSearchParams(params.getAll("comm_groups"));
-  //   setTagsSearchParams(params.getAll("tags"));
-  //   setLocationsSearchParams(params.getAll("locations"));
-  //   setPeopleSearchParams(params.getAll("people"));
-  //   setCollectionsSearchParams(params.getAll("collections"));
-  //   setYearSearchParams(params.get("year"));
-  //   setMediumSearchParams(params.get("medium"));
+    setCommGroupsSearchParams(params.getAll("comm_groups"));
+    setTagsSearchParams(params.getAll("tags"));
+    setLocationsSearchParams(params.getAll("locations"));
+    setPeopleSearchParams(params.getAll("people"));
+    setCollectionsSearchParams(params.getAll("collections"));
+    setYearSearchParams(params.get("year"));
+    setMediumSearchParams(params.get("medium"));
     setSearch(params.get("search"));
   }, [searchParams]);
 
@@ -190,27 +187,24 @@ export default function AlbinaCommunityArchivePage() {
     setUserLoadsMore(false);
     setIsLoaded(false);
   }
+  console.log(pathname)
 
   function handleYearSelect(val) {
     pageReset();
     // if "Any" selected, 'year' param cleared from URL
     if (val.value == "") {
       // deletes 'year' URLSearchParam
-      searchParams.delete('year')
+      params.delete('year')
       // navigates to updated URL
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString()
-      })
+      const newParams = params.toString();
+      router.push(`${pathname}?${newParams}`, {scroll: false});
       setFilterYear({ value: "", label: "Any" })
     } else {
       // sets 'year' URLSearchParam
-      searchParams.set('year', val.value)
+      params.set('year', val.value)
       // navigates to updated URL
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString()
-      })
+      const newParams = params.toString();
+      router.push(`${pathname}?${newParams}`, {scroll: false});
     }
   }
 
@@ -361,7 +355,8 @@ export default function AlbinaCommunityArchivePage() {
                     className='clear-filters button-round sml'
                     onClick={() => {
                       clearAllFilters(params);
-                      router.push(`/albina-community-archive`, {scroll: false})
+                      const newParams = params.toString();
+                      router.push(`/albina-community-archive?${newParams}`, {scroll: false})
                     }}
                   >Clear Filters</button>
                 }
