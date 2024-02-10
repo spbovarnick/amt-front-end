@@ -386,7 +386,7 @@ export default function AlbinaCommunityArchivePage() {
                   pageReset={pageReset}
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="comm_groups"
-                  // filterSearchParams={commGroupsSearchParams}
+                  filterSearchParams={commGroupsSearchParams}
                 />
                 <Drawer
                   label="People"

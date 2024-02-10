@@ -1,42 +1,40 @@
 import React, { useState } from "react";
 import DrawerButton from "./DrawerButton";
 // import { useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import chevronDown from 'public/images/chevron-down.svg'
 import chevronUp from 'public/images/chevron-up.svg'
 
 const Drawer = ({ label, data, pageReset, archiveGallery, filterCateogry, filterSearchParams }) => {
-    // let navigate = useNavigate();
-    // let location = useLocation();
-    // let searchParams = new URLSearchParams(location.search)
+    const router = useRouter();
+    const pathname = usePathname();
+    const sp = useSearchParams();
+    const searchParams = new URLSearchParams(sp);
 
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleTag = (name) => {
-        // pageReset();
-        // if(filterSearchParams.filter(i => i === name).length > 0) {
-        //     // array of filter params, minus the one just de-selected by user
-        //     const filterOptions = searchParams.getAll(filterCateogry).filter(filterOption => filterOption !== name)        
-        //     // .delete() removes all filters with of key filterCategory
-        //     searchParams.delete(filterCateogry)
-        //     // for loop reconstructs search params from filterOptions array
-        //     for (const filterOption of filterOptions) {
-        //         searchParams.append(filterCateogry, filterOption)
-        //     }
-        //     // navigates to new URL based on updated params
-        //     navigate({
-        //         pathname: location.pathname,
-        //         search: searchParams.toString()
-        //     })
-        // } else {
-        //     // appends search URLSearchParams object with selected key value pair
-        //     searchParams.append(filterCateogry, name)
-        //     // navigates to new URL based on appended params
-        //     navigate({
-        //         pathname: location.pathname,
-        //         search: searchParams.toString()
-        //     })
-        //     archiveGallery.scrollIntoView({ behavior: "smooth" })
-        // }
+        pageReset();
+        if(filterSearchParams.filter(i => i === name).length > 0) {
+            // array of filter params, minus the one just de-selected by user
+            const filterOptions = searchParams.getAll(filterCateogry).filter(filterOption => filterOption !== name)        
+            // .delete() removes all filters with of key filterCategory
+            searchParams.delete(filterCateogry)
+            // for loop reconstructs search params from filterOptions array
+            for (const filterOption of filterOptions) {
+                searchParams.append(filterCateogry, filterOption)
+            }
+            // navigates to new URL based on updated params
+            const newParams = searchParams.toString()
+            router.push(`${pathname}?${newParams}`, { scroll: false })
+        } else {
+            // appends search URLSearchParams object with selected key value pair
+            searchParams.append(filterCateogry, name)
+            // navigates to new URL based on appended params
+            const newParams = searchParams.toString()
+            router.push(`${pathname}?${newParams}`, { scroll: false })
+            archiveGallery.scrollIntoView({ behavior: "smooth" })
+        }
     }
 
     return (
