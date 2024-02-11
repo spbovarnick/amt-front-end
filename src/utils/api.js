@@ -199,12 +199,6 @@ export async function getLocations(locations) {
   }
 }
 
-export async function getAPIKey() {
-  const res = await axios.get(`${ROOT_URL}/api/v1/locations/api_key`);
-  const data = await res.data;
-  return data;
-}
-
 export async function getAllLocations() {
   try {
     const res = await axios.get(`${ROOT_URL}/api/v1/locations/index`);
