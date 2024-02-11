@@ -12,7 +12,6 @@ import Drawer from '../components/Drawer';
 import ArchiveGallery from '../components/ArchiveGallery';
 import Footer from '../components/Footer';
 import SelectUI from '../components/SelectUI';
-// import ArchiveItemModal from '../components/ArchiveItemModal';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function AlbinaCommunityArchivePage() {

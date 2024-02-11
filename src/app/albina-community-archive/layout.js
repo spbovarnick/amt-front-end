@@ -1,8 +1,7 @@
-export default function AlbinaCommmunityArchiveLayout({ children, archive_item }) {
+export default function AlbinaCommmunityArchiveLayout({ children }) {
   return (
     <>
       {children}
-      {archive_item}
     </>
   );
 }
