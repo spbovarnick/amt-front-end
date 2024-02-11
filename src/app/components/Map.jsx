@@ -3,35 +3,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import GoogleMapReact from "google-map-react";
 import LocationMarker from "./LocationMarker";
-import { getAPIKey, getAllLocations } from "@/utils/api";
+import { getAllLocations } from "@/utils/api";
 import useSupercluster from "use-supercluster";
 
 const Map = ({ itemLocation }) => {
-    const [mapKey, setMapKey] = useState(null);
     const [zoom, setZoom] = useState(15);
     const [bounds, setBounds] = useState(null);
     const [allLocations, setAllLocations] = useState([]);
     const mapRef = useRef();
-
-    // this effect hook grabs the api key from the locations/api_key endpoint
-    // key is stored in config/credentials.yml.enc
-    // **When frontend is de-coupled, this API key can be moved to local .env and config vars
-    useEffect(() => {
-        // check if api key has already been cached in session storage
-        const cachedApiKey = sessionStorage.getItem('googleMapsApiKey');
-
-        // if cached, set state from session storage
-        if (cachedApiKey) {
-            setMapKey(cachedApiKey)
-        // if not cached, send request to api endpoint and set both state and storage
-        } else {
-            (async () => {
-                const fetchedKey = await getAPIKey()
-                sessionStorage.setItem('googleMapsApiKey', fetchedKey)
-                setMapKey(fetchedKey)
-            })();
-        }
-    },[])
     
     // fetch all locations to set state and render markers/clusterse
     useEffect(() => {
@@ -42,6 +21,8 @@ const Map = ({ itemLocation }) => {
     },[])
 
     const Marker = ({children}) => children;
+
+    console.log(allLocations)
 
     const points = allLocations.map(location => ({
         type: "Feature",
@@ -74,11 +55,10 @@ const Map = ({ itemLocation }) => {
 
     return (
         (allLocations &&
-        <div className="map">
-            { mapKey && 
+            <div className="map">
             // this component is from the google-map-react library
             <GoogleMapReact
-                bootstrapURLKeys={{ key: mapKey }}
+                bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
                 center={[itemLocation[0].lat, itemLocation[0].lng]}
                 zoom={15}
                 options={mapOptions}
@@ -140,7 +120,7 @@ const Map = ({ itemLocation }) => {
                         />
                     )
                 })}
-            </GoogleMapReact> }
+            </GoogleMapReact>
         </div>)
     )
 }
