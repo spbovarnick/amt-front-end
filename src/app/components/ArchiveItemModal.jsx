@@ -17,7 +17,6 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const params = new URLSearchParams(searchParams);
     const id = params.get('id');
     const modalIsOpen = params.get('modal') === 'true' ? true : false;
-    // const [isOpen, setIsOpen] = useState(false);
     const [modalItem, setModalItem] = useState(null);
     const [viewContent, setViewContent] = useState(true)
     const [viewMap, setViewMap] = useState(false);
@@ -26,6 +25,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const [timelineItems, setTimelineItems] = useState([]);
     const [timelineIsLoading, setTimelineIsLoading] = useState(true);
     const [commentValue, setCommentValue] = useState('');
+    const [DOMLoaded, setDOMLoaded] = useState(false);
     const viewPaneRef = useRef();
     const tabRef = useRef();
 
@@ -35,7 +35,9 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const currentPath = currentPathArr?.join('/');
 
     useEffect(() => {
-        Modal.setAppElement(document.getElementsByClassName('page-wrapper')[0]);
+        const appEl = document.getElementsByClassName('page-wrapper')[0];
+        setDOMLoaded(true);
+        appEl && Modal.setAppElement(document.getElementsByClassName('page-wrapper')[0]);
     }, [])
 
     useEffect(() => {
@@ -127,7 +129,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     }
 
     return (
-        // <div className='overlay'>
+        DOMLoaded &&
         <>
         <Modal
             isOpen={modalIsOpen}
