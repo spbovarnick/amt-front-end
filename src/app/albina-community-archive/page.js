@@ -261,7 +261,7 @@ export default function AlbinaCommunityArchivePage() {
     // set 'search' param with searchTerm
     params.set("search", searchTerm);
     const searchPath = params.toString();
-    router.push(`/albina-community-archive?${searchPath}`, {scroll: false});
+    router.push(`${pathname}?${searchPath}`, {scroll: false});
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
     setAdvancedDrawerHeight(0);
     setCurrentPage(0);
