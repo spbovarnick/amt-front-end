@@ -21,18 +21,18 @@ export default function AlbinaCommunityArchivePage() {
   const focusedRef = useRef(null);
   const archiveGalleryEl = useRef(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  const sP = useSearchParams();
+  const searchParams = new URLSearchParams(sP);
   const router = useRouter();  
 
-  const [search, setSearch] = useState(searchParams.get("search"));
-  const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(params.getAll("comm_groups"));
-  const [peopleSearchParams, setPeopleSearchParams] = useState(params.getAll("people"));
-  const [locationsSearchParams, setLocationsSearchParams] = useState(params.getAll("locations"));
-  const [tagsSearchParams, setTagsSearchParams] = useState(params.getAll("tags"));
-  const [collectionsSearchParams, setCollectionsSearchParams] = useState(params.getAll("collections"));
-  const [yearSearchParams, setYearSearchParams] = useState(params.get("year"));
-  const [mediumSearchParams, setMediumSearchParams] = useState(params.get("medium"));
+  const [search, setSearch] = useState(sP.get("search"));
+  const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(searchParams.getAll("comm_groups"));
+  const [peopleSearchParams, setPeopleSearchParams] = useState(searchParams.getAll("people"));
+  const [locationsSearchParams, setLocationsSearchParams] = useState(searchParams.getAll("locations"));
+  const [tagsSearchParams, setTagsSearchParams] = useState(searchParams.getAll("tags"));
+  const [collectionsSearchParams, setCollectionsSearchParams] = useState(searchParams.getAll("collections"));
+  const [yearSearchParams, setYearSearchParams] = useState(searchParams.get("year"));
+  const [mediumSearchParams, setMediumSearchParams] = useState(searchParams.get("medium"));
 
   const [archiveResults, setArchiveResults] = useState([]);
   const [carouselSlides, setCarouselSlides] = useState([]);
@@ -156,15 +156,15 @@ export default function AlbinaCommunityArchivePage() {
 
   // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
   useEffect(() => {
-    setCommGroupsSearchParams(params.getAll("comm_groups"));
-    setTagsSearchParams(params.getAll("tags"));
-    setLocationsSearchParams(params.getAll("locations"));
-    setPeopleSearchParams(params.getAll("people"));
-    setCollectionsSearchParams(params.getAll("collections"));
-    setYearSearchParams(params.get("year"));
-    setMediumSearchParams(params.get("medium"));
-    setSearch(params.get("search"));
-  }, [searchParams]);
+    setCommGroupsSearchParams(searchParams.getAll("comm_groups"));
+    setTagsSearchParams(searchParams.getAll("tags"));
+    setLocationsSearchParams(searchParams.getAll("locations"));
+    setPeopleSearchParams(searchParams.getAll("people"));
+    setCollectionsSearchParams(searchParams.getAll("collections"));
+    setYearSearchParams(searchParams.get("year"));
+    setMediumSearchParams(searchParams.get("medium"));
+    setSearch(searchParams.get("search"));
+  }, [sP]);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutsideMenu);
@@ -194,16 +194,16 @@ export default function AlbinaCommunityArchivePage() {
     // if "Any" selected, 'year' param cleared from URL
     if (val.value == "") {
       // deletes 'year' URLSearchParam
-      params.delete('year')
+      searchParams.delete('year')
       // navigates to updated URL
-      const newParams = params.toString();
+      const newParams = searchParams.toString();
       router.push(`${pathname}?${newParams}`, {scroll: false});
       setFilterYear({ value: "", label: "Any" })
     } else {
       // sets 'year' URLSearchParam
-      params.set('year', val.value)
+      searchParams.set('year', val.value)
       // navigates to updated URL
-      const newParams = params.toString();
+      const newParams = searchParams.toString();
       router.push(`${pathname}?${newParams}`, {scroll: false});
     }
   }
@@ -213,15 +213,15 @@ export default function AlbinaCommunityArchivePage() {
     // if "Any" selected, 'medium' param cleared from URL
     if (val.value == "") {
       // deletes 'medium' URLSearchParam
-      params.delete('medium')
+      searchParams.delete('medium')
       // navigates to updated URL
-      const newParams = params.toString();
+      const newParams = searchParams.toString();
       router.push(`${pathname}?${newParams}`, {scroll: false});
     } else {
       // sets 'medium' URLSearchParam
-      params.set('medium', val.value)
+      searchParams.set('medium', val.value)
       // navigates to updated URL
-      const newParams = params.toString();
+      const newParams = searchParams.toString();
       router.push(`${pathname}?${newParams}`, {scroll: false})
     }
   }
@@ -259,8 +259,8 @@ export default function AlbinaCommunityArchivePage() {
   async function handleSubmitSearch(e) {
     e.preventDefault();
     // set 'search' param with searchTerm
-    params.set("search", searchTerm);
-    const searchPath = params.toString();
+    searchParams.set("search", searchTerm);
+    const searchPath = searchParams.toString();
     router.push(`${pathname}?${searchPath}`, {scroll: false});
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
     setAdvancedDrawerHeight(0);
@@ -275,8 +275,9 @@ export default function AlbinaCommunityArchivePage() {
 
   function clearSearch() {
     setSearchTerm('')
-    params.delete("search");
-    router.push(`/albina-community-archive?${params.toString()}`, {scroll: false});
+    searchParams.delete("search");
+    const newParams = searchParams.toString();
+    router.push(`${pathname}?${newParams}`, {scroll: false});
   }
 
   function handleClickOutsideMenu(event) {
@@ -356,9 +357,9 @@ export default function AlbinaCommunityArchivePage() {
                   <button
                     className='clear-filters button-round sml'
                     onClick={() => {
-                      clearAllFilters(params);
-                      const newParams = params.toString();
-                      router.push(`/albina-community-archive?${newParams}`, {scroll: false})
+                      clearAllFilters(searchParams);
+                      const newParams = searchParams.toString();
+                      router.push(`${pathname}?${newParams}`, {scroll: false})
                     }}
                   >Clear Filters</button>
                 }
