@@ -22,8 +22,6 @@ const Map = ({ itemLocation }) => {
 
     const Marker = ({children}) => children;
 
-    console.log(allLocations)
-
     const points = allLocations.map(location => ({
         type: "Feature",
         properties: {
