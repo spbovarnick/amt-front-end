@@ -216,13 +216,13 @@ export default function AlbinaCommunityArchivePage() {
       params.delete('medium')
       // navigates to updated URL
       const newParams = params.toString();
-      router.push(`/albina-community-archive?${newParams}`, {scroll: false});
+      router.push(`${pathname}?${newParams}`, {scroll: false});
     } else {
       // sets 'medium' URLSearchParam
       params.set('medium', val.value)
       // navigates to updated URL
       const newParams = params.toString();
-      router.push(`/albina-community-archive?${newParams}`, {scroll: false})
+      router.push(`${pathname}?${newParams}`, {scroll: false})
     }
   }
 
