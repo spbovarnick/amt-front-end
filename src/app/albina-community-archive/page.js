@@ -86,12 +86,13 @@ export default function AlbinaCommunityArchivePage() {
     if (currentPage > 0) {
       (async () => {
         if (isFiltering && !isSearching) {
+          // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
           const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
           data && setIsLoaded(true)
           setShowLoadMore(data.hasMore);
           setArchiveResults(archiveResults.concat(data.adjustedResults));
         } else if (isSearching) {
-          // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
+          // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
           const args = createSearchUrl()
           const data = await getData(args.url, args.itemsPerLoad)
           data && setIsLoaded(true)
