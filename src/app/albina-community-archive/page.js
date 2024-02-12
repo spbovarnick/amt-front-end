@@ -66,6 +66,7 @@ export default function AlbinaCommunityArchivePage() {
     // when currentPage changes and filters has updated
     (async () => {
       if (isFiltering && !isSearching) {
+        // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
         data && setIsLoaded(true)
         setShowLoadMore(data.hasMore);
