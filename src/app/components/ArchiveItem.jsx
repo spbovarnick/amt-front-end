@@ -1,5 +1,5 @@
 import { getCloudfrontUrl } from "@/utils/helpers";
-import { useParams, useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import audioIcon from 'public/images/audio-icon-2.svg';
 import videoIcon from 'public/images/video-icon.svg';
 import pdfIcon from 'public/images/pdf-icon.svg';
