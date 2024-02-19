@@ -6,7 +6,7 @@ import React, { useRef } from 'react';
 import { getCloudfrontUrl } from "@/utils/helpers";
 import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { useLocation, useNavigate } from "react-router-dom";
+import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { clearAllFilters } from "@/utils/api";
 import classnames from "classnames";
@@ -82,21 +82,21 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                     { onPage ?
                                         // slide if rendering from Page.jsx
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
-                                            <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />
+                                            { slide.image_url && <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />}
                                             <div className="carousel-text">
                                                 <h3 className="carousel-item-title">{slide.title}</h3>
                                                 <div className="carousel-item-description">{slide.description}</div>
                                             </div>
                                         </div>
                                         :
-                                        // slide if rendering from ArchiveBeta.jsx
-                                        <a href={slide.link} className="carousel-item" target={"_blank"}>
-                                            <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />
+                                        // slide if rendering from root page.js
+                                        <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
+                                            { slide.image_url && <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />}
                                             <div className="carousel-text">
                                                 <h3 className="carousel-item-title">{slide.title}</h3>
                                                 <div className="carousel-item-description">{slide.description}</div>
                                             </div>
-                                        </a>
+                                        </Link>
 
                                     }
                                 </SwiperSlide>

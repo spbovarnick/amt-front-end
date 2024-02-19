@@ -14,18 +14,26 @@ const NavPage = ({themeLight, pageName}) => {
         <>
             <div className="mobile-navbar">
                 <div className="page-nav__links">
-                    <Link className="global-nav__home-link" href="/albina-community-archive">Albina Community Archive</Link>
-                    <img className='page-nav__arrow' src={chevronRight.src} />
-                    <Link href="#">{pageName}</Link>
+                    <Link className="global-nav__home-link" href="/">Albina Community Archive</Link>
+                    { pageName && 
+                        <>
+                            <img className='page-nav__arrow' src={chevronRight.src} />
+                            <Link href="#">{pageName}</Link>
+                        </>
+                    }
                 </div>
             </div>
 
             <div className={cmptClasses}>
                 <nav className='global-nav'>
                     <div className="page-nav__links">
-                        <Link className="global-nav__home-link" href="/albina-community-archive">Albina Community Archive</Link>
-                        <img className='page-nav__arrow' src={chevronRight.src} />
-                        <Link href="#">{pageName}</Link>
+                        <Link className="global-nav__home-link" href="/">Albina Community Archive</Link>
+                        { pageName && 
+                            <>
+                                <img className='page-nav__arrow' src={chevronRight.src} />
+                                <Link href="#">{pageName}</Link>
+                            </>
+                        }
                     </div>
                 </nav>
             </div>
