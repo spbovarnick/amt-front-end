@@ -8,25 +8,21 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'amt-admin-727b777103da.herokuapp.com',
         port: '',
-        pathname: '/**'
       },
       {
         protocol: 'https',
         hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com',
         port: '',
-        pathname: '/**'
       },
       // {
       //   protocol: 'https',
       //   hostname: 'd3qyzflaqh7cpk.cloudfront.net',
       //   port: '',
-      //   pathname: '/**'
       // },
       {
         protocol: 'http',
         hostname: '',
         port: '3000',
-        pathname: '/**'
       }
     ]
   },
