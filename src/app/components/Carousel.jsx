@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { getCloudfrontUrl } from "@/utils/helpers";
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -16,15 +16,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
     let location = useRouter();
     const slideRef = useRef();
     const slidelWidth = slideRef.current?.offsetWidth;
-    const [slideURLs, setSlideURLs] = useState([])
     let searchParams = new URLSearchParams(location.search)
-
-    useEffect(() => {
-        slides.forEach(slide => {
-            setSlideURLs([...slideURLs, getCloudfrontUrl(slide.image_url, slidelWidth * 2)])
-        })
-    },[slides])
-
 
     function handlePageSlideClick(slide) {
         // if user has clicked Load More, current page needs to be reset, and userLoadsMore state needs to be set to false
@@ -109,7 +101,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                             { slide.image_url && 
                                                 <Image 
                                                     loading='lazy'
-                                                    src={slideURLs[idx]} 
+                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
                                                     width={793.3}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
