@@ -5,9 +5,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'src/app/styles')],
   },
-  images: {
-    unoptimized: true,
-  }
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 module.exports = nextConfig;
