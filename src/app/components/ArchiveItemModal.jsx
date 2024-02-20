@@ -30,9 +30,6 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const tabRef = useRef();
 
     const currentUrl = usePathname();
-    const currentPathArr = currentUrl?.split('/');
-    currentPathArr?.pop();
-    const currentPath = currentPathArr?.join('/');
 
     useEffect(() => {
         const appEl = document.getElementsByClassName('page-wrapper')[0];
@@ -222,7 +219,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>LOCATION:</span></div>
                                 {modalItem.locations.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <Link href={`${currentPath}?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                                        <Link href={`${currentUrl}?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.locations.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -234,7 +231,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>TAGS:</span></div>
                                 {modalItem.tags.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <Link href={`${currentPath}?tags=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                                        <Link href={`${currentUrl}?tags=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.tags.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -246,7 +243,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>COMMUNITY GROUPS:</span></div>
                                 {modalItem.comm_groups.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <Link href={`${currentPath}?comm_groups=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                                        <Link href={`${currentUrl}?comm_groups=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.comm_groups.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -258,7 +255,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>PEOPLE:</span></div>
                                 {modalItem.people.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <Link href={`${currentPath}?people=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                                        <Link href={`${currentUrl}?people=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.people.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
@@ -270,7 +267,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 <div className="modalMetaLabel"><span>COURTESY OF:</span></div>
                                 {modalItem.collections.map((i, idx) => (
                                     <Fragment key={idx} >
-                                        <Link href={`${currentPath}?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                                        <Link href={`${currentUrl}?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>
                                         {idx < modalItem.collections.length - 1 ? ", " : ""}
                                     </Fragment>
                                 ))}
