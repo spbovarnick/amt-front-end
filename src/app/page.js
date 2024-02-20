@@ -1,4 +1,5 @@
-// import { Suspense } from "react";
+'use client';
+
 import AlbinaCommArchive from "@/app/components/AlbinaCommArchive";
 
 export default function Page(){
