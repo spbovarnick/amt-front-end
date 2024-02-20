@@ -1,3 +1,5 @@
+'server only'
+
 export function getCloudfrontUrl(
   path,
   width = null,
