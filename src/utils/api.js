@@ -53,7 +53,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
       dataObj[tagNameString] = await data;
     } catch (error) {
       console.log(error);
-      throw new Error("Network response was not ok.");
+      throw new Error("Error fetching associated data:", error);
     }
   }
   return dataObj;
@@ -66,7 +66,7 @@ export async function fetchPageData(slug) {
     return res.data;
   } catch (error) {
     console.log(error)
-    throw new Error("Network response was not OK.");
+    throw new Error("Error fetching org page data:", error);
   }
 }
 
@@ -142,6 +142,7 @@ export async function updateArchiveItems(
   try {
     return getData(url, itemsPerLoad);
   } catch (error) {
+    console.log("Error updating archive items:", error);
     window.location.href = "/";
   }
 }
@@ -234,7 +235,6 @@ export async function fetchTimelineItems(pageTag) {
     return data
   } catch(error) {
     console.error("Error fetching timeline items:", error);
-
     return [];
   }
 }
@@ -260,7 +260,7 @@ export function sendArchiveItemFeedback(comment, title, id) {
     }
   })
   .catch(error => {
-    console.error('Error:', error)
+    console.error('Error sending archive item feedback:', error)
   });
 }
 
