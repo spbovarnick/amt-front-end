@@ -56,7 +56,7 @@ const Map = ({ itemLocation }) => {
             <div className="map">
             {/* this component is from the google-map-react library */}
             <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
+                bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
                 center={[itemLocation[0].lat, itemLocation[0].lng]}
                 zoom={15}
                 options={mapOptions}
