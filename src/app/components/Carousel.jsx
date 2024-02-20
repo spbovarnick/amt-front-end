@@ -107,7 +107,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         // slide if rendering from root page.js
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
                                             { slide.image_url && 
-                                                <img 
+                                                <Image 
                                                     loading='lazy'
                                                     src={slideURLs[idx]} 
                                                     width={793.3}
