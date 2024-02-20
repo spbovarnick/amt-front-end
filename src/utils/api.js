@@ -1,4 +1,4 @@
-const rootURL = process.env.NODE_ENV === "production" ? process.env.PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
+const rootURL = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_DEV_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
 
 import axios from "axios";
 
@@ -26,7 +26,6 @@ export const mediumOptions = [
 ];
 
 export async function fetchAssociatedData(callFromPage=false, pageTitle) {
-  console.log(rootURL)
   const tags = [
     "locations",
     "tags",
