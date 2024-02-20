@@ -7,7 +7,6 @@ export function getCloudfrontUrl(
   // takes an activeRecord attachment path and returns a Cloudfront URL
   const url = new URL(path);
   if (process.env.TARGET_DB === "production") {
-    console.log('cf prod')
     const request = {
       bucket: process.env.S3_BUCKET, // S3 bucket name
       key: url.pathname.replace(/^\//, ""), // path to your file on the S3 bucket (ex. photos/face1.png)
