@@ -4,6 +4,9 @@ export function getCloudfrontUrl(
   height = null,
   fit = "contain" // one of "cover" | "contain"
 ) {
+  console.log(process.env.TARGET_DB);
+  console.log(process.env.NODE_ENV);
+  
   // takes an activeRecord attachment path and returns a Cloudfront URL
   const url = new URL(path);
   if (process.env.TARGET_DB === "production") {
