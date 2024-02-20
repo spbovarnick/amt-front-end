@@ -1,4 +1,4 @@
-const ROOT_URL = process.env.NODE_ENV === "production" ? process.env.PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
+const rootURL = process.env.NODE_ENV === "production" ? process.env.PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
 
 import axios from "axios";
 
@@ -37,7 +37,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
   ];
   const dataObj = {};
   for (const tagNameString of tags) {
-    let url = `${ROOT_URL}/api/v1/${tagNameString}/index`;
+    let url = `${rootURL}/api/v1/${tagNameString}/index`;
     if (callFromPage && tagNameString === "carousel_slides") {
       continue
     }
@@ -45,7 +45,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
       continue
     }
     if (callFromPage && tagNameString === "page_carousel_slides") {
-      url = `${ROOT_URL}/api/v1/${tagNameString}/index?page_title=${encodeURIComponent(pageTitle)}`
+      url = `${rootURL}/api/v1/${tagNameString}/index?page_title=${encodeURIComponent(pageTitle)}`
     }
     try {
       const res = await axios.get(url);
@@ -61,7 +61,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
 
 export async function fetchPageData(slug) {
   try {
-    const url = `${ROOT_URL}/api/v1/pages/${slug}`;
+    const url = `${rootURL}/api/v1/pages/${slug}`;
     const res = await axios.get(url);
     return res.data;
   } catch (error) {
@@ -71,7 +71,7 @@ export async function fetchPageData(slug) {
 }
 
 export async function getData(url, itemsPerLoad) {
-  const res = await axios.get(ROOT_URL + url);
+  const res = await axios.get(rootURL + url);
   const data = await res.data;
   const hasMore = data.length > itemsPerLoad;
   const adjustedResults = hasMore ? data.splice(0, data.length - 1) : data;
@@ -147,25 +147,25 @@ export async function updateArchiveItems(
 }
 
 export async function getItem(id) {
-  const res = await axios.get(`${ROOT_URL}/api/v1/archive_items/${id}`);
+  const res = await axios.get(`${rootURL}/api/v1/archive_items/${id}`);
   const data = await res.data;
   return data;
 }
 
 export async function getNewsItems() {
-  const res = await axios.get(`${ROOT_URL}/api/v1/news_items/index`);
+  const res = await axios.get(`${rootURL}/api/v1/news_items/index`);
   const data = await res.data;
   return { data };
 }
 
 export async function getLeadershipBoard() {
-  const res = await axios.get(`${ROOT_URL}/api/v1/leadership_roles/board`);
+  const res = await axios.get(`${rootURL}/api/v1/leadership_roles/board`);
   const data = await res.data;
   return { data };
 }
 
 export async function getLeadershipStaff() {
-  const res = await axios.get(`${ROOT_URL}/api/v1/leadership_roles/staff`);
+  const res = await axios.get(`${rootURL}/api/v1/leadership_roles/staff`);
   const data = await res.data;
   return { data };
 }
@@ -174,7 +174,7 @@ export async function getLocations(locations) {
   try {
     let locationsArray = [];
     for (const location of locations) {
-      const res = await axios.get(`${ROOT_URL}/api/v1/locations/${encodeURIComponent(location.name)}`);
+      const res = await axios.get(`${rootURL}/api/v1/locations/${encodeURIComponent(location.name)}`);
       let data = await res.data;
       locationsArray.push(...data);
     }
@@ -201,7 +201,7 @@ export async function getLocations(locations) {
 
 export async function getAllLocations() {
   try {
-    const res = await axios.get(`${ROOT_URL}/api/v1/locations/index`);
+    const res = await axios.get(`${rootURL}/api/v1/locations/index`);
     const data = await res.data;
 
     const cleanData = data.filter((point) => {
@@ -228,7 +228,7 @@ export async function getAllLocations() {
 export async function fetchTimelineItems(pageTag) {
   try {    
     const pageTagString = pageTag ? pageTag.map((tag) => `&page_tags[]=${tag.replace(/ /g, '+')}`).join('') : '';
-    const res = await axios.get(`${ROOT_URL}/api/v1/archive_items/timeline?${pageTagString}`);
+    const res = await axios.get(`${rootURL}/api/v1/archive_items/timeline?${pageTagString}`);
     const data = await res.data;
 
     return data
@@ -240,7 +240,7 @@ export async function fetchTimelineItems(pageTag) {
 }
 
 export function sendArchiveItemFeedback(comment, title, id) {
-  fetch(`${ROOT_URL}/api/v1/comments`, {
+  fetch(`${rootURL}/api/v1/comments`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
