@@ -12,7 +12,6 @@ import classnames from "classnames";
 import Image from 'next/image';
 
 const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = false }) => {
-    // let location = useLocation();
     let location = useRouter();
     const slideRef = useRef();
     const slidelWidth = slideRef.current?.offsetWidth;
@@ -82,9 +81,8 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
                                             { slide.image_url && 
                                                 <Image 
-                                                    loading='lazy'
                                                     src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
-                                                    width={793.3}
+                                                    width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
                                                     className="carousel-image" 
@@ -100,9 +98,8 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
                                             { slide.image_url && 
                                                 <Image 
-                                                    loading='lazy'
                                                     src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
-                                                    width={793.3}
+                                                    width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
                                                     className="carousel-image" 
