@@ -81,7 +81,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         // slide if rendering from Page.jsx
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
                                             { slide.image_url && 
-                                                <img 
+                                                <Image 
                                                     loading='lazy'
                                                     src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
                                                     width={793.3}

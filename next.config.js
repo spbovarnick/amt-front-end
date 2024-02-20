@@ -13,6 +13,10 @@ const nextConfig = {
         hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com'
       },
       {
+        protocol: 'https',
+        hostname: 'd3qyzflaqh7cpk.cloudfront.net'
+      },
+      {
         protocol: 'http',
         hostname: '',
         port: '3000'
