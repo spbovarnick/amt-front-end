@@ -7,21 +7,6 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'amt-admin-727b777103da.herokuapp.com'
-      },
-      {
-        protocol: 'https',
-        hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com'
-      },
-      {
-        protocol: 'http',
-        hostname: '',
-        port: '3000'
-      }
-    ]
   }
 };
 
