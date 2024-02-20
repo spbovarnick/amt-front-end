@@ -40,7 +40,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                 onClick={(e) => handleClick(e)}>
                     {item.medium === "photo" && item.content_files[0] && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={getCloudfrontUrl(item.content_urls[0], 800)} 
                                 width={800}
                                 height={1000}
@@ -55,7 +55,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "printed material" && item.content_files[0] && validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={getCloudfrontUrl(item.content_urls[0], 800)} 
                                 width={800}
                                 height={1000}
@@ -70,7 +70,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "printed material" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={printedMaterialIcon.src} 
                                 width={800}
                                 height={1000}
@@ -83,7 +83,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "article" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
-                            <Image 
+                            <img 
                                 src={pdfIcon.src} 
                                 className="cmpt-archive-item__icon" 
                                 width={800}
@@ -96,7 +96,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "article" && item.content_files[0] && validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
-                            <Image 
+                            <img 
                                 src={getCloudfrontUrl(item.content_urls[0], 800)} 
                                 width={800}
                                 height={1000}
@@ -111,7 +111,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "audio" && item.content_files[0] && !item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={audioIcon.src} 
                                 width={800}
                                 height={1000}
@@ -124,7 +124,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "audio" && item.content_files[0] && item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={getCloudfrontUrl(item.poster_url, 800)} 
                                 width={800}
                                 height={1000}
@@ -139,7 +139,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "film" && item.content_files[0] && !item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={videoIcon.src} 
                                 width={800}
                                 height={1000}
@@ -152,7 +152,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
 
                     {item.medium === "film" && item.content_files[0] && item.poster_image && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
+                            <img 
                                 src={getCloudfrontUrl(item.poster_url, 800)} 
                                 width={800}
                                 height={1000}
