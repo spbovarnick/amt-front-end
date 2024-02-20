@@ -366,7 +366,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                     >
                         <b>{item.title}</b>
                     </div>
-                    <Image 
+                    <img 
                         src={pickSource(item)} 
                         width={225}
                         height={600}
