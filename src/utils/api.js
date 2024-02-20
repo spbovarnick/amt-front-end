@@ -26,6 +26,7 @@ export const mediumOptions = [
 ];
 
 export async function fetchAssociatedData(callFromPage=false, pageTitle) {
+  console.log(rootURL)
   const tags = [
     "locations",
     "tags",
