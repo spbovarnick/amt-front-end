@@ -6,20 +6,24 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'amt-admin-727b777103da.herokuapp.com'
+        hostname: 'amt-admin-727b777103da.herokuapp.com',
+        pathname: '/*'
       },
       {
         protocol: 'https',
-        hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com'
+        hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com',
+        pathname: '/*'
       },
       {
         protocol: 'https',
-        hostname: 'd3qyzflaqh7cpk.cloudfront.net'
+        hostname: 'd3qyzflaqh7cpk.cloudfront.net',
+        pathname: '/*'
       },
       {
         protocol: 'http',
         hostname: '',
-        port: '3000'
+        port: '3000',
+        pathname: '/*'
       }
     ]
   },
