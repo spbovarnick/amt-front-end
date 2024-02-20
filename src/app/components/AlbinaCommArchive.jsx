@@ -327,7 +327,7 @@ export default function AlbinaCommArchive() {
                 }
               </div>
               <div>
-                <button type="submit" className="archive__search-submit button-round --secondary"><img className='search-button-icon' src={searchIcon} /><span className='search-button-text'>Search</span></button>
+                <button type="submit" className="archive__search-submit button-round --secondary"><img className='search-button-icon' src={searchIcon.src} /><span className='search-button-text'>Search</span></button>
               </div>
             </form>
           </div>

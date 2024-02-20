@@ -42,7 +42,7 @@ const Drawer = ({ label, data, pageReset, archiveGallery, filterCateogry, filter
             <div className="archive__label">
                 {label}
                 <button className="cmpt-drawer-toggle" onClick={()=>{setIsOpen(!isOpen)}}>
-                    <img src={isOpen ? chevronUp : chevronDown} />
+                    <img src={isOpen ? chevronUp.src : chevronDown.src} />
                 </button>
             </div>
             <div className={`button-scroll ${isOpen ? "open-drawer" : ""}`}>
