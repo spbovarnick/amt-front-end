@@ -283,7 +283,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
 
                         <div className="modalMetaItem">
                             <div className="modalMetaLabel"><span>RIGHTS:</span></div>
-                                See <Link className='rights-links' href="/albina-community-archive/terms-of-use">Copyright, Terms of Use & Policies</Link> for more information. For all rights holder inquiries, please contact us <a className='rights-links' href='mailto:albinacommunityarchive@gmail.com' target='_blank'>here.</a>
+                                See <Link className='rights-links' href="/terms-of-use">Copyright, Terms of Use & Policies</Link> for more information. For all rights holder inquiries, please contact us <a className='rights-links' href='mailto:albinacommunityarchive@gmail.com' target='_blank'>here.</a>
                         </div>
 
                         <div className="modalMetaItem">
