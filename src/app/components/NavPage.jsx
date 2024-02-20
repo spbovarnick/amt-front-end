@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import classNames from 'classnames';
 import chevronRight from 'public/images/chevron-right.svg'
+import Image from 'next/image';
 
 const NavPage = ({themeLight, pageName}) => {
 
@@ -17,7 +18,7 @@ const NavPage = ({themeLight, pageName}) => {
                     <Link className="global-nav__home-link" href="/">Albina Community Archive</Link>
                     { pageName && 
                         <>
-                            <img className='page-nav__arrow' src={chevronRight.src} />
+                        <Image className='page-nav__arrow' width={24} height={24} alt="Breadcrumb arrow" src={chevronRight.src} />
                             <Link href="#">{pageName}</Link>
                         </>
                     }
@@ -30,7 +31,7 @@ const NavPage = ({themeLight, pageName}) => {
                         <Link className="global-nav__home-link" href="/">Albina Community Archive</Link>
                         { pageName && 
                             <>
-                                <img className='page-nav__arrow' src={chevronRight.src} />
+                            <Image className='page-nav__arrow' width={24} height={24} alt="Breadcrumb arrow" src={chevronRight.src} />
                                 <Link href="#">{pageName}</Link>
                             </>
                         }
