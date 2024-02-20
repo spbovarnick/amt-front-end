@@ -13,6 +13,7 @@ import ArchiveGallery from '@/app/components/ArchiveGallery';
 import Footer from '@/app/components/Footer';
 import SelectUI from '@/app/components/SelectUI';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function AlbinaCommArchive() {
   const itemsPerLoad = 20;
@@ -327,7 +328,7 @@ export default function AlbinaCommArchive() {
                 }
               </div>
               <div>
-                <button type="submit" className="archive__search-submit button-round --secondary"><img className='search-button-icon' src={searchIcon.src} /><span className='search-button-text'>Search</span></button>
+                <button type="submit" className="archive__search-submit button-round --secondary"><Image className='search-button-icon' src={searchIcon.src} width={24} height={24} alt={"Search icon"} /><span className='search-button-text'>Search</span></button>
               </div>
             </form>
           </div>

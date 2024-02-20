@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import DrawerButton from "./DrawerButton";
-// import { useLocation, useNavigate } from "react-router-dom";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import chevronDown from 'public/images/chevron-down.svg'
 import chevronUp from 'public/images/chevron-up.svg'
+import Image from "next/image";
 
 const Drawer = ({ label, data, pageReset, archiveGallery, filterCateogry, filterSearchParams }) => {
     const router = useRouter();
@@ -42,7 +42,12 @@ const Drawer = ({ label, data, pageReset, archiveGallery, filterCateogry, filter
             <div className="archive__label">
                 {label}
                 <button className="cmpt-drawer-toggle" onClick={()=>{setIsOpen(!isOpen)}}>
-                    <img src={isOpen ? chevronUp.src : chevronDown.src} />
+                    <Image 
+                        src={isOpen ? chevronUp.src : chevronDown.src}
+                        width={24}
+                        height={24}
+                        alt="Chevron icon"
+                    />
                 </button>
             </div>
             <div className={`button-scroll ${isOpen ? "open-drawer" : ""}`}>

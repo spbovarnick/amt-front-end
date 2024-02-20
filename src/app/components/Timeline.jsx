@@ -6,6 +6,7 @@ import videoIcon from 'public/images/timeline-video-icon.jpg';
 import pdfIcon from 'public/images/timeline-pdf-icon.jpg';
 import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
+import Image from "next/image";
 
 const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane }) => {
     const activeItemRef = useRef(null)
@@ -365,7 +366,14 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                     >
                         <b>{item.title}</b>
                     </div>
-                    <img src={pickSource(item)} className="timelineMedia" style={!item.media.url ? {objectFit: "contain"} : {objectFit: "cover"}}/>
+                    <Image 
+                        src={pickSource(item)} 
+                        width={225}
+                        height={600}
+                        loading="lazy"
+                        className="timelineMedia" 
+                        style={!item.media.url ? {objectFit: "contain"} : {objectFit: "cover"}}
+                    />
                     <span className="triangle-icon"></span>
                 </div>
             </InView>
@@ -414,12 +422,16 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                             className="zoom-button button-round" 
                             onClick={handleZoomIn}
                             disabled={zoom === 0 ? true : false}
-                            ><img src={zoomInIcon.src} /></button>
+                        >
+                            <Image src={zoomInIcon.src} width={24} height={24} alt="Zoom in icon" />
+                        </button>
                         <button 
                             className="zoom-button button-round" 
                             onClick={handleZoomOut}
                             disabled={zoom === 3 ? true : false}
-                        ><img src={zoomOutIcon.src} /></button>
+                        >
+                            <Image src={zoomOutIcon.src} width={24} height={24} alt="Zoom out icon"/>
+                        </button>
                     </div>
                     <div className="decades-menu">
                         {createDecadeButtons()}

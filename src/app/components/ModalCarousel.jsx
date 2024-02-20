@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import chevronRight from 'public/images/chevron-right.svg'
 import chevronLeft from 'public/images/chevron-left.svg'
 import FullscreenImg from './FullscreenImg';
+import Image from 'next/image';
 
 const ModalCarousel = ({item}) => {
     const [fileIndex, setFileIndex] = useState(0);
@@ -98,7 +99,7 @@ const ModalCarousel = ({item}) => {
     let carousel
     if (carouselItems.length) {
         carousel = <div className='modal-carousel' >
-            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronLeft.src} onClick={prevImg} />}
+            {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
             <div className='carousel-content' ref={carouselRef}>
                 {carouselContentTypes[fileIndex] === "image" &&
                     <FullscreenImg 
@@ -137,7 +138,7 @@ const ModalCarousel = ({item}) => {
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
             </div>
-            { carouselItems.length > 1 && <img className='modal-carousel-btns' src={chevronRight.src} onClick={nextImg} />}
+            {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronRight.src} width={24} height={24} alt="Next image icon" onClick={nextImg} />}
         </div>
     } else {
         carousel = <span>Archive item loading...</span>

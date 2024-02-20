@@ -6,6 +6,7 @@ import zoomOutIcon from 'public/images/zoom-out.svg';
 import zoomResetIcon from 'public/images/zoom-reset.svg';
 import chevronRight from 'public/images/chevron-right_fs.svg'
 import chevronLeft from 'public/images/chevron-left_fs.svg'
+import Image from "next/image";
 
 const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex }) => {
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -73,7 +74,7 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                             className='zoom-button_fs button-round'
                             onClick={() => zoomIn()}
                         >
-                            <img src={zoomInIcon.src} />
+                            <Image src={zoomInIcon.src} width={24} height={24} alt="Zoom in icon" />
                             {err}
                         </button>
                         <button
@@ -81,14 +82,14 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                             className='zoom-button_fs button-round'
                             onClick={() => zoomOut()}
                         >
-                            <img src={zoomOutIcon.src} />
+                            <Image src={zoomOutIcon.src} width={24} height={24} alt="Zoom out icon" />
                         </button>
                         <button
                             type="button"
                             className="zoom-button_fs button-round"
                             onClick={() => resetTransform()}
                         >
-                            <img src={zoomResetIcon.src} />
+                            <Image src={zoomResetIcon.src} width={24} height={24} alt="Zoom reset icon" />
                         </button>
                         { carouselItems.length > 1 && 
                             <>
@@ -97,14 +98,14 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
                                 className="zoom-button_fs button-round"
                                 onClick={prevImg}
                             >
-                                <img src={chevronLeft.src} />
+                                <Image src={chevronLeft.src} width={24} height={24} alt="Chevron left icon" />
                             </button>
                             <button
                                 type="button"
                                 className="zoom-button_fs button-round"
                                 onClick={nextImg}
                             >
-                                <img src={chevronRight.src} />
+                                <Image src={chevronRight.src} width={24} height={24} alt="Chevron right icon"/>
                             </button>
                             </>
                         }

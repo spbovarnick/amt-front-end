@@ -1,7 +1,6 @@
 'use client'
 
-
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 import { getCloudfrontUrl } from "@/utils/helpers";
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -10,14 +9,21 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { clearAllFilters } from "@/utils/api";
 import classnames from "classnames";
+import Image from 'next/image';
 
 const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = false }) => {
     // let location = useLocation();
     let location = useRouter();
     const slideRef = useRef();
     const slidelWidth = slideRef.current?.offsetWidth;
-    // let navigate = useNavigate();
+    const [slideURLs, setSlideURLs] = useState([])
     let searchParams = new URLSearchParams(location.search)
+
+    useEffect(() => {
+        slides.forEach(slide => {
+            setSlideURLs([...slideURLs, getCloudfrontUrl(slide.image_url, slidelWidth * 2)])
+        })
+    },[slides])
 
 
     function handlePageSlideClick(slide) {
@@ -75,14 +81,23 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                             disableOnInteraction: false,
                         }}
                     >
-                        {slides.map((slide) => {
+                        {slides.map((slide, idx) => {
 
                             return (
                                 <SwiperSlide key={slide.id}>
                                     { onPage ?
                                         // slide if rendering from Page.jsx
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
-                                            { slide.image_url && <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />}
+                                            { slide.image_url && 
+                                                <img 
+                                                    loading='lazy'
+                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
+                                                    width={793.3}
+                                                    height={250}
+                                                    alt={`Image for slide to ${slide.title}`}
+                                                    className="carousel-image" 
+                                                />
+                                            }
                                             <div className="carousel-text">
                                                 <h3 className="carousel-item-title">{slide.title}</h3>
                                                 <div className="carousel-item-description">{slide.description}</div>
@@ -91,7 +106,16 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         :
                                         // slide if rendering from root page.js
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
-                                            { slide.image_url && <img src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} className="carousel-image" />}
+                                            { slide.image_url && 
+                                                <img 
+                                                    loading='lazy'
+                                                    src={slideURLs[idx]} 
+                                                    width={793.3}
+                                                    height={250}
+                                                    alt={`Image for slide to ${slide.title}`}
+                                                    className="carousel-image" 
+                                                />
+                                            }
                                             <div className="carousel-text">
                                                 <h3 className="carousel-item-title">{slide.title}</h3>
                                                 <div className="carousel-item-description">{slide.description}</div>
