@@ -1,4 +1,4 @@
-const ROOT_URL = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
+const ROOT_URL = process.env.NODE_ENV === "production" ? process.env.PROD_API_URL : process.env.DEV_API_URL
 
 import axios from "axios";
 
