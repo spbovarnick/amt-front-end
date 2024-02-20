@@ -16,12 +16,12 @@ const nextConfig = {
         port: '',
         pathname: '/**'
       },
-      {
-        protocol: 'https',
-        hostname: 'd3qyzflaqh7cpk.cloudfront.net',
-        port: '',
-        pathname: '/**'
-      },
+      // {
+      //   protocol: 'https',
+      //   hostname: 'd3qyzflaqh7cpk.cloudfront.net',
+      //   port: '',
+      //   pathname: '/**'
+      // },
       {
         protocol: 'http',
         hostname: '',
