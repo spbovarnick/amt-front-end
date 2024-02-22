@@ -1,39 +1,35 @@
+# ALBINA COMMUNITY ARCHIVE - Public-Facing Front End
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+This interactive and complete archive is accessible to the public and utilizes the API at [https://github.com/spbovarnick/amt-admin-1.0](https://github.com/spbovarnick/amt-admin-1.0).
 
-First, run the development server:
+### Local Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Locally this app runs on port 3333; [amt-admin-1.0](https://github.com/spbovarnick/amt-admin-1.0), which runs on port 3000, also needs to be running to hydrate amt-front-end with data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Your `.env` file should include the following variables:
+- `NEXT_PUBLIC_DEV_API_URL`
+- `NEXT_PUBLIC_DEV_API_URL`
+- `NEXT_PUBLIC_DEV_API_URL`
+- `NEXT_PUBLIC_S3_BUCKET`
+- `NEXT_PUBLIC_PROD_CLOUDFRONT_DISTRO`
+- `NEXT_PUBLIC_DOMAIN`
+- `NEXT_PUBLIC_TARGET_DB`
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+This project's `NEXT_PUBLIC_TARGET_DB` need to match the value of [amt-admin-1.0's](https://github.com/spbovarnick/amt-admin-1.0) to operate correctly in development.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Start the server with `npm run dev`
 
-## Learn More
+<strong><ins>NOTE:</ins></strong>
 
-To learn more about Next.js, take a look at the following resources:
+In the event that the CloudFront or AWS URLs change, those values need to be updated in both `.env` and `remotePatterns` `next.config.js`. Because this project utilizes Next's `Image` component, external images need to be validated in this config value.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Pushes to `main` automatically builds new deployments in Vercel. Pushes to other branches will build preview deployments. 
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Full functionality of non-`main` branches can be tested by adding the preview URL to the allowed origins in [amt-admin-1.0's](https://github.com/spbovarnick/amt-admin-1.0) `config/initializers/cors.rb` file.
 
 ### Third Party Tools
 
