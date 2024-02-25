@@ -153,24 +153,6 @@ export async function getItem(id) {
   return data;
 }
 
-export async function getNewsItems() {
-  const res = await axios.get(`${rootURL}/api/v1/news_items/index`);
-  const data = await res.data;
-  return { data };
-}
-
-export async function getLeadershipBoard() {
-  const res = await axios.get(`${rootURL}/api/v1/leadership_roles/board`);
-  const data = await res.data;
-  return { data };
-}
-
-export async function getLeadershipStaff() {
-  const res = await axios.get(`${rootURL}/api/v1/leadership_roles/staff`);
-  const data = await res.data;
-  return { data };
-}
-
 export async function getLocations(locations) {
   try {
     let locationsArray = [];

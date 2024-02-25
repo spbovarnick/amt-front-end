@@ -26,7 +26,7 @@ const newsreader = Newsreader({
 })
 
 export const metadata = {
-  title: "Albina Cultural Archive",
+  title: "Albina Community Archive",
   description: "A cultural archive of Portland's historic Albina neighborhood",
 };
 
