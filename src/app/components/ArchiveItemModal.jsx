@@ -12,11 +12,11 @@ import Timeline from './Timeline.jsx';
 
 const ArchiveItemModal = ({ pageTag, focusedRef }) => {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const sp = useSearchParams();
     const pathname = usePathname();
-    const params = new URLSearchParams(searchParams);
-    const id = params.get('id');
-    const modalIsOpen = params.get('modal') === 'true' ? true : false;
+    const searchParams = new URLSearchParams(sp);
+    const id = searchParams.get('id');
+    const modalIsOpen = searchParams.get('modal') === 'true' ? true : false;
     const [modalItem, setModalItem] = useState(null);
     const [viewContent, setViewContent] = useState(true)
     const [viewMap, setViewMap] = useState(false);
@@ -73,10 +73,9 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
 
     const handleClose = (e) => {
         e.preventDefault();
-        // router.back();
-        params.delete('modal')
-        params.delete('id')
-        const newParams = params.toString();
+        searchParams.delete('modal')
+        searchParams.delete('id')
+        const newParams = searchParams.toString();
         router.push(`${pathname}?${newParams}`, {scroll: false})
         setModalItem(null);
         setLocations(null);
@@ -159,6 +158,8 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                                 setViewMap={setViewMap}
                                 setViewTimeline={setViewTimeline}
                                 viewPane={viewPaneRef}
+                                pathname={pathname}
+                                searchParams={searchParams}
                             />
                         }
                         <div className="tabs" ref={tabRef}>

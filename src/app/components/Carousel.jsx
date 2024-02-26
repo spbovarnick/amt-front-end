@@ -11,34 +11,28 @@ import { clearAllFilters } from "@/utils/api";
 import classnames from "classnames";
 import Image from 'next/image';
 
-const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = false }) => {
-    let location = useRouter();
+const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = false, pathname, searchParams }) => {
+    let router = useRouter();
     const slideRef = useRef();
     const slidelWidth = slideRef.current?.offsetWidth;
-    let searchParams = new URLSearchParams(location.search)
 
     function handlePageSlideClick(slide) {
         // if user has clicked Load More, current page needs to be reset, and userLoadsMore state needs to be set to false
         pageReset();
         // clear search params
         clearAllFilters(searchParams)
-        navigate({
-            pathname: location.pathname,
-            search: searchParams.toString()
-        })
-        // appends search URLSearchParams object with selected key value pair
-        slide.collections?.forEach(collection => searchParams.append('collections', collection));
-        slide.year && searchParams.append('year', slide.year);
-        slide.medium && searchParams.append('medium', slide.medium);
-        slide.people?.forEach(p => searchParams.append('people', p))
-        slide.comm_groups?.forEach(cg => searchParams.append('comm_groups', cg));
-        slide.locations?.forEach(l => searchParams.append('locations', l));
-        slide.tags?.forEach(t => searchParams.append('tags', t))
-        // // navigates to new URL based on appended params
-        navigate({
-            pathname: location.pathname,
-            search: searchParams.toString()
-        })
+
+        // sets search URLSearchParams object with selected key value pair
+        slide.collections?.forEach(collection => searchParams.set('collections', collection));
+        slide.year && searchParams.set('year', slide.year);
+        slide.medium && searchParams.set('medium', slide.medium);
+        slide.people?.forEach(p => searchParams.set('people', p))
+        slide.comm_groups?.forEach(cg => searchParams.set('comm_groups', cg));
+        slide.locations?.forEach(l => searchParams.set('locations', l));
+        slide.tags?.forEach(t => searchParams.set('tags', t))
+    
+        // navigates to new URL with updated search params
+        router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
     }
 
     return (

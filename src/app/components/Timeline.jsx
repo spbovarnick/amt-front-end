@@ -7,8 +7,9 @@ import pdfIcon from 'public/images/timeline-pdf-icon.jpg';
 import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane }) => {
+const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane, pathname, searchParams }) => {
     const activeItemRef = useRef(null)
     const [activeItemIndex, setActiveItemIndex] = useState(null);
     const [screenSize, setScreenSize] = useState(getCurrentWindowWidth());
@@ -28,6 +29,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
     const innerContainer = useRef();
     const outerContainer = useRef();
     const isMounted = useRef(false);
+    const router = useRouter();
 
     // controls placeholder vs. List visibility
     useEffect(() => {
@@ -203,9 +205,8 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
         if (itemId !== id ) {
             setModalItem(null);
             setLocations(null);
-            navigate({
-                pathname: `${location.pathname.substring(0, location.pathname.lastIndexOf('/')) }/${itemId}`
-            });
+            searchParams.set('id', itemId);
+            router.push(`${pathname}?${searchParams.toString()}`, { scroll: false })
             setViewContent(true);
             setViewTimeline(false);
             setViewMap(false);
@@ -373,6 +374,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                         loading="lazy"
                         className="timelineMedia" 
                         style={!item.media.url ? {objectFit: "contain"} : {objectFit: "cover"}}
+                        alt={item.title}
                     />
                     <span className="triangle-icon"></span>
                 </div>

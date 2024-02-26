@@ -60,13 +60,16 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
 }
 
 export async function fetchPageData(slug) {
+  if (slug === undefined) {
+    return;
+  };
   try {
     const url = `${rootURL}/api/v1/pages/${slug}`;
     const res = await axios.get(url);
     return res.data;
   } catch (error) {
     console.log(error)
-    throw new Error("Error fetching org page data:", error);
+    throw new Error(`Error fetching org page data with slug: ${slug}`, error);
   }
 }
 
