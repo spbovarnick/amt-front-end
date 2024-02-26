@@ -98,7 +98,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                                 height={1000}
                                 alt={item.title}
                                 placeholder="blur"
-                                blurDataURL={encodeImageToBlurhash(item.content_urls[0])}
+                                blurDataURL={item.content_urls[0]}
                                 loading="lazy" 
                                 draggable="false" 
                             />
