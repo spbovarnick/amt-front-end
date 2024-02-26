@@ -196,17 +196,11 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
             return {height: viewPane.current?.offsetHeight, width: viewPane.current?.offsetWidth}
         }
     }
-    function get_url_extension(url) {
-
-        console.log(url)
-        return url.split(/[#?]/)[0].split('.').pop().trim();
-    }
+    
     // sourcer picker returns some image; users can click media tab to view all contents
     function pickSource(item) {
-        console.log(item)
-        const validFormats = ["jpg", "jpeg", "png"];
-        if (item.content_file_url && validFormats.includes(get_url_extension(item.content_file_url).toLowerCase())) {
-            return getCloudfrontUrl(item.content_file_url, 500)
+        if (item.content_file_url && item.medium !== "audio" && item.medium !== "film") {
+            return getCloudfrontUrl(item.content_file_url, 1000)
         } else {
             if (item.medium === "audio") {
                 return audioIcon;
@@ -386,11 +380,11 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                         <b>{item.title}</b>
                     </div>
                     <Image 
-                        src={ item.poster_image_url && getCloudfrontUrl(item.poster_image_url ,500) || item.medium_photo_url && getCloudfrontUrl(item.medium_photo_url ,500) || pickSource(item)} 
-                        width={225}
-                        height={600}
+                        src={ item.poster_image_url && getCloudfrontUrl(item.poster_image_url, 1000) || item.medium_photo_url && getCloudfrontUrl(item.medium_photo_url, 1000) || pickSource(item)} 
+                        width={500}
+                        height={1200}
                         className="timelineMedia" 
-                        style={!item.poster_image_url && !item.medium_photo_url && item.content_file_url ? {objectFit: "contain"} : {objectFit: "cover"}}
+                        style={ !item.poster_image_url && !item.medium_photo_url && !item.content_file_url ? {objectFit:contain} : {objectFit: "cover"}}
                         alt={item.title}
                     />
                     <span className="triangle-icon"></span>
