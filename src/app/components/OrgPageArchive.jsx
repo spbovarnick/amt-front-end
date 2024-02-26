@@ -26,7 +26,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const searchParams = new URLSearchParams(sP);
   const router = useRouter();
   const { slug } = useParams();
-  const callFromPage = true
 
   const [search, setSearch] = useState(sP.get("search"));
   const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(sP.getAll("comm_groups"));
@@ -52,7 +51,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [filterCommGroups, setFilterCommGroups] = useState([]);
   const [filterPeople, setFilterPeople] = useState([]);
   const [filterCollections, setFilterCollections] = useState([])
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({  });
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [showLoadMore, setShowLoadMore] = useState(false);
@@ -63,17 +62,13 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [userLoadsMore, setUserLoadsMore] = useState(false);
-
-  // fetch page data on mount
-  useEffect(() => {
-    setFilters({ ...filters, pageTag: pageData.tag, pageCollection: pageData.collection });
-  }, [pageData]);
+  const [paramsChecked, setParamsChecked] = useState(false);
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from pages_index endpoint
     // when currentPage changes AND filters has updated
     (async () => {
-      if (isFiltering && !isSearching) {
+      if (isFiltering > 0 && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
         data && setIsLoaded(true)
@@ -112,9 +107,11 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   }, [currentPage])
 
   useEffect(() => {
+    // piece of state prevents top-most hook from firing and returning unwanted results too early
+    if (!paramsChecked) return;
     // when any state for the filter fields are updated in Drawer.jsx
     // filters state object updates
-    setFilters({ ...filters, locations: filterLocations, people: filterPeople, collections: filterCollections, tags: filterTags, comm_groups: filterCommGroups, year: filterYear.value, medium: filterMedium.value })
+    setFilters({  ...filters, pageTag: pageData.tag, pageCollection: pageData.collection , locations: filterLocations, people: filterPeople, collections: filterCollections, tags: filterTags, comm_groups: filterCommGroups, year: filterYear.value, medium: filterMedium.value })
   }, [filterLocations, filterPeople, filterCollections, filterTags, filterCommGroups, filterYear, filterMedium])
 
   useEffect(() => {
@@ -131,16 +128,16 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   // hook sets filters based on URL params
   useEffect(() => {
     // .filter depends upon all associated data being hydrated, thus the if... block
-    // if (!assocDataIsLoading) {
-      setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
-      setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
-      setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
-      setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
-      setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
-      yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
-      mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
-      setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1))
-    // }
+    setParamsChecked(false)
+    setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
+    setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
+    setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
+    setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
+    setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
+    yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
+    mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
+    setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1));
+    setParamsChecked(true)
   }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams]);
 
   useEffect(() => {
@@ -401,7 +398,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
             </div>
             <div ref={mobileDrawerRef} className={`advanced-search__drawer ${advancedSearchOpen ? "advanced-search-open" : ""}`} style={{ height: `${advancedDrawerHeight}px` }}>
               <div ref={advancedDrawerRef}>
-                {/* <Drawer
+                <Drawer
                   label="Community Groups"
                   data={commGroups}
                   pageReset={pageReset}
@@ -440,7 +437,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   archiveGallery={archiveGalleryEl.current}
                   filterCateogry="collections"
                   filterSearchParams={collectionsSearchParams}
-                /> */}
+                />
               </div>
             </div>
           </div>
