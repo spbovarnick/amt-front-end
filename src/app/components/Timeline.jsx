@@ -8,6 +8,7 @@ import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { getCloudfrontUrl } from "@/utils/helpers";
 
 const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane, pathname, searchParams }) => {
     const activeItemRef = useRef(null)
@@ -196,7 +197,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                 return pdfIcon;
             }
         } else {
-            return item.media.url;
+            return getCloudfrontUrl(item.media.url, 500)
         }
     }
 
