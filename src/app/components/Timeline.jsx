@@ -185,19 +185,25 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
             return {height: viewPane.current?.offsetHeight, width: viewPane.current?.offsetWidth}
         }
     }
+    function get_url_extension(url) {
 
+        console.log(url)
+        return url.split(/[#?]/)[0].split('.').pop().trim();
+    }
     // sourcer picker returns some image; users can click media tab to view all contents
     function pickSource(item) {
-        if (!item.media.url) {
-            if (item.media.medium === "audio") {
+        console.log(item)
+        const validFormats = ["jpg", "jpeg", "png"];
+        if (item.content_file_url && validFormats.includes(get_url_extension(item.content_file_url).toLowerCase())) {
+            return getCloudfrontUrl(item.content_file_url, 500)
+        } else {
+            if (item.medium === "audio") {
                 return audioIcon;
-            } else if (item.media.medium === "film") {
+            } else if (item.medium === "film") {
                 return videoIcon;
-            } else if (item.media.medium === "article" || item.media.medium === "printed material") {
+            } else if (item.medium === "article" || item.medium === "printed material") {
                 return pdfIcon;
             }
-        } else {
-            return getCloudfrontUrl(item.media.url, 500)
         }
     }
 
@@ -369,11 +375,11 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                         <b>{item.title}</b>
                     </div>
                     <Image 
-                        src={pickSource(item)} 
+                        src={ item.poster_image_url && getCloudfrontUrl(item.poster_image_url ,500) || item.medium_photo_url && getCloudfrontUrl(item.medium_photo_url ,500) || pickSource(item)} 
                         width={225}
                         height={600}
                         className="timelineMedia" 
-                        style={!item.media.url ? {objectFit: "contain"} : {objectFit: "cover"}}
+                        style={!item.poster_image_url && !item.medium_photo_url && item.content_file_url ? {objectFit: "contain"} : {objectFit: "cover"}}
                         alt={item.title}
                     />
                     <span className="triangle-icon"></span>
