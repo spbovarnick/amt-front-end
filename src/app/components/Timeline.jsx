@@ -196,6 +196,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                 return pdfIcon;
             }
         } else {
+            console.log(item.media.url)
             return item.media.url;
         }
     }
