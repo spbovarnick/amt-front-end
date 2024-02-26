@@ -196,7 +196,6 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                 return pdfIcon;
             }
         } else {
-            console.log(item.media.url)
             return item.media.url;
         }
     }
@@ -372,7 +371,6 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
                         src={pickSource(item)} 
                         width={225}
                         height={600}
-                        loading="lazy"
                         className="timelineMedia" 
                         style={!item.media.url ? {objectFit: "contain"} : {objectFit: "cover"}}
                         alt={item.title}
