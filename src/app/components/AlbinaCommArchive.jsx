@@ -6,7 +6,7 @@ import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
 import NavPage from "@/app/components/NavPage"
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { fetchAssociatedData, updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions } from '@/utils/api';
+import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions } from '@/utils/api';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from '@/app/components/Drawer';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
@@ -15,7 +15,7 @@ import SelectUI from '@/app/components/SelectUI';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-export default function AlbinaCommArchive() {
+export default function AlbinaCommArchive({ associatedData }) {
   const itemsPerLoad = 20;
   const advancedDrawerRef = useRef(null);
   const mobileDrawerRef = useRef(null);
@@ -25,6 +25,13 @@ export default function AlbinaCommArchive() {
   const sP = useSearchParams();
   const searchParams = new URLSearchParams(sP);
   const router = useRouter();
+
+  const locations = associatedData.locations;
+  const tags = associatedData.tags;
+  const commGroups = associatedData.comm_groups;
+  const people = associatedData.people;
+  const carouselSlides = associatedData.carousel_slides;
+  const collections = associatedData.collections;
 
   const [search, setSearch] = useState(sP.get("search"));
   const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(searchParams.getAll("comm_groups"));
@@ -36,12 +43,6 @@ export default function AlbinaCommArchive() {
   const [mediumSearchParams, setMediumSearchParams] = useState(searchParams.get("medium"));
 
   const [archiveResults, setArchiveResults] = useState([]);
-  const [carouselSlides, setCarouselSlides] = useState([]);
-  const [locations, setLocations] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [commGroups, setCommGroups] = useState([]);
-  const [people, setPeople] = useState([]);
-  const [collections, setCollections] = useState([]);
   const [filterYear, setFilterYear] = useState({ value: "", label: "Any" });
   const [filterMedium, setFilterMedium] = useState({ value: "", label: "Any" });
   const [filterLocations, setFilterLocations] = useState([]);
@@ -57,10 +58,11 @@ export default function AlbinaCommArchive() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [isFiltering, setIsFiltering] = useState(0);
-  const [assocDataIsLoading, setAssocDataIsLoading] = useState(true);
+  // const [assocDataIsLoading, setAssocDataIsLoading] = useState(true);
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [userLoadsMore, setUserLoadsMore] = useState(false);
+  const [paramsChecked, setParamsChecked] = useState(false);
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -105,25 +107,12 @@ export default function AlbinaCommArchive() {
   }, [currentPage])
 
   useEffect(() => {
+    // piece of state prevents top-most hook from firing and returning unwanted results too early
+    if (!paramsChecked) return;
     // when any state for the filter fields are updated in Drawer.jsx
     // filters state object updates
     setFilters({ ...filters, locations: filterLocations, tags: filterTags, comm_groups: filterCommGroups, people: filterPeople, collections: filterCollections, year: filterYear.value, medium: filterMedium.value });
   }, [filterLocations, filterTags, filterCommGroups, filterPeople, filterCollections, filterYear, filterMedium])
-
-  // get associated data on mount
-  useEffect(() => {
-    (async () => {
-      setAssocDataIsLoading(true)
-      const data = await fetchAssociatedData()
-      setLocations(data.locations)
-      setTags(data.tags)
-      setCommGroups(data.comm_groups)
-      setPeople(data.people)
-      setCarouselSlides(data.carousel_slides)
-      setCollections(data.collections)
-      setAssocDataIsLoading(false)
-    })();
-  }, []);
 
   useEffect(() => {
     // if 'search' URL param present, set isSearching to true and searchTerm to 'search' URL param string
@@ -138,18 +127,18 @@ export default function AlbinaCommArchive() {
 
   // hook sets filters based on URL params
   useEffect(() => {
+    setParamsChecked(false);
     // .filter depends upon all associated data being hydrated, thus the if... block
-    if (!assocDataIsLoading) {
-      setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
-      setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
-      setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
-      setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
-      setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
-      yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
-      mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
-      setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1))
-    }
-  }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams, assocDataIsLoading]);
+    setFilterTags(tags.filter(i => tagsSearchParams.includes(i.name)))
+    setFilterCommGroups(commGroups.filter(i => commGroupsSearchParams.includes(i.name)))
+    setFilterCollections(collections.filter(i => collectionsSearchParams.includes(i.name)))
+    setFilterLocations(locations.filter(i => locationsSearchParams.includes(i.name)))
+    setFilterPeople(people.filter(i => peopleSearchParams.includes(i.name)))
+    yearSearchParams ? setFilterYear(yearOptions[yearOptions.findIndex(option => option.value == yearSearchParams)]) : setFilterYear({ value: "", label: "Any" })
+    mediumSearchParams ? setFilterMedium(mediumOptions[mediumOptions.findIndex(option => option.value == mediumSearchParams)]) : setFilterMedium({ value: "", label: "Any" })
+    setIsFiltering(commGroupsSearchParams.length + tagsSearchParams.length + locationsSearchParams.length + peopleSearchParams.length + collectionsSearchParams.length + (yearSearchParams && 1) + (mediumSearchParams && 1));
+    setParamsChecked(true);
+  }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams]);
 
   useEffect(() => {
     isFiltering > 0 && archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })

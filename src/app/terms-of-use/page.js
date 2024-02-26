@@ -3,6 +3,11 @@ import Banner from "@/app/components/Banner"
 import TextBlock from "@/app/components/TextBlock"
 import NavPage from "@/app/components/NavPage"
 
+export const metadata = {
+  title: "Terms Of Use | Albina Community Archive",
+  description: "Materials in The Albina Community Archive are available for purposes of education, historical research, and other 'fair use' as defined by U.S. Copyright Law.",
+  metadataBase: 'https://albinacommunityarchive.org/terms-of-use',
+}
 
 export default function TermsOfUsePage() {
 

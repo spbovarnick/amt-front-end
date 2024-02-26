@@ -8,7 +8,7 @@ import Carousel from '@/app/components/Carousel';
 import MissionStatement from '@/app/components/MissionStatement';
 import NavPage from "@/app/components/NavPage";
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { yearOptions, mediumOptions, updateArchiveItems, getData, fetchAssociatedData, fetchPageData, clearAllFilters } from '@/utils/api';
+import { yearOptions, mediumOptions, updateArchiveItems, getData,  clearAllFilters } from '@/utils/api';
 import Drawer from "@/app/components/Drawer";
 import ArchiveGallery from '@/app/components/ArchiveGallery';
 import Footer from "@/app/components/Footer";
@@ -27,6 +27,13 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const router = useRouter();
   const { slug } = useParams();
 
+  const locations = associatedData.locations;
+  const people = associatedData.people;
+  const tags = associatedData.tags;
+  const carouselSlides = associatedData.page_carousel_slides;
+  const collections = associatedData.collections;
+  const commGroups = associatedData.comm_groups;
+
   const [search, setSearch] = useState(sP.get("search"));
   const [commGroupsSearchParams, setCommGroupsSearchParams] = useState(sP.getAll("comm_groups"));
   const [peopleSearchParams, setPeopleSearchParams] = useState(sP.getAll("people"));
@@ -37,13 +44,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [mediumSearchParams, setMediumSearchParams] = useState(sP.get("medium"));
 
   const [archiveResults, setArchiveResults] = useState([]);
-  const locations = associatedData.locations;
-  const people = associatedData.people;
-  const tags = associatedData.tags;
-  const carouselSlides = associatedData.page_carousel_slides;
-  const collections = associatedData.collections;
-  const commGroups = associatedData.comm_groups;
-
   const [filterYear, setFilterYear] = useState({ value: "", label: "Any" });
   const [filterMedium, setFilterMedium] = useState({ value: "", label: "Any" });
   const [filterLocations, setFilterLocations] = useState([]);
