@@ -9,8 +9,9 @@ import zoomOutIcon from 'public/images/zoom-out.svg';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getCloudfrontUrl } from "@/utils/helpers";
+import { fetchTimelineItems } from "@/utils/api";
 
-const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane, pathname, searchParams }) => {
+const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane, pathname, searchParams }) => {
     const activeItemRef = useRef(null)
     const [activeItemIndex, setActiveItemIndex] = useState(null);
     const [screenSize, setScreenSize] = useState(getCurrentWindowWidth());
@@ -26,6 +27,7 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
     const [velocity, setVelocity] = useState(0);
     const [isInertiaScrolling, setIsInertiaScrolling] = useState(false);
     const [initialTime, setInitialTime] = useState(0);
+    const [items, setItems] = useState([]);
     const listRef = useRef();
     const innerContainer = useRef();
     const outerContainer = useRef();
@@ -36,6 +38,15 @@ const Timeline = ({ items, id, setModalItem, setLocations, setIsLoading, isLoadi
     useEffect(() => {
         items.length > 0 && setIsLoading(false)
     },[items.length])
+
+    useEffect(() => {
+        if (items.length === 0 ) {
+            (async () => {
+                const fetchedTimelineItems = await fetchTimelineItems(pageTag);
+                setItems(fetchedTimelineItems)
+            })();
+        }
+    }, []);
 
     useEffect(() => {
         if (id && !isLoading) {

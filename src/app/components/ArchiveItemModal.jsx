@@ -58,18 +58,18 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
         }
     }, [modalItem]);
 
-    useEffect(() => {
-        if ( timelineItems.length === 0 && modalItem?.year ) {
-            (async () => {
-                const fetchedTimelineItems = await fetchTimelineItems(pageTag);
-                setTimelineItems(fetchedTimelineItems)
-            })();
-        }
-    },[modalItem?.year]);
+    // useEffect(() => {
+    //     if ( timelineItems.length === 0 && modalItem?.year ) {
+    //         (async () => {
+    //             const fetchedTimelineItems = await fetchTimelineItems(pageTag);
+    //             setTimelineItems(fetchedTimelineItems)
+    //         })();
+    //     }
+    // },[modalItem?.year]);
 
-    useEffect(() => {
-        timelineItems.length > 0 && setTimelineIsLoading(false)
-    },[])
+    // useEffect(() => {
+    //     timelineItems.length > 0 && setTimelineIsLoading(false)
+    // },[])
 
     const handleClose = (e) => {
         e.preventDefault();
@@ -148,7 +148,8 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
                         }
                         {modalItem?.year && viewTimeline &&
                             <Timeline
-                                items={timelineItems}
+                                // items={timelineItems}
+                                pageTag={pageTag}
                                 id={modalItem.id}
                                 setModalItem={setModalItem}
                                 setLocations={setLocations}
