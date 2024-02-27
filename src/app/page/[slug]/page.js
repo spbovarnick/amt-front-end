@@ -10,7 +10,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
   if (pageData) {
     return {
       title: `${pageData?.title} | Albina Community Archive`,
-      metadataBase: new URL(process.env.NODE_ENV === "development" ? `http://localhost:3333/page/${params.slug}` : `https://albinacommunityarchive.org/page/${params.slug}` ),
+      metadataBase: new URL(`https://albinacommunityarchive.org/page/${params.slug}` ),
       description: pageData.description,
       openGraph: {
         images: [pageData.header_file, ...previousImages]
