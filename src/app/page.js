@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     images: [
       {
-        url: 'public/images/open-graph-img.jpg'
+        url: 'https://albinacommunityarchive.org/public/images/open-graph-img.jpg'
       }
     ]
   },
