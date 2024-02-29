@@ -78,15 +78,12 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
         const args = createSearchUrl()
         const data = await getData(args.url, args.itemsPerLoad)
-        console.log(data.adjustedResults)
         data && setIsLoaded(true)
         setShowLoadMore(data.hasMore)
         setArchiveResults(data.adjustedResults);
       }
     })()
   }, [filters, isSearching])
-
-  console.log(search)
 
   useEffect(() => {
     if (currentPage > 0) {
@@ -239,10 +236,10 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     let searchString
     searchTerm ? searchString = searchTerm : searchString = search;
     // pageTagString necessary to filter search results by content assoc'd to given page
-    const pageTagsArr = filters.pageTag?.split(", ");
+    const pageTagsArr = pageData.tag ? pageData.tag?.split(", ") : null;
     const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';
-    const pageCollectionArr = filters.pageCollection?.split(", ");
-    const pageCollectionString = pageCollectionArr ? pageCollectionArr.map((tag) => `&page_collections[]=${encodeURIComponent(tag)}`).join('') : '';
+    const pageCollectionArr = pageData.collection ? pageData.collection?.split(", ") : null;
+    const pageCollectionString = pageCollectionArr ? pageCollectionArr.map((tag) => `&page_collections[]=${encodeURIComponent(tag)}`).join('') : "";
     const yearString = filters.year ? `&year=${filters.year}` : '';
     const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
     const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
