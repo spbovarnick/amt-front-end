@@ -78,6 +78,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
         const args = createSearchUrl()
         const data = await getData(args.url, args.itemsPerLoad)
+        console.log(data.adjustedResults)
         data && setIsLoaded(true)
         setShowLoadMore(data.hasMore)
         setArchiveResults(data.adjustedResults);
