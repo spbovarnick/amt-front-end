@@ -78,7 +78,7 @@ export async function getData(url, itemsPerLoad) {
   const data = await res.data;
   const hasMore = data.length > itemsPerLoad;
   const adjustedResults = hasMore ? data.splice(0, data.length - 1) : data;
-  console.log("api fired", data)
+  console.log(`api fired on url ${url} `, data)
   return { hasMore: hasMore, adjustedResults: adjustedResults };
 }
 
