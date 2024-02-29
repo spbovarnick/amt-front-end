@@ -260,14 +260,14 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     e.preventDefault();
     // searching clears filters via effect hooks and sets currentPage to 0, effectively beginning user interaction with archive db
     clearAllFilters(searchParams);
+    // close advanced drawer if open
+    setAdvancedDrawerHeight(0);
+    setCurrentPage(0);
     // set 'search' param with searchTerm
     searchParams.set("search", searchTerm);
     // navigate to new URL based on updated params
     const searchPath = searchParams.toString();
     router.push(`${pathname}?${searchPath}`, { scroll: false });
-    // close advanced drawer if open
-    setAdvancedDrawerHeight(0);
-    setCurrentPage(0);
   }
 
   function clearSearch() {
