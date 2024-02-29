@@ -27,9 +27,11 @@ In the event that the CloudFront or AWS URLs change, those values need to be upd
 
 ### Deployment
 
-Pushes to `main` automatically builds new deployments in Vercel. Pushes to other branches will build preview deployments. 
+Pushes to `main` automatically builds new deployments in Vercel. Pushes to other branches will build preview deployments. As such, it's important to be mindful of code pushed to `main`.
 
-Full functionality of non-`main` branches can be tested by adding the preview URL to the allowed origins in [amt-admin-1.0's](https://github.com/spbovarnick/amt-admin-1.0) `config/initializers/cors.rb` file.
+Production loads can be tested by replacing `NEXT_PUBLIC_TARGET_DB=localhost` with `NEXT_PUBLIC_TARGET_DB=production` in this project's `.env` and updating `amt-admin-1.0`'s `ENV['TARGET_DB']` environment variable to `production` in that project's `local_env_vars.rb`.
+
+Full functionality and production environment behavior of non-`main` branches can be tested by adding the preview URL to the allowed origins in [amt-admin-1.0's](https://github.com/spbovarnick/amt-admin-1.0) `config/initializers/cors.rb` file.
 
 ### Third Party Tools
 
