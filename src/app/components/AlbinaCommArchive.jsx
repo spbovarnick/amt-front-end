@@ -250,9 +250,11 @@ export default function AlbinaCommArchive({ associatedData }) {
     e.preventDefault();
     // set 'search' param with searchTerm
     searchParams.set("search", searchTerm);
+    // navigate to new URL based on updated params
     const searchPath = searchParams.toString();
     router.push(`${pathname}?${searchPath}`, { scroll: false });
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
+    // close advanced drawer if open
     setAdvancedDrawerHeight(0);
     setCurrentPage(0);
     setIsSearching(true);

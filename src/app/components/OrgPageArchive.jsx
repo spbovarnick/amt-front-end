@@ -261,7 +261,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     const searchPath = searchParams.toString();
     router.push(`${pathname}?${searchPath}`, { scroll: false });
     // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
-    clearAllFilters(searchParams);
     // close advanced drawer if open
     setAdvancedDrawerHeight(0);
     setCurrentPage(0);
