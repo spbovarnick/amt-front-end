@@ -248,21 +248,16 @@ export default function AlbinaCommArchive({ associatedData }) {
 
   async function handleSubmitSearch(e) {
     e.preventDefault();
+    // searching clears filters effect hooks and sets currentPage to 0, effectively beginning user interaction with archive db
+    clearAllFilters(searchParams);
     // set 'search' param with searchTerm
     searchParams.set("search", searchTerm);
     // navigate to new URL based on updated params
     const searchPath = searchParams.toString();
     router.push(`${pathname}?${searchPath}`, { scroll: false });
-    // searching clears filters and sets currentPage to 0, effectively beginning user interaction with archive db
     // close advanced drawer if open
     setAdvancedDrawerHeight(0);
     setCurrentPage(0);
-    setIsSearching(true);
-    const args = createSearchUrl();
-    const data = await getData(args.url, args.itemsPerLoad);
-    data && setIsLoaded(true);
-    setShowLoadMore(data.hasMore);
-    setArchiveResults(currentPage > 0 ? archiveResults.concat(data.adjustedResults) : data.adjustedResults);
   }
 
   function clearSearch() {
