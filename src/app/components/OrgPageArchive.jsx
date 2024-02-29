@@ -86,6 +86,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     })()
   }, [filters, isSearching])
 
+  console.log(search)
+
   useEffect(() => {
     if (currentPage > 0) {
       (async () => {
