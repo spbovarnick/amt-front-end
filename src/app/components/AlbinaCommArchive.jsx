@@ -284,7 +284,7 @@ export default function AlbinaCommArchive({ associatedData }) {
         className="--has-graphic --is-archive"
       />
       <MissionStatement
-        text="Welcome to the Albina Community Archive, a digital repository documenting Albina's arts and culture legacy. Our mission is to engage community members and mission-aligned organizations to preserve digital versions of the Albina community's historical materials. We encourage you to revisit the archive as new items are added on a regular basis. These items include photography, film, audio, articles, and printed materials."
+        text="Developed by Albina Music Trust, the Albina Community Archive is a digital repository documenting Albina's arts and culture legacy. Our mission is to engage community members and mission-aligned organizations to preserve digital versions of the Albina community's historical materials. We encourage you to revisit the archive as new items are added on a regular basis. These items include photography, film, audio, articles, and printed materials."
       />
       <Carousel
         slides={carouselSlides}
