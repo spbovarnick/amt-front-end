@@ -23,14 +23,14 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
         clearAllFilters(searchParams)
 
         // sets search URLSearchParams object with selected key value pair
-        slide.collections?.forEach(collection => searchParams.set('collections', collection));
+        slide.collections?.forEach(collection => searchParams.append('collections', collection));
         slide.year && searchParams.set('year', slide.year);
         slide.medium && searchParams.set('medium', slide.medium);
-        slide.people?.forEach(p => searchParams.set('people', p))
-        slide.comm_groups?.forEach(cg => searchParams.set('comm_groups', cg));
-        slide.locations?.forEach(l => searchParams.set('locations', l));
-        slide.tags?.forEach(t => searchParams.set('tags', t))
-    
+        slide.people?.forEach(p => searchParams.append('people', p))
+        slide.comm_groups?.forEach(cg => searchParams.append('comm_groups', cg));
+        slide.locations?.forEach(l => searchParams.append('locations', l));
+        slide.tags?.forEach(t => searchParams.append('tags', t))
+
         // navigates to new URL with updated search params
         router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
     }
@@ -73,13 +73,13 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                     { onPage ?
                                         // slide if rendering from Page.jsx
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
-                                            { slide.image_url && 
-                                                <Image 
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
+                                            { slide.image_url &&
+                                                <Image
+                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
-                                                    className="carousel-image" 
+                                                    className="carousel-image"
                                                 />
                                             }
                                             <div className="carousel-text">
@@ -90,13 +90,13 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         :
                                         // slide if rendering from root page.js
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
-                                            { slide.image_url && 
-                                                <Image 
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)} 
+                                            { slide.image_url &&
+                                                <Image
+                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
-                                                    className="carousel-image" 
+                                                    className="carousel-image"
                                                 />
                                             }
                                             <div className="carousel-text">
