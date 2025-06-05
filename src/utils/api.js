@@ -1,4 +1,4 @@
-const rootURL = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
+const rootURL = process.env.NODE_ENV === "production" ? process.env.PROD_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL
 
 import axios from "axios";
 
@@ -201,7 +201,7 @@ export async function getAllLocations() {
 
         return true;
       }
-    }); 
+    });
 
     return cleanData;
   } catch(error) {
@@ -212,7 +212,7 @@ export async function getAllLocations() {
 
 // get items for timeline. pageTag arg is optional and filters to show only dated items connected to given page
 export async function fetchTimelineItems(pageTag) {
-  try {    
+  try {
     const pageTagString = pageTag ? pageTag.map((tag) => `&page_tags[]=${tag.replace(/ /g, '+')}`).join('') : '';
     const res = await axios.get(`${rootURL}/api/v1/archive_items/timeline?${pageTagString}`);
     const data = await res.data;
@@ -230,7 +230,7 @@ export function sendArchiveItemFeedback(comment, title, id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
         text: comment,
         title: title,
         id: id

@@ -10,10 +10,8 @@ Locally this app runs on port 3333; [amt-admin-1.0](https://github.com/spbovarni
 
 Your `.env` file should include the following variables:
 - `NEXT_PUBLIC_DEV_API_URL`
-- `NEXT_PUBLIC_DEV_API_URL`
-- `NEXT_PUBLIC_DEV_API_URL`
-- `NEXT_PUBLIC_S3_BUCKET`
-- `NEXT_PUBLIC_PROD_CLOUDFRONT_DISTRO`
+- `S3_BUCKET`
+- `CLOUDFRONT_DISTRO`
 - `NEXT_PUBLIC_DOMAIN`
 - `NEXT_PUBLIC_TARGET_DB`
 

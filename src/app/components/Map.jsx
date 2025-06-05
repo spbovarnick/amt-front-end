@@ -11,7 +11,7 @@ const Map = ({ itemLocation }) => {
     const [bounds, setBounds] = useState(null);
     const [allLocations, setAllLocations] = useState([]);
     const mapRef = useRef();
-    
+
     // fetch all locations to set state and render markers/clusterse
     useEffect(() => {
         (async () => {
@@ -30,10 +30,10 @@ const Map = ({ itemLocation }) => {
             name: location.name,
             text: location.description
         },
-        geometry: { 
-            type: "Point", 
+        geometry: {
+            type: "Point",
             coordinates: [
-                location.lng, 
+                location.lng,
                 location.lat
             ]
         }
@@ -45,7 +45,7 @@ const Map = ({ itemLocation }) => {
         zoom,
         options: {radius: 75, maxZoom: 20}
     })
-    
+
     const mapOptions = {
         mapTypeControl: true,
         streetViewControl: true
@@ -56,7 +56,7 @@ const Map = ({ itemLocation }) => {
             <div className="map">
             {/* this component is from the google-map-react library */}
             <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+                bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY }}
                 center={[itemLocation[0].lat, itemLocation[0].lng]}
                 zoom={15}
                 options={mapOptions}
@@ -85,8 +85,8 @@ const Map = ({ itemLocation }) => {
                     if (isCluster) {
                         return (
                             <Marker key={cluster.id} lat={latitude} lng={longitude}>
-                                <div 
-                                    className="cluster-marker" 
+                                <div
+                                    className="cluster-marker"
                                     style={{
                                         width: `${15 + (pointCount / points.length) * 75}px`,
                                         height: `${15 + (pointCount / points.length) * 75}px`
@@ -107,7 +107,7 @@ const Map = ({ itemLocation }) => {
                     }
 
                     return (
-                        <LocationMarker 
+                        <LocationMarker
                             key={cluster.properties.locationId}
                             name={cluster.properties.name}
                             lat={latitude}
