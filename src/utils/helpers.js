@@ -28,7 +28,7 @@ export function getCloudfrontUrl(
     return newUrl;
   } else if (process.env.NEXT_PUBLIC_TARGET_DB === "staging") {
     const request = {
-      bucket: process.env.STAGING_S3_BUCKET, // S3 bucket name
+      bucket: process.env.S3_BUCKET, // S3 bucket name
       key: url.pathname.replace(/^\//, ""), // path to your file on the S3 bucket (ex. photos/face1.png)
       edits: {
         webp: true,
