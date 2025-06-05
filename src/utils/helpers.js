@@ -43,7 +43,7 @@ export function getCloudfrontUrl(
 
     const strRequest = JSON.stringify(request);
     const encRequest = btoa(strRequest);
-    const newUrl = `${process.env.STAGING_CLOUDFRONT_DISTRO}/${encRequest}`;
+    const newUrl = `${process.env.PROD_CLOUDFRONT_DISTRO}/${encRequest}`;
 
     return newUrl;
   } else {
