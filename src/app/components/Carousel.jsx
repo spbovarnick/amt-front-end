@@ -35,8 +35,6 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
         router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
     }
 
-    !onPage && console.log(slides)
-
     return (
         <div className="cmpt-carousel">
             <div className="global-container">
@@ -91,7 +89,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         </div>
                                         :
                                         // slide if rendering from root page.js
-                                        <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"}>
+                                        <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"} ref={slideRef}>
                                             { slide.image_url &&
                                                 <Image
                                                     src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
