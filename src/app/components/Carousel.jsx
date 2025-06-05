@@ -73,9 +73,9 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                     { onPage ?
                                         // slide if rendering from Page.jsx
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
-                                            { slide.image_url &&
+                                            { slide.image &&
                                                 <Image
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
+                                                    src={getCloudfrontUrl(slide.image, slidelWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
@@ -90,9 +90,9 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         :
                                         // slide if rendering from root page.js
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"} ref={slideRef}>
-                                            { slide.image_url &&
+                                            { slide.image &&
                                                 <Image
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
+                                                    src={getCloudfrontUrl(slide.image, slidelWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
