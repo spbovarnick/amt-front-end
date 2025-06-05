@@ -35,6 +35,8 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
         router.push(`${pathname}?${searchParams.toString()}`, { scroll: false });
     }
 
+    !onPage && console.log(slides)
+
     return (
         <div className="cmpt-carousel">
             <div className="global-container">
