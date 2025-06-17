@@ -12,6 +12,7 @@ const ModalCarousel = ({item}) => {
     const [carouselItems, setCarouselItems] = useState([]);
     const [carouselFileNames, setCarouselFileNames] = useState([]);
     const [carouselContentTypes, setCarouselContentTypes] = useState([]);
+    const [audioIndexer, setAudioIndexer] = useState(0);
     const carouselRef = useRef();
 
     useEffect(() => {
@@ -94,7 +95,9 @@ const ModalCarousel = ({item}) => {
         fileIndex === carouselItems.length - 1 ? setFileIndex(0) : setFileIndex(fileIndex + 1)
     }
 
-    const audioIndexer = carouselItems.length > 1 ? ((fileIndex - 1) * 5) : 0
+    useEffect(() => {
+        carouselItems?.length > 1 ? setAudioIndexer((fileIndex - 1) * 5) : setAudioIndexer(0)
+    }, [fileIndex]);
 
     const carouselWidth = carouselRef.current?.offsetWidth;
 
