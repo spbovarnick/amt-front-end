@@ -94,6 +94,8 @@ const ModalCarousel = ({item}) => {
         fileIndex === carouselItems.length - 1 ? setFileIndex(0) : setFileIndex(fileIndex + 1)
     }
 
+    const audioIndexer = carouselItems.length > 1 ? ((fileIndex - 1) * 5) : 0
+
     const carouselWidth = carouselRef.current?.offsetWidth;
 
     let carousel
@@ -102,9 +104,9 @@ const ModalCarousel = ({item}) => {
             {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
             <div className='carousel-content' ref={carouselRef}>
                 {carouselContentTypes[fileIndex] === "image" &&
-                    <FullscreenImg 
-                        imgPath={carouselItems[fileIndex]} 
-                        defaultWidth={carouselWidth * 2} 
+                    <FullscreenImg
+                        imgPath={carouselItems[fileIndex]}
+                        defaultWidth={carouselWidth * 2}
                         prevImg={prevImg}
                         nextImg={nextImg}
                         fileIndex={fileIndex}
@@ -124,7 +126,7 @@ const ModalCarousel = ({item}) => {
                     <div className='audio-container'>
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
-                                <span>{audioClipTitle(idx)}</span>
+                                <span>{audioClipTitle(idx + audioIndexer)}</span>
                                 <audio
                                 controls
                                 controlsList="nodownload"
