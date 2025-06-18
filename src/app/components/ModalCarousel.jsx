@@ -15,19 +15,27 @@ const ModalCarousel = ({item}) => {
     const [audioIndexer, setAudioIndexer] = useState(0);
     const carouselRef = useRef();
 
-    useEffect(() => {
-            // remove query params from urls
-            const basicUrls = item.content_files?.map((url) => url.split('?')[0]);
-            setCarouselFileNames([...item.medium_photos, ...basicUrls]);
-    }, []);
+    // useEffect(() => {
+    //         // remove query params from urls
+    //         const basicUrls = item.content_files?.map((url) => url.split('?')[0]);
+    //         setCarouselFileNames([...item.medium_photos, ...basicUrls]);
+    // }, []);
+
+    // useEffect(() => {
+    //     if (item.medium_photo_urls) {
+    //         setCarouselItems([...item.medium_photo_urls]);
+    //     }
+    // }, [item]);
 
     useEffect(() => {
+        // remove query params from urls
+        const basicUrls = item.content_files?.map((url) => url.split('?')[0]);
+        setCarouselFileNames([...item.medium_photos, ...basicUrls]);
+
         if (item.medium_photo_urls) {
             setCarouselItems([...item.medium_photo_urls]);
         }
-    }, [item]);
 
-    useEffect(() => {
         setCarouselItems(prevItems => {
             let newItems = [];
             if (item.medium === "audio") {
@@ -49,17 +57,19 @@ const ModalCarousel = ({item}) => {
         })
     }, [item]);
 
-
-
     useEffect(() => {
-        setCarouselContentTypes(carouselItems.map(url => getFileType(url)));
-    }, [carouselItems]);
+        setCarouselContentTypes(carouselFileNames.map(url => getFileType(url)));
+    }, [carouselFileNames]);
 
     const validImageTypes = ["jpg", "jpeg", "png"];
     const validVideoTypes = ["mp4", "mov", "qt", "webm"];
 
     function get_url_extension( url ) {
-        return url.split(/[#?]/)[0].split('.').pop().trim();
+        if (typeof url === 'string') {
+            return url.split(/[#?]/)[0].split('.').pop().trim();
+        } else {
+            return ""
+        }
     }
 
     function getFileType(url) {
