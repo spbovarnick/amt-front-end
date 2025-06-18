@@ -25,7 +25,7 @@ const ModalCarousel = ({item}) => {
         if (item.medium_photo_urls) {
             setCarouselItems([...item.medium_photo_urls]);
         }
-    }, []);
+    }, [item]);
 
     useEffect(() => {
         setCarouselItems(prevItems => {
@@ -47,11 +47,13 @@ const ModalCarousel = ({item}) => {
             }
             return newItems
         })
-    }, []);
+    }, [item]);
+
+
 
     useEffect(() => {
-        setCarouselContentTypes(carouselFileNames.map(url => getFileType(url)));
-    }, [carouselFileNames]);
+        setCarouselContentTypes(carouselItems.map(url => getFileType(url)));
+    }, [carouselItems]);
 
     const validImageTypes = ["jpg", "jpeg", "png"];
     const validVideoTypes = ["mp4", "mov", "qt", "webm"];
@@ -81,9 +83,8 @@ const ModalCarousel = ({item}) => {
         return slideArr
     }
 
-    const audioClipTitle = (idx) => {
-        const url = item.content_files[idx];
-        let fileName = url.substring(url.lastIndexOf('/') + 1).replaceAll('%20', ' ').replaceAll('%23', '#')
+    const audioClipTitle = (clip) => {
+        let fileName = clip.substring(clip.lastIndexOf('/') + 1).replaceAll('%20', ' ').replaceAll('%23', '#')
         return fileName.slice(0, fileName.lastIndexOf('.'))
     }
 
@@ -106,7 +107,7 @@ const ModalCarousel = ({item}) => {
         carousel = <div className='modal-carousel' >
             {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
             <div className='carousel-content' ref={carouselRef}>
-                {carouselContentTypes[fileIndex] === "image" &&
+                {getFileType(carouselItems[fileIndex]) === "image" &&
                     <FullscreenImg
                         imgPath={carouselItems[fileIndex]}
                         defaultWidth={carouselWidth * 2}
@@ -116,20 +117,20 @@ const ModalCarousel = ({item}) => {
                         carouselItems={carouselItems}
                     />
                 }
-                { carouselContentTypes[fileIndex] === "video" &&
+                { getFileType(carouselItems[fileIndex]) === "video" &&
                     <video key={fileIndex} controls controlsList="nodownload" className="modalVideo">
                         <source src={carouselItems[fileIndex]} type="video/mp4" />
                         Sorry, your browser doesn't support embedded videos.
                     </video>
                 }
-                {carouselContentTypes[fileIndex] === "pdf" &&
+                {getFileType(carouselItems[fileIndex]) === "pdf" &&
                     <iframe className="modalArticle" src={`${item?.content_files[0]}#toolbar=0`} />
                 }
                 {item.medium === "audio" && typeof carouselItems[fileIndex] === 'object'  &&
                     <div className='audio-container'>
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
-                                <span>{audioClipTitle(idx + audioIndexer)}</span>
+                                <span>{audioClipTitle(clip)}</span>
                                 <audio
                                 controls
                                 controlsList="nodownload"
