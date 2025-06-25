@@ -27,61 +27,63 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
         setIsFocused(item.id)
     }
 
+    console.log(item.poster_url)
+
     return (
         <>
             {
                 // prevent broken images when file type is not image format
-                !(item.medium === "photo" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase())) &&
+                !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase())) &&
 
             <div className="cmpt-archive-item" ref={isFocused === item.id ? focusedRef : null}>
                 <button type="button"
                 className="cmpt-archive-item__button"
                 // modals are opened via effect hook in ArchiveItemModal.jsx: when id params changes, modal opens
                 onClick={(e) => handleClick(e)}>
-                    {item.medium === "photo" && item.content_files[0] && (
+                    {item.medium === "photo" && item.content_file_urls[0] && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={getCloudfrontUrl(item.content_urls[0], 800)} 
+                            <Image
+                                src={getCloudfrontUrl(item.content_file_urls[0], 800)}
                                 width={800}
                                 height={1000}
                                 alt={item.title}
-                                loading="lazy" 
-                                draggable="false" 
+                                loading="lazy"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "printed material" && item.content_files[0] && validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
+                    {item.medium === "printed material" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={getCloudfrontUrl(item.content_urls[0], 800)} 
+                            <Image
+                                src={getCloudfrontUrl(item.content_file_urls[0], 800)}
                                 width={800}
                                 height={1000}
                                 alt={item.title}
-                                loading="lazy" 
-                                draggable="false" 
+                                loading="lazy"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "printed material" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
+                    {item.medium === "printed material" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={printedMaterialIcon.src} 
+                            <Image
+                                src={printedMaterialIcon.src}
                                 width={800}
                                 height={1000}
                                 alt={"Printed matter icon"}
-                                className="cmpt-archive-item__icon" 
-                                draggable="false" 
+                                className="cmpt-archive-item__icon"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "article" && item.content_files[0] && !validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
+                    {item.medium === "article" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
-                            <Image 
-                                src={pdfIcon.src} 
-                                className="cmpt-archive-item__icon" 
+                            <Image
+                                src={pdfIcon.src}
+                                className="cmpt-archive-item__icon"
                                 width={800}
                                 height={1000}
                                 alt={"Pdf icon"}
@@ -90,73 +92,73 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         </div>
                     )}
 
-                    {item.medium === "article" && item.content_files[0] && validFormats.includes(get_url_extension(item.content_files[0]).toLowerCase()) && (
+                    {item.medium === "article" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
-                            <Image 
-                                src={getCloudfrontUrl(item.content_urls[0], 800)} 
+                            <Image
+                                src={getCloudfrontUrl(item.content_file_urls[0], 800)}
                                 width={800}
                                 height={1000}
                                 alt={item.title}
                                 placeholder="blur"
-                                blurDataURL={item.content_urls[0]}
-                                loading="lazy" 
-                                draggable="false" 
+                                blurDataURL={item.content_file_urls[0]}
+                                loading="lazy"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "audio" && item.content_files[0] && !item.poster_image && (
+                    {item.medium === "audio" && item.content_file_urls[0] && !item.poster_url && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={audioIcon.src} 
+                            <Image
+                                src={audioIcon.src}
                                 width={800}
                                 height={1000}
                                 alt={"Audio icon"}
-                                className="cmpt-archive-item__icon" 
-                                draggable="false" 
+                                className="cmpt-archive-item__icon"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "audio" && item.content_files[0] && item.poster_image && (
+                    {item.medium === "audio" && item.content_file_urls[0] && item.poster_url && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={getCloudfrontUrl(item.poster_url, 800)} 
+                            <Image
+                                src={getCloudfrontUrl(item.poster_url, 800)}
                                 width={800}
                                 height={1000}
                                 placeholder="blur"
-                                blurDataURL={item.content_urls[0]}
+                                blurDataURL={item.content_file_urls[0]}
                                 alt={item.title}
-                                loading="lazy" 
-                                draggable="false" 
+                                loading="lazy"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "film" && item.content_files[0] && !item.poster_image && (
+                    {item.medium === "film" && item.content_file_urls[0] && !item.poster_url && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={videoIcon.src} 
+                            <Image
+                                src={videoIcon.src}
                                 width={800}
                                 height={1000}
                                 alt={"Video icon"}
-                                className="cmpt-archive-item__icon" 
-                                draggable="false" 
+                                className="cmpt-archive-item__icon"
+                                draggable="false"
                             />
                         </div>
                     )}
 
-                    {item.medium === "film" && item.content_files[0] && item.poster_image && (
+                    {item.medium === "film" && item.content_file_urls[0] && item.poster_url && (
                         <div className="cmpt-archive-item__thumb">
-                            <Image 
-                                src={getCloudfrontUrl(item.poster_url, 800)} 
+                            <Image
+                                src={getCloudfrontUrl(item.poster_url, 800)}
                                 width={800}
                                 height={1000}
                                 placeholder="blur"
-                                blurDataURL={item.content_urls[0]}
+                                blurDataURL={item.content_file_urls[0]}
                                 alt={item.title}
-                                loading="lazy" 
-                                draggable="false" 
+                                loading="lazy"
+                                draggable="false"
                             />
                         </div>
                     )}
