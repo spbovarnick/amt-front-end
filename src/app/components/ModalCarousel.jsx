@@ -11,39 +11,51 @@ const ModalCarousel = ({item}) => {
     const [fileIndex, setFileIndex] = useState(0);
     const [carouselItems, setCarouselItems] = useState([]);
     const [carouselFileNames, setCarouselFileNames] = useState([]);
-    const [carouselContentTypes, setCarouselContentTypes] = useState([]);
-    const [audioIndexer, setAudioIndexer] = useState(0);
+    const [slideOffset, setSlideOffset] = useState(0)
     const carouselRef = useRef();
 
     console.log("filenames", carouselFileNames)
-    console.log("items", carouselItems)
+    console.log("log", carouselItems[fileIndex])
+    console.log(typeof carouselItems[fileIndex] )
+
 
     useEffect(() => {
-        setCarouselFileNames(item.content_file_names.length <= 5 ? [item.content_file_names] : divideSlides(item.content_file_names));
+        const {
+            medium,
+            medium_photo_urls = [],
+            medium_photos_file_names = [],
+            content_file_names = [],
+            content_file_urls = [],
+        } = item;
 
-        if (item.medium_photo_urls) {
-            setCarouselItems([...item.medium_photo_urls]);
+        let items = [];
+        let filenames = [];
+
+
+        if (medium_photo_urls.length > 0) {
+            items = [...medium_photo_urls];
+            filenames = [...medium_photos_file_names, ...content_file_names];
+            setSlideOffset(medium_photo_urls.length)
+        } else {
+            filenames = [...content_file_names];
         }
 
-        setCarouselItems(prevItems => {
-            let newItems = [];
-            if (item.medium === "audio") {
-                if (item.content_file_urls.length <= 5) {
-                    setCarouselItems([...prevItems, item.content_file_urls]);
-                } else if (item.content_file_urls.length > 5) {
-                    let slides =  divideSlides(item.content_file_urls);
-                    setCarouselItems([...prevItems, ...slides]);
-                }
+        if (medium === "audio") {
+            if (content_file_urls.length <= 5) {
+                items = [...items, content_file_urls];
             } else {
-                newItems = [...prevItems, ...item.content_file_urls];
+                const slides = divideSlides(content_file_urls);
+                items = [...items, ...slides];
+                const dividedNames = divideSlides(content_file_names, slideOffset)
+                filenames = [...medium_photos_file_names, ...dividedNames]
             }
-            return newItems
-        })
-    }, [item]);
+        } else {
+            items = [...items, ...content_file_urls];
+        }
 
-    useEffect(() => {
-        setCarouselContentTypes(carouselFileNames.map(url => getFileType(url)));
-    }, [carouselFileNames]);
+        setCarouselItems(items);
+        setCarouselFileNames(filenames);
+    }, [item]);
 
     const validImageTypes = ["jpg", "jpeg", "png"];
     const validVideoTypes = ["mp4", "mov", "qt", "webm"];
@@ -69,17 +81,17 @@ const ModalCarousel = ({item}) => {
         }
     }
 
-    const divideSlides = (files) => {
+    const divideSlides = (files, offset = 0) => {
         let slideArr = []
-        for (let i = 0; i < files.length; i = i + 5) {
+        for (let i = 0 + offset; i < files.length; i = i + 5) {
             slideArr.push(files.slice(i, i+5))
         }
         return slideArr
     }
 
     const audioClipTitle = (idx) => {
-        let offset = item.medium_photo_urls.length > 0 ? item.medium_photo_urls.length : 0
-        return carouselFileNames[fileIndex - offset][idx]
+
+        return carouselItems.length > 5 ? carouselFileNames[fileIndex][idx] : carouselFileNames[fileIndex]
     }
 
     const prevImg = () => {
@@ -90,10 +102,6 @@ const ModalCarousel = ({item}) => {
         fileIndex === carouselItems.length - 1 ? setFileIndex(0) : setFileIndex(fileIndex + 1)
     }
 
-    useEffect(() => {
-        carouselItems?.length > 1 ? setAudioIndexer((fileIndex - 1) * 5) : setAudioIndexer(0)
-    }, [fileIndex]);
-
     const carouselWidth = carouselRef.current?.offsetWidth;
 
     let carousel
@@ -101,7 +109,7 @@ const ModalCarousel = ({item}) => {
         carousel = <div className='modal-carousel' >
             {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
             <div className='carousel-content' ref={carouselRef}>
-                {getFileType(carouselItems[fileIndex]) === "image" &&
+                {getFileType(carouselFileNames[fileIndex]) === "image" &&
                     <FullscreenImg
                         imgPath={carouselItems[fileIndex]}
                         defaultWidth={carouselWidth * 2}
