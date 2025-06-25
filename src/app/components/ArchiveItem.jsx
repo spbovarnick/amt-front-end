@@ -27,13 +27,11 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
         setIsFocused(item.id)
     }
 
-    console.log(item.content_file_urls)
-
     return (
         <>
             {
                 // prevent broken images when file type is not image format
-                !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase())) &&
+                !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase())) &&
 
             <div className="cmpt-archive-item" ref={isFocused === item.id ? focusedRef : null}>
                 <button type="button"
@@ -53,7 +51,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         </div>
                     )}
 
-                    {item.medium === "printed material" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
+                    {item.medium === "printed material" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
                             <Image
                                 src={getCloudfrontUrl(item.content_file_urls[0], 800)}
@@ -66,7 +64,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         </div>
                     )}
 
-                    {item.medium === "printed material" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
+                    {item.medium === "printed material" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb">
                             <Image
                                 src={printedMaterialIcon.src}
@@ -79,7 +77,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         </div>
                     )}
 
-                    {item.medium === "article" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
+                    {item.medium === "article" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
                             <Image
                                 src={pdfIcon.src}
@@ -92,7 +90,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         </div>
                     )}
 
-                    {item.medium === "article" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_urls[0]).toLowerCase()) && (
+                    {item.medium === "article" && item.content_file_urls[0] && validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase()) && (
                         <div className="cmpt-archive-item__thumb" >
                             <Image
                                 src={getCloudfrontUrl(item.content_file_urls[0], 800)}
