@@ -43,7 +43,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                     {item.medium === "photo" && item.content_file_urls[0] && (
                         <div className="cmpt-archive-item__thumb">
                             <Image
-                                src={getCloudfrontUrl(item.content_file_urls[0], 800)}
+                                src={item.content_file_urls[0]}
                                 width={800}
                                 height={1000}
                                 alt={item.title}
