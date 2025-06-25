@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const { hostname } = require('os');
 const path = require('path');
 
 const nextConfig = {
@@ -11,6 +12,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'world-arts-prod.s3.us-west-2.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'amt-staging-445296212188.us-west-2.amazonaws.com'
       },
       {
         protocol: 'https',
