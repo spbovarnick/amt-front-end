@@ -14,6 +14,8 @@ const ModalCarousel = ({item}) => {
     const [slideOffset, setSlideOffset] = useState(0)
     const carouselRef = useRef();
 
+    console.log(carouselFileNames)
+
     useEffect(() => {
         const {
             medium,
@@ -86,7 +88,7 @@ const ModalCarousel = ({item}) => {
 
     const audioClipTitle = (idx) => {
 
-        return carouselItems.length > 5 ? carouselFileNames[fileIndex][idx] : carouselFileNames[fileIndex]
+        return carouselItems.length > 5 ? carouselFileNames[fileIndex][idx] : carouselFileNames[fileIndex + idx]
     }
 
     const prevImg = () => {
