@@ -17,7 +17,7 @@ const ModalCarousel = ({item}) => {
 
     // useEffect(() => {
     //         // remove query params from urls
-    //         const basicUrls = item.content_files?.map((url) => url.split('?')[0]);
+    //         const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
     //         setCarouselFileNames([...item.medium_photos, ...basicUrls]);
     // }, []);
 
@@ -29,8 +29,8 @@ const ModalCarousel = ({item}) => {
 
     useEffect(() => {
         // remove query params from urls
-        const basicUrls = item.content_files?.map((url) => url.split('?')[0]);
-        setCarouselFileNames([...item.medium_photos, ...basicUrls]);
+        const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
+        setCarouselFileNames([...item.medium_photo_urls, ...basicUrls]);
 
         if (item.medium_photo_urls) {
             setCarouselItems([...item.medium_photo_urls]);
@@ -40,17 +40,17 @@ const ModalCarousel = ({item}) => {
             let newItems = [];
             if (item.medium === "audio") {
                 // remove query params from urls
-                const basicUrls = item.content_urls?.map((url) => url.split('?')[0]);
+                const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
 
-                if (item.content_urls.length <= 5) {
+                if (item.content_file_urls.length <= 5) {
                     setCarouselItems([...prevItems, basicUrls]);
-                } else if (item.content_urls.length > 5) {
+                } else if (item.content_file_urls.length > 5) {
                     let slides =  divideSlides(basicUrls);
                     setCarouselItems([...prevItems, ...slides]);
                 }
             } else {
                 // remove query params from urls
-                const basicUrls = item.content_urls?.map((url) => url.split('?')[0]);
+                const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
                 newItems = [...prevItems, ...basicUrls];
             }
             return newItems
@@ -134,7 +134,7 @@ const ModalCarousel = ({item}) => {
                     </video>
                 }
                 {getFileType(carouselItems[fileIndex]) === "pdf" &&
-                    <iframe className="modalArticle" src={`${item?.content_files[0]}#toolbar=0`} />
+                    <iframe className="modalArticle" src={`${item?.content_file_urls[0]}#toolbar=0`} />
                 }
                 {item.medium === "audio" && typeof carouselItems[fileIndex] === 'object'  &&
                     <div className='audio-container'>
