@@ -27,6 +27,8 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
         setIsFocused(item.id)
     }
 
+    console.log(item.content_file_urls)
+
     return (
         <>
             {
