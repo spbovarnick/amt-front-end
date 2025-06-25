@@ -27,8 +27,6 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
         setIsFocused(item.id)
     }
 
-    console.log(getCloudfrontUrl(item.poster_url, 800))
-
     return (
         <>
             {
