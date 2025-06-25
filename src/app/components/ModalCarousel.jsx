@@ -15,22 +15,11 @@ const ModalCarousel = ({item}) => {
     const [audioIndexer, setAudioIndexer] = useState(0);
     const carouselRef = useRef();
 
-    // useEffect(() => {
-    //         // remove query params from urls
-    //         const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
-    //         setCarouselFileNames([...item.medium_photos, ...basicUrls]);
-    // }, []);
-
-    // useEffect(() => {
-    //     if (item.medium_photo_urls) {
-    //         setCarouselItems([...item.medium_photo_urls]);
-    //     }
-    // }, [item]);
+    console.log("filenames", carouselFileNames)
+    console.log("items", carouselItems)
 
     useEffect(() => {
-        // remove query params from urls
-        const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
-        setCarouselFileNames([...item.medium_photo_urls, ...basicUrls]);
+        setCarouselFileNames(item.content_file_names.length <= 5 ? [item.content_file_names] : divideSlides(item.content_file_names));
 
         if (item.medium_photo_urls) {
             setCarouselItems([...item.medium_photo_urls]);
@@ -39,19 +28,14 @@ const ModalCarousel = ({item}) => {
         setCarouselItems(prevItems => {
             let newItems = [];
             if (item.medium === "audio") {
-                // remove query params from urls
-                const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
-
                 if (item.content_file_urls.length <= 5) {
-                    setCarouselItems([...prevItems, basicUrls]);
+                    setCarouselItems([...prevItems, item.content_file_urls]);
                 } else if (item.content_file_urls.length > 5) {
-                    let slides =  divideSlides(basicUrls);
+                    let slides =  divideSlides(item.content_file_urls);
                     setCarouselItems([...prevItems, ...slides]);
                 }
             } else {
-                // remove query params from urls
-                const basicUrls = item.content_file_urls?.map((url) => url.split('?')[0]);
-                newItems = [...prevItems, ...basicUrls];
+                newItems = [...prevItems, ...item.content_file_urls];
             }
             return newItems
         })
@@ -93,9 +77,9 @@ const ModalCarousel = ({item}) => {
         return slideArr
     }
 
-    const audioClipTitle = (clip) => {
-        let fileName = clip.substring(clip.lastIndexOf('/') + 1).replaceAll('%20', ' ').replaceAll('%23', '#')
-        return fileName.slice(0, fileName.lastIndexOf('.'))
+    const audioClipTitle = (idx) => {
+        let offset = item.medium_photo_urls.length > 0 ? item.medium_photo_urls.length : 0
+        return carouselFileNames[fileIndex - offset][idx]
     }
 
     const prevImg = () => {
@@ -140,7 +124,7 @@ const ModalCarousel = ({item}) => {
                     <div className='audio-container'>
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
-                                <span>{audioClipTitle(clip)}</span>
+                                <span>{audioClipTitle(idx)}</span>
                                 <audio
                                 controls
                                 controlsList="nodownload"
