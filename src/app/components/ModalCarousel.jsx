@@ -14,11 +14,6 @@ const ModalCarousel = ({item}) => {
     const [slideOffset, setSlideOffset] = useState(0)
     const carouselRef = useRef();
 
-    console.log("filenames", carouselFileNames)
-    console.log("log", carouselItems[fileIndex])
-    console.log(typeof carouselItems[fileIndex] )
-
-
     useEffect(() => {
         const {
             medium,
@@ -119,13 +114,13 @@ const ModalCarousel = ({item}) => {
                         carouselItems={carouselItems}
                     />
                 }
-                { getFileType(carouselItems[fileIndex]) === "video" &&
+                { getFileType(carouselFileNames[fileIndex]) === "video" &&
                     <video key={fileIndex} controls controlsList="nodownload" className="modalVideo">
                         <source src={carouselItems[fileIndex]} type="video/mp4" />
                         Sorry, your browser doesn't support embedded videos.
                     </video>
                 }
-                {getFileType(carouselItems[fileIndex]) === "pdf" &&
+                {getFileType(carouselFileNames[fileIndex]) === "pdf" &&
                     <iframe className="modalArticle" src={`${item?.content_file_urls[0]}#toolbar=0`} />
                 }
                 {item.medium === "audio" && typeof carouselItems[fileIndex] === 'object'  &&
