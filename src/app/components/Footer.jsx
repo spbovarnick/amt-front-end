@@ -2,6 +2,8 @@ import Link from 'next/link';
 
 const Footer = ({ mailListLink = null, mailListName = null }) => {
 
+    const now = new Date();
+
     return (
         <div className="cmpt-footer">
             <div className="global-container">
@@ -13,7 +15,7 @@ const Footer = ({ mailListLink = null, mailListName = null }) => {
                             <li>Join {mailListName ? `the ${mailListName}` : "our"} <a href={mailListLink} className="--highlight" target="_blank">mailing list</a></li>
                         )}
                     </ul>
-                    <span className="cmpt-footer__copy">&copy; 2024 Albina Music Trust</span>
+                    <span className="cmpt-footer__copy">&copy; {now.getFullYear()} Albina Music Trust</span>
                 </div>
             </div>
         </div>
