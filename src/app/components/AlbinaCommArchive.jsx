@@ -53,7 +53,8 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [filters, setFilters] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [showLoadMore, setShowLoadMore] = useState(false);
+  const [showPagination, setShowPagination] = useState(false);
+  const [pages, setPages] = useState(0)
   const [advancedDrawerHeight, setAdvancedDrawerHeight] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -72,14 +73,15 @@ export default function AlbinaCommArchive({ associatedData }) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
         data && setIsLoaded(true)
-        setShowLoadMore(data.hasMore);
+        setPages(Math.ceil(data.pages))
+        setShowPagination(data.pages > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
         const args = createSearchUrl()
         const data = await getData(args.url, args.itemsPerLoad)
         data && setIsLoaded(true)
-        setShowLoadMore(data.hasMore)
+        setShowPagination(data.pages > 1)
         setArchiveResults(data.adjustedResults);
       }
     })();
@@ -92,14 +94,15 @@ export default function AlbinaCommArchive({ associatedData }) {
           // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
           const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
           data && setIsLoaded(true)
-          setShowLoadMore(data.hasMore);
+          setPages(Math.ceil(data.pages))
+          setShowPagination(data.pages > 1);
           setArchiveResults(archiveResults.concat(data.adjustedResults));
         } else if (isSearching) {
           // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
           const args = createSearchUrl()
           const data = await getData(args.url, args.itemsPerLoad)
           data && setIsLoaded(true)
-          setShowLoadMore(data.hasMore)
+          setShowPagination(data.pages > 1)
           setArchiveResults(archiveResults.concat(data.adjustedResults));
         }
       })();
@@ -419,7 +422,8 @@ export default function AlbinaCommArchive({ associatedData }) {
               isFiltering={isFiltering}
               isSearching={isSearching}
               archiveResults={archiveResults}
-              showLoadMore={showLoadMore}
+              showPagination={showPagination}
+              pages={Math.ceil(pages)}
               showMoreItems={showMoreItems}
               searchTerm={searchTerm}
               isFocused={isFocused}

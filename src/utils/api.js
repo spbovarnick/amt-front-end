@@ -77,8 +77,11 @@ export async function getData(url, itemsPerLoad) {
   const res = await axios.get(rootURL + url);
   const data = await res.data;
   const hasMore = data.length > itemsPerLoad;
+  const pages = data.length / itemsPerLoad
+
+  console.log(pages)
   const adjustedResults = hasMore ? data.splice(0, data.length - 1) : data;
-  return { hasMore: hasMore, adjustedResults: adjustedResults };
+  return { pages: pages, adjustedResults: adjustedResults, hasMore: hasMore };
 }
 
 // parameter `slug` is optional. when invoking updateArchiveItems in the Page component, simply pass slug as the final argument and the else block will run

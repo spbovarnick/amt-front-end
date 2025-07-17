@@ -1,8 +1,9 @@
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ArchiveItem from "./ArchiveItem";
+import Pagination from "./Pagination";
 
-const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showLoadMore, showMoreItems, searchTerm, isFocused, setIsFocused, focusedRef}) => {
-    
+const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, showMoreItems, searchTerm, isFocused, setIsFocused, focusedRef, pages}) => {
+
 
     if (!isLoaded && isFiltering || !isLoaded && isSearching) {
         return (
@@ -15,7 +16,7 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                         <div className="pulse-bubble pulse-bubble-3"></div>
                     </div>
                 </div>
-            </div> 
+            </div>
         )
     } else if (isLoaded && isFiltering && archiveResults.length > 0 || isLoaded && isSearching && archiveResults.length > 0) {
         return (
@@ -35,9 +36,10 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                     ))}
                     </Masonry>
                 </ResponsiveMasonry>
-                { showLoadMore &&
+                { showPagination &&
                     <div className="archive-load-more">
-                        <button type="button" onClick={showMoreItems} className="archive-load-more-btn">Load More</button>
+                        {/* <button type="button" onClick={showMoreItems} className="archive-load-more-btn">Load More</button> */}
+                        <Pagination pages={pages} />
                     </div>
                 }
             </>
