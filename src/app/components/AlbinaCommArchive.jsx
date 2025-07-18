@@ -41,6 +41,7 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [collectionsSearchParams, setCollectionsSearchParams] = useState(searchParams.getAll("collections"));
   const [yearSearchParams, setYearSearchParams] = useState(searchParams.get("year"));
   const [mediumSearchParams, setMediumSearchParams] = useState(searchParams.get("medium"));
+  const [currentPage, setCurrentPage] = useState(searchParams.get("page"))
 
   const [archiveResults, setArchiveResults] = useState([]);
   const [filterYear, setFilterYear] = useState({ value: "", label: "Any" });
@@ -52,7 +53,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [filterCollections, setFilterCollections] = useState([]);
   const [filters, setFilters] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
   const [showPagination, setShowPagination] = useState(false);
   const [pages, setPages] = useState(0)
   const [advancedDrawerHeight, setAdvancedDrawerHeight] = useState(0);
@@ -73,7 +73,7 @@ export default function AlbinaCommArchive({ associatedData }) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
         data && setIsLoaded(true)
-        setPages(Math.ceil(data.pages))
+        setPages(data.pages)
         setShowPagination(data.pages > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
@@ -94,7 +94,7 @@ export default function AlbinaCommArchive({ associatedData }) {
           // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
           const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
           data && setIsLoaded(true)
-          setPages(Math.ceil(data.pages))
+          setPages(data.pages)
           setShowPagination(data.pages > 1);
           setArchiveResults(archiveResults.concat(data.adjustedResults));
         } else if (isSearching) {
@@ -423,12 +423,13 @@ export default function AlbinaCommArchive({ associatedData }) {
               isSearching={isSearching}
               archiveResults={archiveResults}
               showPagination={showPagination}
-              pages={Math.ceil(pages)}
+              pages={pages}
               showMoreItems={showMoreItems}
               searchTerm={searchTerm}
               isFocused={isFocused}
               setIsFocused={setIsFocused}
               focusedRef={focusedRef}
+              currentPage={currentPage}
             />
           </div>
         </div>

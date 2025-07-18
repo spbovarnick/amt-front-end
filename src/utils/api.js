@@ -77,9 +77,7 @@ export async function getData(url, itemsPerLoad) {
   const res = await axios.get(rootURL + url);
   const data = await res.data;
   const hasMore = data.length > itemsPerLoad;
-  const pages = data.length / itemsPerLoad
-
-  console.log(pages)
+  const pages = Math.ceil(data.length / itemsPerLoad)
   const adjustedResults = hasMore ? data.splice(0, data.length - 1) : data;
   return { pages: pages, adjustedResults: adjustedResults, hasMore: hasMore };
 }
