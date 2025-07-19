@@ -82,6 +82,68 @@ export async function getData(url, itemsPerLoad) {
   return { pages: pages, adjustedResults: adjustedResults, hasMore: hasMore };
 }
 
+export async function getPageCount( data, itemsPerLoad, slug = null ) {
+  let url;
+  // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
+  // parse all tags from the filters object ('data' here) into the query params
+  // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
+  const yearString = data.year ? `&year=${data.year}` : "";
+  const mediumString = data.medium ? `&medium=${data.medium}` : "";
+  const peopleString = data.people
+    ? data.people
+      .map((person) => `&people[]=${encodeURIComponent(person.name)}`)
+      .join("")
+    : "";
+  const locationString = data.locations
+    ? data.locations
+      .map((location) => `&locations[]=${encodeURIComponent(location.name)}`)
+      .join("")
+    : "";
+  const collectionString = data.collections
+    ? data.collections
+      .map(
+        (collection) => `&collections[]=${encodeURIComponent(collection.name)}`
+      )
+      .join("")
+    : "";
+  const commGroupString = data.comm_groups
+    ? data.comm_groups
+      .map(
+        (comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`
+      )
+      .join("")
+    : "";
+  const tagString = data.tags
+    ? data.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join("")
+    : "";
+  if (!slug) {
+    // always request one more than will be shown to check if more are available
+    url = `/api/v1/archive_items/page_count?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+  } else {
+    // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
+    const pageTagsArr = data.pageTag?.split(", ");
+    const pageTagString = pageTagsArr
+      ? pageTagsArr
+        .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
+        .join("")
+      : "";
+
+    // always request one more than will be shown to check if more are available
+    // endpoint for api queries from pages is to `archive_items/pages_index`
+    url = `/api/v1/archive_items/pages_page_count${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
+  }
+  try {
+    console.log(url)
+    const res = await axios.get(rootURL + url)
+    const count = await res.data
+    return Math.ceil(count/itemsPerLoad)
+  } catch (error) {
+    console.log("Error getting total page count:", error);
+    window.location.href = "/";
+  }
+}
+
+
 // parameter `slug` is optional. when invoking updateArchiveItems in the Page component, simply pass slug as the final argument and the else block will run
 export async function updateArchiveItems(
   currentPage,
@@ -89,8 +151,7 @@ export async function updateArchiveItems(
   data,
   slug = null
 ) {
-  const offset = (currentPage -1) * itemsPerLoad;
-  console.log(currentPage, itemsPerLoad)
+  const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
   let url;
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('data' here) into the query params

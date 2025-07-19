@@ -6,7 +6,7 @@ import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
 import NavPage from "@/app/components/NavPage"
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions } from '@/utils/api';
+import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount } from '@/utils/api';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from '@/app/components/Drawer';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
@@ -71,16 +71,19 @@ export default function AlbinaCommArchive({ associatedData }) {
       if (isFiltering && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
+        const pagesData = await getPageCount(filters, itemsPerLoad)
+        pagesData && setPages(pagesData)
         data && setIsLoaded(true)
-        setPages(data.pages)
-        setShowPagination(data.pages > 1 || currentPage > 1);
+        pagesData && setShowPagination(pagesData > 1 || currentPage > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
         const args = createSearchUrl()
         const data = await getData(args.url, args.itemsPerLoad)
         data && setIsLoaded(true)
-        setShowPagination(data.pages > 1)
+        const pagesData = await getPageCount(args.url, itemsPerLoad)
+        pagesData && setPages(pagesData)
+        pagesData && setShowPagination(pagesData > 1)
         setArchiveResults(data.adjustedResults);
       }
     })();
@@ -93,15 +96,18 @@ export default function AlbinaCommArchive({ associatedData }) {
           // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
           const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
           data && setIsLoaded(true)
-          setPages(data.pages)
-          setShowPagination(data.pages > 1);
+          const pagesData = await getPageCount(filters, itemsPerLoad)
+          pagesData && setPages(pagesData)
+          pagesData &&setShowPagination(pagesData > 1);
           setArchiveResults(data.adjustedResults);
         } else if (isSearching) {
           // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
           const args = createSearchUrl()
           const data = await getData(args.url, args.itemsPerLoad)
           data && setIsLoaded(true)
-          setShowPagination(data.pages > 1)
+          const pagesData = await getPageCount(args.url, itemsPerLoad)
+          pagesData && setPages(pagesData)
+          pagesData && setShowPagination(pagesData > 1)
           setArchiveResults(data.adjustedResults);
         }
       })();
@@ -175,7 +181,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   // this ensures that in the effect hook that hydrates archiveResults
   // results are not concatenated to the previous page of results and users get a fresh gallery
   function pageReset() {
-    setCurrentPage(0);
     setIsLoaded(false);
   }
 

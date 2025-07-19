@@ -14,8 +14,6 @@ const ModalCarousel = ({item}) => {
     const [slideOffset, setSlideOffset] = useState(0)
     const carouselRef = useRef();
 
-    console.log(carouselFileNames)
-
     useEffect(() => {
         const {
             medium,
