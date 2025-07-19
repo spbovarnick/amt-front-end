@@ -133,7 +133,6 @@ export async function getPageCount( data, itemsPerLoad, slug = null ) {
     url = `/api/v1/archive_items/pages_page_count${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
   }
   try {
-    console.log(url)
     const res = await axios.get(rootURL + url)
     const count = await res.data
     return Math.ceil(count/itemsPerLoad)
