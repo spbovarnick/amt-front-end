@@ -41,7 +41,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [collectionsSearchParams, setCollectionsSearchParams] = useState(searchParams.getAll("collections"));
   const [yearSearchParams, setYearSearchParams] = useState(searchParams.get("year"));
   const [mediumSearchParams, setMediumSearchParams] = useState(searchParams.get("medium"));
-  const [currentPage, setCurrentPage] = useState(searchParams.get("page"))
 
   const [archiveResults, setArchiveResults] = useState([]);
   const [filterYear, setFilterYear] = useState({ value: "", label: "Any" });
@@ -62,8 +61,8 @@ export default function AlbinaCommArchive({ associatedData }) {
   // const [assocDataIsLoading, setAssocDataIsLoading] = useState(true);
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
-  const [userLoadsMore, setUserLoadsMore] = useState(false);
   const [paramsChecked, setParamsChecked] = useState(false);
+  const currentPage = searchParams.get("page")
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -74,7 +73,7 @@ export default function AlbinaCommArchive({ associatedData }) {
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
         data && setIsLoaded(true)
         setPages(data.pages)
-        setShowPagination(data.pages > 1);
+        setShowPagination(data.pages > 1 || currentPage > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
@@ -96,14 +95,14 @@ export default function AlbinaCommArchive({ associatedData }) {
           data && setIsLoaded(true)
           setPages(data.pages)
           setShowPagination(data.pages > 1);
-          setArchiveResults(archiveResults.concat(data.adjustedResults));
+          setArchiveResults(data.adjustedResults);
         } else if (isSearching) {
           // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
           const args = createSearchUrl()
           const data = await getData(args.url, args.itemsPerLoad)
           data && setIsLoaded(true)
           setShowPagination(data.pages > 1)
-          setArchiveResults(archiveResults.concat(data.adjustedResults));
+          setArchiveResults(data.adjustedResults);
         }
       })();
     }
@@ -167,10 +166,9 @@ export default function AlbinaCommArchive({ associatedData }) {
   }, []);
 
   useEffect(() => {
-    if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current && !userLoadsMore) {
+    if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
       archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
     }
-    setUserLoadsMore(false);
   }, [archiveGalleryEl, archiveResults])
 
   // pageReset is called whenever a filter is selected
@@ -178,7 +176,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   // results are not concatenated to the previous page of results and users get a fresh gallery
   function pageReset() {
     setCurrentPage(0);
-    setUserLoadsMore(false);
     setIsLoaded(false);
   }
 
@@ -217,12 +214,6 @@ export default function AlbinaCommArchive({ associatedData }) {
       const newParams = searchParams.toString();
       router.push(`${pathname}?${newParams}`, { scroll: false })
     }
-  }
-
-  function showMoreItems() {
-    setCurrentPage(currentPage + 1);
-    // setting userLoadsMore state controls whether or not gallery will scroll to top in effect hook above
-    setUserLoadsMore(true);
   }
 
   function handleToggleAdvancedDrawer() {
@@ -424,7 +415,6 @@ export default function AlbinaCommArchive({ associatedData }) {
               archiveResults={archiveResults}
               showPagination={showPagination}
               pages={pages}
-              showMoreItems={showMoreItems}
               searchTerm={searchTerm}
               isFocused={isFocused}
               setIsFocused={setIsFocused}

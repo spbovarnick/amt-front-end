@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: center;
 
+  .disabled-pagination {
+    pointer-events: none;
+  }
+
   .page-btn{
     height: 40px;
     width: 40px;

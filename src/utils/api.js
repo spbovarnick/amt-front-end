@@ -89,7 +89,8 @@ export async function updateArchiveItems(
   data,
   slug = null
 ) {
-  const offset = currentPage * itemsPerLoad;
+  const offset = (currentPage -1) * itemsPerLoad;
+  console.log(currentPage, itemsPerLoad)
   let url;
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('data' here) into the query params
