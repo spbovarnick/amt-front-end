@@ -34,7 +34,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // width: 100%;
+
+    .current_page {
+      background-color: variables.$purple-6;
+      pointer-events: none;
+    }
 
     .numEl {
       border: solid white 2px;

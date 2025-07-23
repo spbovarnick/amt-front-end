@@ -2,6 +2,7 @@
 
 import { useSearchParams, usePathname } from "next/navigation"
 import PaginationArrow from "./PaginationArrow"
+import Link from "next/link";
 
 export default function Pagination ({ totalPages }) {
   const pathname = usePathname();
@@ -28,13 +29,14 @@ export default function Pagination ({ totalPages }) {
       />
       <div className="page_nums">
         {pages.map(page => (
-          <div
+          <Link
             key={page}
-            className="numEl"
+            className={`numEl ${currentPage === page ? "current_page" : ""}`}
             id={page}
+            href={createPageURL(page)}
           >
             {page}
-          </div>
+          </Link>
         ))}
       </div>
       <PaginationArrow

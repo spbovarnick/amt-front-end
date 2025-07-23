@@ -38,7 +38,6 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                 </ResponsiveMasonry>
                 { showPagination &&
                     <div className="archive-load-more">
-                        {/* <button type="button" onClick={showMoreItems} className="archive-load-more-btn">Load More</button> */}
                         <Pagination
                             totalPages={pages}
                         />

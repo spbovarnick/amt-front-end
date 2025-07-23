@@ -58,7 +58,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [isFiltering, setIsFiltering] = useState(0);
-  // const [assocDataIsLoading, setAssocDataIsLoading] = useState(true);
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [paramsChecked, setParamsChecked] = useState(false);
@@ -71,48 +70,50 @@ export default function AlbinaCommArchive({ associatedData }) {
       if (isFiltering && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
-        const pagesData = await getPageCount(filters, itemsPerLoad)
-        pagesData && setPages(pagesData)
         data && setIsLoaded(true)
-        pagesData && setShowPagination(pagesData > 1 || currentPage > 1);
+        const paginationData = await getPageCount({ filterData: filters, itemsPerLoad: itemsPerLoad, })
+        paginationData && setPages(paginationData)
+        paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-        const args = createSearchUrl()
-        const data = await getData(args.url, args.itemsPerLoad)
-        data && setIsLoaded(true)
-        const pagesData = await getPageCount(args.url, itemsPerLoad)
-        pagesData && setPages(pagesData)
-        pagesData && setShowPagination(pagesData > 1)
+
+
+        const args = createSearchUrl();
+        const data = await getData(args.url, args.itemsPerLoad);
+        data && setIsLoaded(true);
+        const paginationData = await getPageCount({filterData: null, itemsPerLoad: args.itemsPerLoad, urlSearchString: args.url});
+        paginationData && setPages(paginationData);
+        paginationData && setShowPagination(paginationData > 1);
         setArchiveResults(data.adjustedResults);
       }
     })();
   }, [filters, isSearching]);
 
-  useEffect(() => {
-    if (currentPage > 0) {
-      (async () => {
-        if (isFiltering && !isSearching) {
-          // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
-          const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
-          data && setIsLoaded(true)
-          const pagesData = await getPageCount(filters, itemsPerLoad)
-          pagesData && setPages(pagesData)
-          pagesData &&setShowPagination(pagesData > 1);
-          setArchiveResults(data.adjustedResults);
-        } else if (isSearching) {
-          // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
-          const args = createSearchUrl()
-          const data = await getData(args.url, args.itemsPerLoad)
-          data && setIsLoaded(true)
-          const pagesData = await getPageCount(args.url, itemsPerLoad)
-          pagesData && setPages(pagesData)
-          pagesData && setShowPagination(pagesData > 1)
-          setArchiveResults(data.adjustedResults);
-        }
-      })();
-    }
-  }, [currentPage])
+  // useEffect(() => {
+  //   if (currentPage > 0) {
+  //     (async () => {
+  //       if (isFiltering && !isSearching) {
+  //         // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
+  //         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters);
+  //         data && setIsLoaded(true);
+  //         const paginationData = await getPageCount(filters, itemsPerLoad);
+  //         paginationData && setPages(paginationData);
+  //         paginationData &&setShowPagination(paginationData > 1);
+  //         setArchiveResults(data.adjustedResults);
+  //       } else if (isSearching) {
+  //         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
+  //         const args = createSearchUrl();
+  //         const data = await getData(args.url, args.itemsPerLoad);
+  //         data && setIsLoaded(true);
+  //         const paginationData = await getPageCount(args.url, itemsPerLoad);
+  //         paginationData && setPages(paginationData);
+  //         paginationData && setShowPagination(paginationData > 1);
+  //         setArchiveResults(data.adjustedResults);
+  //       }
+  //     })();
+  //   }
+  // }, [currentPage])
 
   useEffect(() => {
     // piece of state prevents top-most hook from firing and returning unwanted results too early
@@ -240,7 +241,7 @@ export default function AlbinaCommArchive({ associatedData }) {
     const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
     const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
     const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
-    const offset = currentPage * itemsPerLoad;
+    const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
     const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
     return { url: url, itemsPerLoad: itemsPerLoad }
   }
@@ -251,11 +252,11 @@ export default function AlbinaCommArchive({ associatedData }) {
     clearAllFilters(searchParams);
     // close advanced drawer if open
     setAdvancedDrawerHeight(0);
-    setCurrentPage(0);
     // set 'search' param with searchTerm
     searchParams.set("search", searchTerm);
     // navigate to new URL based on updated params
     const searchPath = searchParams.toString();
+    searchParams.delete("page");
     router.push(`${pathname}?${searchPath}`, { scroll: false });
   }
 
@@ -313,7 +314,12 @@ export default function AlbinaCommArchive({ associatedData }) {
                 }
               </div>
               <div>
-                <button type="submit" className="archive__search-submit button-round --secondary"><Image className='search-button-icon' src={searchIcon.src} width={24} height={24} alt={"Search icon"} /><span className='search-button-text'>Search</span></button>
+                <button type="submit" className="archive__search-submit button-round --secondary">
+                  <Image className='search-button-icon' src={searchIcon.src} width={24} height={24} alt={"Search icon"} />
+                  <span className='search-button-text'>
+                    Search
+                  </span>
+                </button>
               </div>
             </form>
           </div>
