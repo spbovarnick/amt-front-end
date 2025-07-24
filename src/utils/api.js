@@ -352,4 +352,35 @@ export function createSearchUrl(
   const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
   const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
   return { url: url, itemsPerLoad: itemsPerLoad }
-}
+};
+
+export function generatePagination({currentPage, totalPages, width}){
+  const truncateMin = width >= 768 ? 10 : 5;
+
+  // if total number of pages is 5 or less, display all pages w/o ellipsis
+  if (totalPages <= truncateMin) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  };
+
+  // If currentPage is among first 3 pages, show first 3, an ellipsis, and last 2 pages
+  if (currentPage <= 3) {
+    return [1, 2, 3, '...', totalPages - 1, totalPages];
+  }
+
+  // If currentPage is among last 3 pages, show first 2, an ellipsis, and last 3 pages
+  if (currentPage >= totalPages - 2) {
+    return [1, 2, "...", totalPages - 2, totalPages - 1, totalPages];
+  }
+
+  // If currentPage is in the middle, show first page, ellipsis, current page & neighbors, ellipsis, last page
+  return [
+    1,
+    '...',
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    '...',
+    totalPages
+  ];
+};

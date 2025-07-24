@@ -20,7 +20,7 @@
   display: flex;
   grid-gap: 15px;
   flex-wrap: wrap;
-  
+
   @media (min-width: variables.$bp-md) {
     flex-wrap: nowrap;
   }
@@ -28,7 +28,7 @@
 
 .archive-filters__col {
   flex: 1 1 auto;
-  
+
   @media (min-width: variables.$bp-md) {
     flex: 1 1 auto;
   }
@@ -37,7 +37,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-  
+
       @media (min-width: variables.$bp-md) {
         width: auto;
         padding-top: 18px;
@@ -46,7 +46,7 @@
       .button-round {
         width: 100%;
         align-self: center;
-        
+
         @media (min-width: variables.$bp-md) {
             width: auto;
           }
@@ -56,7 +56,7 @@
 
 .archive__label {
   margin-bottom: 8px;
-  
+
   .cmpt-drawer-toggle {
     display: none;
   }
@@ -68,24 +68,9 @@
   position: relative;
 }
 
-.archive-load-more {
+.archive-pagination_wrapper {
   margin-top: 50px;
   text-align: center;
-}
-
-.archive-load-more-btn {
-  background: variables.$white-1;
-  color: variables.$black-1;
-  border: none;
-  padding: 10px 30px;
-  border-radius: 33px;
-  font-size: 12px;
-  position: relative;
-  cursor: pointer;
-
-  &:hover {
-    background: variables.$white-2;
-  }
 }
 
 .archive-search {
@@ -151,7 +136,7 @@
 .clear-filters {
   font-size: 14px;
   background: #d9d6d6;
-  
+
   @media (max-width: variables.$bp-sm) {
     padding: 4px 8px !important;
   }
@@ -199,7 +184,7 @@
   #clear-search {
     padding: 5px !important;
     padding: 5px 10px !important;
-    
+
     #clear-search-x {
       display: inline !important;
     }
@@ -224,7 +209,7 @@
 
   .archive-tags {
 
-    &.advanced-search-open{ 
+    &.advanced-search-open{
       position: fixed;
       top: 0;
       left: 0;

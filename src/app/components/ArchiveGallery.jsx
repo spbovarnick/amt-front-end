@@ -2,7 +2,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ArchiveItem from "./ArchiveItem";
 import Pagination from "./Pagination";
 
-const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, searchTerm, isFocused, setIsFocused, focusedRef, pages }) => {
+const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, searchTerm, isFocused, setIsFocused, focusedRef, pages, currentPage }) => {
 
 
     if (!isLoaded && isFiltering || !isLoaded && isSearching) {
@@ -37,9 +37,10 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                     </Masonry>
                 </ResponsiveMasonry>
                 { showPagination &&
-                    <div className="archive-load-more">
+                    <div className="archive-pagination_wrapper">
                         <Pagination
                             totalPages={pages}
+                            currentPage={currentPage}
                         />
                     </div>
                 }
