@@ -323,6 +323,7 @@ export function sendArchiveItemFeedback(comment, title, id) {
 // deletes all searchParams, but has no navigational effect until useNavigate called
 export function clearAllFilters(params) {
   // clear all URLSearchParams except 'search'
+  params.delete("page")
   params.delete("comm_groups");
   params.delete("people");
   params.delete("locations");

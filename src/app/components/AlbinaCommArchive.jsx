@@ -90,31 +90,6 @@ export default function AlbinaCommArchive({ associatedData }) {
     })();
   }, [filters, isSearching]);
 
-  // useEffect(() => {
-  //   if (currentPage > 0) {
-  //     (async () => {
-  //       if (isFiltering && !isSearching) {
-  //         // this block only refreshes archiveResults with fresh data when user only toggling filters and adding to currentPage with Load More
-  //         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters);
-  //         data && setIsLoaded(true);
-  //         const paginationData = await getPageCount(filters, itemsPerLoad);
-  //         paginationData && setPages(paginationData);
-  //         paginationData &&setShowPagination(paginationData > 1);
-  //         setArchiveResults(data.adjustedResults);
-  //       } else if (isSearching) {
-  //         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options and adding to currentPage with Load More
-  //         const args = createSearchUrl();
-  //         const data = await getData(args.url, args.itemsPerLoad);
-  //         data && setIsLoaded(true);
-  //         const paginationData = await getPageCount(args.url, itemsPerLoad);
-  //         paginationData && setPages(paginationData);
-  //         paginationData && setShowPagination(paginationData > 1);
-  //         setArchiveResults(data.adjustedResults);
-  //       }
-  //     })();
-  //   }
-  // }, [currentPage])
-
   useEffect(() => {
     // piece of state prevents top-most hook from firing and returning unwanted results too early
     if (!paramsChecked) return;
@@ -182,6 +157,7 @@ export default function AlbinaCommArchive({ associatedData }) {
   // this ensures that in the effect hook that hydrates archiveResults
   // results are not concatenated to the previous page of results and users get a fresh gallery
   function pageReset() {
+    searchParams.delete("page")
     setIsLoaded(false);
   }
 
@@ -333,6 +309,7 @@ export default function AlbinaCommArchive({ associatedData }) {
                   val={filterYear}
                   year={true}
                   changeHandler={handleYearSelect}
+                  searchParams={yearSearchParams}
                 />
               </div>
               <div className="archive-filters__col">
@@ -342,6 +319,7 @@ export default function AlbinaCommArchive({ associatedData }) {
                   val={filterMedium}
                   medium={true}
                   changeHandler={handleMediumSelect}
+                  searchParams={mediumSearchParams}
                 />
               </div>
               <div className="archive-filters__col --clear">
