@@ -1,0 +1,56 @@
+@use "variables";
+
+.pagination_controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .arrow_a {
+    height: 40px;
+  }
+
+  .disabled-pagination {
+    pointer-events: none;
+  }
+
+  .page-btn{
+    height: 40px;
+    width: 40px;
+    border: solid white 2px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .page-back-btn {
+    margin-right: 10px;
+  }
+
+  .page-next-btn {
+    margin-left: 10px;
+  }
+
+  .page_nums {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .current_page {
+      background-color: variables.$purple-6;
+      pointer-events: none;
+    }
+
+    .numEl {
+      border: solid white 2px;
+      padding: 5px;
+      border-radius: 5px;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px 0 10px;
+    }
+
+  }
+}
