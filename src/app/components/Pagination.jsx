@@ -7,8 +7,8 @@ import Link from "next/link";
 import { generatePagination } from "@/utils/api";
 import PaginationNumber from "./PaginationNumber";
 
-export default function Pagination ({  }) {
-  const totalPages = 50
+export default function Pagination ({ totalPages }) {
+  // const totalPages = 50
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
