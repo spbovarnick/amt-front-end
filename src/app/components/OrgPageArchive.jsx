@@ -91,28 +91,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     })()
   }, [filters, isSearching])
 
-  // useEffect(() => {
-  //   if (currentPage > 0) {
-  //     (async () => {
-  //       if (isFiltering && !isSearching) {
-  //         // this block only refreshes archiveResults with fresh data when user only toggling filters
-  //         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-  //         data && setIsLoaded(true)
-  //         setShowLoadMore(data.hasMore)
-  //         setArchiveResults(currentPage > 0 ? archiveResults.concat(data.adjustedResults) : data.adjustedResults);
-  //       } else if (isSearching) {
-  //         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-  //         const args = createSearchUrl()
-  //         const data = await getData(args.url, args.itemsPerLoad)
-  //         data && setIsLoaded(true)
-  //         paginationData
-  //         setShowLoadMore(data.hasMore)
-  //         setArchiveResults(currentPage > 0 ? archiveResults.concat(data.adjustedResults) : data.adjustedResults);
-  //       }
-  //     })()
-  //   }
-  // }, [currentPage])
-
   useEffect(() => {
     // piece of state prevents top-most hook from firing and returning unwanted results too early
     if (!paramsChecked) return;
@@ -350,7 +328,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   val={filterYear}
                   year={true}
                   changeHandler={handleYearSelect}
-                />
+                  searchParams={yearSearchParams}
+                  />
               </div>
               <div className="archive-filters__col">
                 <div className="archive__label">Medium</div>
@@ -359,6 +338,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   val={filterMedium}
                   medium={true}
                   changeHandler={handleMediumSelect}
+                  searchParams={mediumSearchParams}
                 />
               </div>
               <div className="archive-filters__col --clear">

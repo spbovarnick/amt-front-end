@@ -23,11 +23,11 @@
   }
 
   .page-back-btn {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   .page-next-btn {
-    margin-left: 10px;
+    margin-left: 5px;
   }
 
   .page_nums {
@@ -49,8 +49,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 10px 0 10px;
+      margin: 0 5px 0 5px;
     }
 
   }
+
+    @media (min-width: variables.$bp-md) {
+      .page-back-btn {
+          margin-right: 10px;
+        }
+
+        .page-next-btn {
+          margin-left: 10px;
+        }
+
+        .numEl {
+          margin: 0 10px 0 10px;
+        }
+    }
 }

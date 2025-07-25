@@ -1,17 +1,32 @@
 'use client'
 
 import { useSearchParams, usePathname } from "next/navigation"
+import { useState, useEffect } from "react";
 import PaginationArrow from "./PaginationArrow"
 import Link from "next/link";
+import { generatePagination } from "@/utils/api";
+import PaginationNumber from "./PaginationNumber";
 
 export default function Pagination ({ totalPages }) {
+  // const totalPages = 50
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth)
 
-  // const totalPages = 50
-  const pages = Array.from({ length: totalPages}, (_, i) => i + 1);
+  useEffect(() => {
+    const handleResize = () => {
+      setInnerWidth(window.innerWidth)
+    };
 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const pages = generatePagination({currentPage: currentPage, totalPages: totalPages, width: innerWidth});
 
   const createPageURL = ( pageNumber ) => {
     const params = new URLSearchParams(searchParams)
@@ -28,16 +43,18 @@ export default function Pagination ({ totalPages }) {
         isDisabled={currentPage <= 1}
       />
       <div className="page_nums">
-        {pages.map(page => (
-          <Link
-            key={page}
-            className={`numEl ${currentPage === page ? "current_page" : ""}`}
-            id={page}
-            href={createPageURL(page)}
-          >
-            {page}
-          </Link>
-        ))}
+        {pages.map((page, index) => {
+
+          return (
+            <PaginationNumber
+              key={page+index}
+              page={page}
+              href={createPageURL(page)}
+              isActive={currentPage === page}
+
+            />
+          )
+        })}
       </div>
       <PaginationArrow
         href={createPageURL(currentPage + 1)}
