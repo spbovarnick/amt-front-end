@@ -52,6 +52,10 @@
       margin: 0 5px 0 5px;
     }
 
+    .ellipsis {
+      pointer-events: none;
+    }
+
   }
 
     @media (min-width: variables.$bp-md) {
