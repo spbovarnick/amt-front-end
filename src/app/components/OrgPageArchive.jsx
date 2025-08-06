@@ -75,7 +75,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
         data && setIsLoaded(true);
         const paginationData = await getPageCount({filterData: filters, itemsPerLoad: itemsPerLoad, slug: slug });
-        paginationData && setPages
+        paginationData && setPages(paginationData)
         paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
