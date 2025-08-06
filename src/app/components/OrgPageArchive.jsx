@@ -422,6 +422,9 @@ export default function OrgPageArchive({ pageData, associatedData }) {
               isFiltering={isFiltering}
               isSearching={isSearching}
               archiveResults={archiveResults}
+              showPagination={showPagination}
+              pages={pages}
+              currentPage={currentPage}
               searchTerm={searchTerm}
               isFocused={isFocused}
               setIsFocused={setIsFocused}
