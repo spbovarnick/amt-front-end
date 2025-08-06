@@ -8,12 +8,14 @@ import Carousel from '@/app/components/Carousel';
 import MissionStatement from '@/app/components/MissionStatement';
 import NavPage from "@/app/components/NavPage";
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { yearOptions, mediumOptions, updateArchiveItems, getData,  clearAllFilters } from '@/utils/api';
+import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount } from '@/utils/api';
+import searchIcon from "public/images/search-icon.svg";
 import Drawer from "@/app/components/Drawer";
 import ArchiveGallery from '@/app/components/ArchiveGallery';
 import Footer from "@/app/components/Footer";
 import SelectUI from '@/app/components/SelectUI';
 import { useSearchParams, usePathname, useRouter, useParams } from 'next/navigation';
+import Image from 'next/image';
 
 export default function OrgPageArchive({ pageData, associatedData }) {
   const itemsPerLoad = 20;
@@ -53,16 +55,16 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [filterCollections, setFilterCollections] = useState([])
   const [filters, setFilters] = useState({  });
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [showLoadMore, setShowLoadMore] = useState(false);
+  const [showPagination, setShowPagination] = useState(false);
+  const [pages, setPages] = useState(0)
   const [advancedDrawerHeight, setAdvancedDrawerHeight] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [isFiltering, setIsFiltering] = useState(0);
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
-  const [userLoadsMore, setUserLoadsMore] = useState(false);
   const [paramsChecked, setParamsChecked] = useState(false);
+  const currentPage = searchParams.get("page")
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from pages_index endpoint
@@ -71,40 +73,23 @@ export default function OrgPageArchive({ pageData, associatedData }) {
       if (isFiltering > 0 && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-        data && setIsLoaded(true)
-        setShowLoadMore(data.hasMore)
+        data && setIsLoaded(true);
+        const paginationData = await getPageCount({filterData: filters, itemsPerLoad: itemsPerLoad, slug: slug });
+        paginationData && setPages(paginationData)
+        paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
         setArchiveResults(data.adjustedResults);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-        const args = createSearchUrl()
+        const args = createSearchUrl();
         const data = await getData(args.url, args.itemsPerLoad)
         data && setIsLoaded(true)
-        setShowLoadMore(data.hasMore)
+        const paginationData = await getPageCount({ filterData: null, itemsPerLoad: itemsPerLoad, urlSearchString: args.url, slug: slug });
+        paginationData && setPages (paginationData);
+        paginationData && setShowPagination(paginationData > 1);
         setArchiveResults(data.adjustedResults);
       }
     })()
   }, [filters, isSearching])
-
-  useEffect(() => {
-    if (currentPage > 0) {
-      (async () => {
-        if (isFiltering && !isSearching) {
-          // this block only refreshes archiveResults with fresh data when user only toggling filters
-          const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-          data && setIsLoaded(true)
-          setShowLoadMore(data.hasMore)
-          setArchiveResults(currentPage > 0 ? archiveResults.concat(data.adjustedResults) : data.adjustedResults);
-        } else if (isSearching) {
-          // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-          const args = createSearchUrl()
-          const data = await getData(args.url, args.itemsPerLoad)
-          data && setIsLoaded(true)
-          setShowLoadMore(data.hasMore)
-          setArchiveResults(currentPage > 0 ? archiveResults.concat(data.adjustedResults) : data.adjustedResults);
-        }
-      })()
-    }
-  }, [currentPage])
 
   useEffect(() => {
     // piece of state prevents top-most hook from firing and returning unwanted results too early
@@ -165,18 +150,15 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   }, []);
 
   useEffect(() => {
-    if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current && !userLoadsMore) {
+    if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
       archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
     }
-    setUserLoadsMore(false);
   }, [archiveGalleryEl, archiveResults])
 
   // pageReset is called whenever a filter is selected
   // this ensures that in the effect hook that hydrates archiveResults
   // results are not concatenated to the previous page of results and users get a fresh gallery
   function pageReset() {
-    setCurrentPage(0);
-    setUserLoadsMore(false);
     setIsLoaded(false);
   }
 
@@ -217,12 +199,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     }
   }
 
-  function showMoreItems() {
-    setCurrentPage(currentPage + 1);
-    // setting userLoadsMore state controls whether or not gallery will scroll to top in effect hook above
-    setUserLoadsMore(true);
-  }
-
   function handleToggleAdvancedDrawer() {
     let drawerTargetHeight = 0;
     if (advancedDrawerHeight < 1) {
@@ -248,7 +224,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     // const collectionString = `&collections[]=${encodeURIComponent('Test Collection One')}`;
     const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
     const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
-    const offset = currentPage * itemsPerLoad;
+    const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
     const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}${pageTagString}${pageCollectionString}`;
     return { url: url, itemsPerLoad: itemsPerLoad }
   }
@@ -259,7 +235,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     clearAllFilters(searchParams);
     // close advanced drawer if open
     setAdvancedDrawerHeight(0);
-    setCurrentPage(0);
     // set 'search' param with searchTerm
     searchParams.set("search", searchTerm);
     // navigate to new URL based on updated params
@@ -336,7 +311,11 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                 }
               </div>
               <div>
-                <button type="submit" className="archive__search-submit button-round --secondary">Search</button>
+                <button type="submit" className="archive__search-submit button-round --secondary"><Image className='search-button-icon' src={searchIcon.src} width={24} height={24} alt={"Search icon"} />
+                <span className='search-button-text'>
+                  Search
+                </span>
+              </button>
               </div>
             </form>
           </div>
@@ -349,7 +328,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   val={filterYear}
                   year={true}
                   changeHandler={handleYearSelect}
-                />
+                  searchParams={yearSearchParams}
+                  />
               </div>
               <div className="archive-filters__col">
                 <div className="archive__label">Medium</div>
@@ -358,6 +338,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   val={filterMedium}
                   medium={true}
                   changeHandler={handleMediumSelect}
+                  searchParams={mediumSearchParams}
                 />
               </div>
               <div className="archive-filters__col --clear">
@@ -441,8 +422,9 @@ export default function OrgPageArchive({ pageData, associatedData }) {
               isFiltering={isFiltering}
               isSearching={isSearching}
               archiveResults={archiveResults}
-              showLoadMore={showLoadMore}
-              showMoreItems={showMoreItems}
+              showPagination={showPagination}
+              pages={pages}
+              currentPage={currentPage}
               searchTerm={searchTerm}
               isFocused={isFocused}
               setIsFocused={setIsFocused}

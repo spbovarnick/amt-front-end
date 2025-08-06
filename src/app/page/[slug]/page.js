@@ -14,7 +14,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
       description: pageData.description,
       openGraph: {
         images: [pageData.header_file, ...previousImages]
-      }  
+      }
     }
   }
 }
@@ -26,10 +26,10 @@ export default async function PagePage({ params, searchParams }) {
   return (
     <>
     { associatedData && pageData &&
-      <OrgPageArchive 
-        pageData={pageData} 
-        associatedData={associatedData} 
-        
+      <OrgPageArchive
+        pageData={pageData}
+        associatedData={associatedData}
+
       />
     }
     </>
