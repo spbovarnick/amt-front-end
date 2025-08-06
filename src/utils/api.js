@@ -85,61 +85,58 @@ export async function getData(url, itemsPerLoad, ) {
 export async function getPageCount({
   filterData,
   itemsPerLoad,
-  slug = null,
-  urlSearchString = null
+  isSearching = false,
 }) {
   let url;
-  url = urlSearchString
-  if (filterData) {
-    // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
-    // parse all tags from the filters object ('filterData' here) into the query params
-    // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
-    const yearString = filterData.year ? `&year=${filterData.year}` : "";
-    const mediumString = filterData.medium ? `&medium=${filterData.medium}` : "";
-    const peopleString = filterData.people
-      ? filterData.people
-        .map((person) => `&people[]=${encodeURIComponent(person.name)}`)
+  let endpoint = isSearching ? 'search_page_count' : 'page_count'
+  // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
+  // parse all tags from the filters object ('filterData' here) into the query params
+  // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
+  const yearString = filterData.year ? `&year=${filterData.year}` : "";
+  const mediumString = filterData.medium ? `&medium=${filterData.medium}` : "";
+  const peopleString = filterData.people
+    ? filterData.people
+      .map((person) => `&people[]=${encodeURIComponent(person.name)}`)
+      .join("")
+    : "";
+  const locationString = filterData.locations
+    ? filterData.locations
+      .map((location) => `&locations[]=${encodeURIComponent(location.name)}`)
+      .join("")
+    : "";
+  const collectionString = filterData.collections
+    ? filterData.collections
+      .map(
+        (collection) => `&collections[]=${encodeURIComponent(collection.name)}`
+      )
+      .join("")
+    : "";
+  const commGroupString = filterData.comm_groups
+    ? filterData.comm_groups
+      .map(
+        (comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`
+      )
+      .join("")
+    : "";
+  const tagString = filterData.tags
+    ? filterData.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join("")
+    : "";
+  // if (!slug) {
+  //   // always request one more than will be shown to check if more are available
+  //   url = `/api/v1/archive_items/${endpoint}?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+  // } else {
+    // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
+    const pageTagsArr = filterData.pageTag?.split(", ");
+    const pageTagString = pageTagsArr
+      ? pageTagsArr
+        .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
         .join("")
       : "";
-    const locationString = filterData.locations
-      ? filterData.locations
-        .map((location) => `&locations[]=${encodeURIComponent(location.name)}`)
-        .join("")
-      : "";
-    const collectionString = filterData.collections
-      ? filterData.collections
-        .map(
-          (collection) => `&collections[]=${encodeURIComponent(collection.name)}`
-        )
-        .join("")
-      : "";
-    const commGroupString = filterData.comm_groups
-      ? filterData.comm_groups
-        .map(
-          (comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`
-        )
-        .join("")
-      : "";
-    const tagString = filterData.tags
-      ? filterData.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join("")
-      : "";
-    if (!slug) {
-      // always request one more than will be shown to check if more are available
-      url = `/api/v1/archive_items/page_count?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
-    } else {
-      // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
-      const pageTagsArr = filterData.pageTag?.split(", ");
-      const pageTagString = pageTagsArr
-        ? pageTagsArr
-          .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
-          .join("")
-        : "";
 
-      // always request one more than will be shown to check if more are available
-      // endpoint for api queries from pages is to `archive_items/pages_index`
-      url = `/api/v1/archive_items/pages_page_count?${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
-    }
-  }
+    // always request one more than will be shown to check if more are available
+    // endpoint for api queries from pages is to `archive_items/pages_index`
+    url = `/api/v1/archive_items/${endpoint}?${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
+  // }
   try {
     const res = await axios.get(rootURL + url)
     const count = await res.data
@@ -333,15 +330,18 @@ export function clearAllFilters(params) {
   params.delete("medium");
 }
 
-export function createSearchUrl(
+export function createSearchUrl({
   searchTerm,
   search,
   filters,
   currentPage,
-  itemsPerLoad
-) {
+  itemsPerLoad,
+  pageTag = null
+}) {
   let searchString
   searchTerm ? searchString = searchTerm : searchString = search;
+  const pageTagsArr = pageTag ? pageTag?.split(", ") : null;
+  const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';
   const yearString = filters.year ? `&year=${filters.year}` : '';
   const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
   const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
@@ -350,7 +350,7 @@ export function createSearchUrl(
   const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
   const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
   const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
-  const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+  const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}${pageTagString && pageTagString}`;
   return { url: url, itemsPerLoad: itemsPerLoad }
 };
 

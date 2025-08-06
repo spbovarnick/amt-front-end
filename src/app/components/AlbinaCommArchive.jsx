@@ -6,7 +6,7 @@ import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
 import NavPage from "@/app/components/NavPage"
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount } from '@/utils/api';
+import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from '@/app/components/Drawer';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
@@ -79,10 +79,20 @@ export default function AlbinaCommArchive({ associatedData }) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
 
 
-        const args = createSearchUrl();
+        const args = createSearchUrl({
+          searchTerm: searchTerm,
+          search: search,
+          filters: filters,
+          currentPage: currentPage,
+          itemsPerLoad: itemsPerLoad
+        });
         const data = await getData(args.url, args.itemsPerLoad);
         data && setIsLoaded(true);
-        const paginationData = await getPageCount({filterData: null, itemsPerLoad: args.itemsPerLoad, urlSearchString: args.url});
+        const paginationData = await getPageCount({
+          filterData: filters,
+          itemsPerLoad: args.itemsPerLoad,
+          isSearching: true
+        });
         paginationData && setPages(paginationData);
         paginationData && setShowPagination(paginationData > 1);
         setArchiveResults(data.adjustedResults);
@@ -207,20 +217,20 @@ export default function AlbinaCommArchive({ associatedData }) {
   }
 
   // function creates the query string and params by grabbing values from filters state object
-  function createSearchUrl() {
-    let searchString
-    searchTerm ? searchString = searchTerm : searchString = search;
-    const yearString = filters.year ? `&year=${filters.year}` : '';
-    const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
-    const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
-    const locationString = filters.locations ? filters.locations.map((location) => `&locations[]=${encodeURIComponent(location.name)}`).join('') : '';
-    const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
-    const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
-    const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
-    const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
-    const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
-    return { url: url, itemsPerLoad: itemsPerLoad }
-  }
+  // function createSearchUrl() {
+  //   let searchString
+  //   searchTerm ? searchString = searchTerm : searchString = search;
+  //   const yearString = filters.year ? `&year=${filters.year}` : '';
+  //   const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
+  //   const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
+  //   const locationString = filters.locations ? filters.locations.map((location) => `&locations[]=${encodeURIComponent(location.name)}`).join('') : '';
+  //   const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
+  //   const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
+  //   const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
+  //   const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
+  //   const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+  //   return { url: url, itemsPerLoad: itemsPerLoad }
+  // }
 
   async function handleSubmitSearch(e) {
     e.preventDefault();
