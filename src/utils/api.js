@@ -86,9 +86,15 @@ export async function getPageCount({
   filterData,
   itemsPerLoad,
   isSearching = false,
+  searchTerm,
+  search,
 }) {
   let url;
-  let endpoint = isSearching ? 'search_page_count' : 'page_count'
+  let endpoint = isSearching ? 'search_page_count' : 'page_count';
+  let searchString = "";
+  if (isSearching) {
+    searchString = `&q=${encodeURIComponent(searchTerm ? searchTerm : search)}`;
+  };
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('filterData' here) into the query params
   // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
@@ -135,7 +141,7 @@ export async function getPageCount({
 
     // always request one more than will be shown to check if more are available
     // endpoint for api queries from pages is to `archive_items/pages_index`
-    url = `/api/v1/archive_items/${endpoint}?${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
+    url = `/api/v1/archive_items/${endpoint}?${searchString}${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
   // }
   try {
     const res = await axios.get(rootURL + url)
@@ -338,7 +344,7 @@ export function createSearchUrl({
   itemsPerLoad,
   pageTag = null
 }) {
-  let searchString
+  let searchString;
   searchTerm ? searchString = searchTerm : searchString = search;
   const pageTagsArr = pageTag ? pageTag?.split(", ") : null;
   const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';

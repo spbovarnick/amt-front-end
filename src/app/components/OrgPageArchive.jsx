@@ -94,6 +94,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
           filterData: filters,
           itemsPerLoad: itemsPerLoad,
           isSearching: true,
+          searchTerm: searchTerm,
+          search: search,
         });
         paginationData && setPages (paginationData);
         paginationData && setShowPagination(paginationData > 1);

@@ -91,7 +91,9 @@ export default function AlbinaCommArchive({ associatedData }) {
         const paginationData = await getPageCount({
           filterData: filters,
           itemsPerLoad: args.itemsPerLoad,
-          isSearching: true
+          isSearching: true,
+          search,
+          searchTerm
         });
         paginationData && setPages(paginationData);
         paginationData && setShowPagination(paginationData > 1);
