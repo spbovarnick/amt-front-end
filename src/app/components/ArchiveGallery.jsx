@@ -5,7 +5,8 @@ import Pagination from "./Pagination";
 const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, searchTerm, isFocused, setIsFocused, focusedRef, pages, currentPage }) => {
 
 
-    if (!isLoaded && isFiltering || !isLoaded && isSearching) {
+    // if (!isLoaded && isFiltering || !isLoaded && isSearching) {
+    if (!isLoaded ) {
         return (
             <div className="archive-loader">
                 LOADING
@@ -47,30 +48,34 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
             </>
         )
     } else if (isLoaded && isSearching && archiveResults.length < 1 ) {
-        return (
-            <div className='no-results'>
-                { isFiltering ? <p>Sorry, no results were found that match <b>"{searchTerm}"</b> and the filters you selected</p> : <p>Sorry, no results were found that match <b>"{searchTerm}."</b></p> }
-                <div className='suggestions'>
-                    <p>Search suggestions:</p>
-                    <ul>
-                        { isFiltering > 0 && <li>Try selecting fewer filter options</li> }
-                        <li>Check your spelling</li>
-                        <li>Try more general words or phrases</li>
-                        <li>Try a shorter phrase</li>
-                        <li>Try different words or phrases that mean the same thing</li>
-                    </ul>
+        // setTimeout(() => {
+            return (
+                <div className='no-results'>
+                    { isFiltering ? <p>Sorry, no results were found that match <b>"{searchTerm}"</b> and the filters you selected</p> : <p>Sorry, no results were found that match <b>"{searchTerm}."</b></p> }
+                    <div className='suggestions'>
+                        <p>Search suggestions:</p>
+                        <ul>
+                            { isFiltering > 0 && <li>Try selecting fewer filter options</li> }
+                            <li>Check your spelling</li>
+                            <li>Try more general words or phrases</li>
+                            <li>Try a shorter phrase</li>
+                            <li>Try different words or phrases that mean the same thing</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        // }, 2000)
     } else if (isLoaded && isFiltering && archiveResults.length < 1) {
-        return (
-            <div className='no-results'>
-                <p>Sorry, no results were found matching the filters you selected</p>
-                <div className='suggestions'>
-                    <p>Try selecting fewer filter options, or using the search bar.</p>
+        // setTimeout(() => {
+            return (
+                <div className='no-results'>
+                    <p>Sorry, no results were found matching the filters you selected</p>
+                    <div className='suggestions'>
+                        <p>Try selecting fewer filter options, or using the search bar.</p>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        // }, 500);
     }
 }
 

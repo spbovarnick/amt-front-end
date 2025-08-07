@@ -8,7 +8,9 @@ import Carousel from '@/app/components/Carousel';
 import MissionStatement from '@/app/components/MissionStatement';
 import NavPage from "@/app/components/NavPage";
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
+// import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
+import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
+import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from "@/app/components/Drawer";
 import ArchiveGallery from '@/app/components/ArchiveGallery';
@@ -72,14 +74,17 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     (async () => {
       if (isFiltering > 0 && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
+        setArchiveResults([]);
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-        data && setIsLoaded(true);
+        // data && setIsLoaded(true);
         const paginationData = await getPageCount({filterData: filters, itemsPerLoad: itemsPerLoad, slug: slug });
         paginationData && setPages(paginationData)
         paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
-        setArchiveResults(data.adjustedResults);
+        data && setArchiveResults(data.adjustedResults);
+        data && setIsLoaded(true);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
+        setArchiveResults([]);
         const args = createSearchUrl({
           searchTerm: searchTerm,
           search: search,
@@ -89,7 +94,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
           pageTag: pageData.tag
         });
         const data = await getData(args.url, itemsPerLoad)
-        data && setIsLoaded(true)
+        // data && setIsLoaded(true)
         const paginationData = await getPageCount({
           filterData: filters,
           itemsPerLoad: itemsPerLoad,
@@ -99,7 +104,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         });
         paginationData && setPages (paginationData);
         paginationData && setShowPagination(paginationData > 1);
-        setArchiveResults(data.adjustedResults);
+        data && setArchiveResults(data.adjustedResults);
+        data && setIsLoaded(true);
       }
     })()
   }, [filters, isSearching])
@@ -117,7 +123,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     if (search) {
       setIsSearching(true)
       setSearchTerm(search)
-      archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
+      archiveGalleryEl.current?.scrollIntoView({ behavior: "instant" })
     } else {
       setIsSearching(false)
     }
@@ -139,7 +145,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams]);
 
   useEffect(() => {
-    isFiltering > 0 && archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
+    isFiltering > 0 && archiveGalleryEl.current?.scrollIntoView({ behavior: "instant" })
   }, [isFiltering])
 
   // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
@@ -164,7 +170,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
 
   useEffect(() => {
     if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
-      archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
+      archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
     }
   }, [archiveGalleryEl, archiveResults])
 
@@ -219,28 +225,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     }
     setAdvancedDrawerHeight(drawerTargetHeight);
   }
-
-  // function creates the query string and params by grabbing values from filters state object
-  // function createSearchUrl() {
-  //   let searchString
-  //   searchTerm ? searchString = searchTerm : searchString = search;
-  //   // pageTagString necessary to filter search results by content assoc'd to given page
-  //   const pageTagsArr = pageData.tag ? pageData.tag?.split(", ") : null;
-  //   const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';
-  //   const pageCollectionArr = pageData.collection ? pageData.collection?.split(", ") : null;
-  //   const pageCollectionString = pageCollectionArr ? pageCollectionArr.map((tag) => `&page_collections[]=${encodeURIComponent(tag)}`).join('') : "";
-  //   const yearString = filters.year ? `&year=${filters.year}` : '';
-  //   const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
-  //   const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
-  //   const locationString = filters.locations ? filters.locations.map((location) => `&locations[]=${encodeURIComponent(location.name)}`).join('') : '';
-  //   const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
-  //   // const collectionString = `&collections[]=${encodeURIComponent('Test Collection One')}`;
-  //   const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
-  //   const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
-  //   const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
-  //   const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}${pageTagString}${pageCollectionString}`;
-  //   return { url: url, itemsPerLoad: itemsPerLoad }
-  // }
 
   async function handleSubmitSearch(e) {
     e.preventDefault();
