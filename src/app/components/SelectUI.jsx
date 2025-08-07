@@ -1,7 +1,8 @@
 import dynamic from 'next/dynamic';
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
-import { mediumOptions, yearOptions } from '@/utils/api';
+// import { mediumOptions, yearOptions } from '@/utils/api'
+import { mediumOptions, yearOptions } from '@/utils/actions';
 
 // select moved to its own component to avoid ssr/csr conflicts from within albina-community-archive/page.js
 const SelectUI = ({ val, placeholderText, changeHandler, year=false, medium=false, searchParams  }) => {

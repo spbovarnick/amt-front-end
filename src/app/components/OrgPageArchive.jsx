@@ -2,13 +2,14 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useTransition } from 'react';
 import BannerPage from "@/app/components/BannerPage";
 import Carousel from '@/app/components/Carousel';
 import MissionStatement from '@/app/components/MissionStatement';
 import NavPage from "@/app/components/NavPage";
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
+import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
+import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from "@/app/components/Drawer";
 import ArchiveGallery from '@/app/components/ArchiveGallery';
@@ -64,7 +65,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [paramsChecked, setParamsChecked] = useState(false);
-  const currentPage = searchParams.get("page")
+  const currentPage = searchParams.get("page");
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from pages_index endpoint
@@ -72,14 +74,16 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     (async () => {
       if (isFiltering > 0 && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
+        setIsLoaded(false);
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-        data && setIsLoaded(true);
         const paginationData = await getPageCount({filterData: filters, itemsPerLoad: itemsPerLoad, slug: slug });
         paginationData && setPages(paginationData)
         paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
-        setArchiveResults(data.adjustedResults);
+        data && setArchiveResults(data.adjustedResults);
+        data && setIsLoaded(true);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
+        setIsLoaded(false);
         const args = createSearchUrl({
           searchTerm: searchTerm,
           search: search,
@@ -89,7 +93,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
           pageTag: pageData.tag
         });
         const data = await getData(args.url, itemsPerLoad)
-        data && setIsLoaded(true)
         const paginationData = await getPageCount({
           filterData: filters,
           itemsPerLoad: itemsPerLoad,
@@ -99,7 +102,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         });
         paginationData && setPages (paginationData);
         paginationData && setShowPagination(paginationData > 1);
-        setArchiveResults(data.adjustedResults);
+        data && setArchiveResults(data.adjustedResults);
+        data && setIsLoaded(true);
       }
     })()
   }, [filters, isSearching])
@@ -117,7 +121,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     if (search) {
       setIsSearching(true)
       setSearchTerm(search)
-      archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
+      archiveGalleryEl.current?.scrollIntoView({ behavior: "instant" })
     } else {
       setIsSearching(false)
     }
@@ -139,7 +143,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams]);
 
   useEffect(() => {
-    isFiltering > 0 && archiveGalleryEl.current?.scrollIntoView({ behavior: "smooth" })
+    isFiltering > 0 && archiveGalleryEl.current?.scrollIntoView({ behavior: "instant" })
   }, [isFiltering])
 
   // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
@@ -164,7 +168,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
 
   useEffect(() => {
     if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
-      archiveGalleryEl.current.scrollIntoView({ behavior: "smooth" })
+      archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
     }
   }, [archiveGalleryEl, archiveResults])
 
@@ -174,6 +178,43 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   function pageReset() {
     setIsLoaded(false);
   }
+
+  function handleYearAndMediumSelect(val) {
+    pageReset();
+    let param;
+    // check val.value against year and medium options
+    // to determine which Select element is being used
+    // and set `param`
+    yearOptions.forEach((y, i) => {
+      if (y.value === val.value) {
+        param = 'year';
+      };
+    });
+    mediumOptions.forEach((m, i) => {
+      if (m.value === val.value) {
+        param = 'medium';
+      };
+    });
+    // if "Any" selected, 'year' or 'medium' param cleared from URL
+    if (val.value === ""){
+      searchParams.delete(param);
+      // navigates to updated URL
+      const newParams = searchParams.toString();
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
+    } else {
+      // sets 'year' or 'medium' URLSearchParam
+      searchParams.set(param, val.value);
+      // navigates to updated URL
+      const newParams = searchParams.toString();
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
+    }
+  }
+
+
 
   function handleYearSelect(val) {
     pageReset();
@@ -219,28 +260,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     }
     setAdvancedDrawerHeight(drawerTargetHeight);
   }
-
-  // function creates the query string and params by grabbing values from filters state object
-  // function createSearchUrl() {
-  //   let searchString
-  //   searchTerm ? searchString = searchTerm : searchString = search;
-  //   // pageTagString necessary to filter search results by content assoc'd to given page
-  //   const pageTagsArr = pageData.tag ? pageData.tag?.split(", ") : null;
-  //   const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';
-  //   const pageCollectionArr = pageData.collection ? pageData.collection?.split(", ") : null;
-  //   const pageCollectionString = pageCollectionArr ? pageCollectionArr.map((tag) => `&page_collections[]=${encodeURIComponent(tag)}`).join('') : "";
-  //   const yearString = filters.year ? `&year=${filters.year}` : '';
-  //   const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
-  //   const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
-  //   const locationString = filters.locations ? filters.locations.map((location) => `&locations[]=${encodeURIComponent(location.name)}`).join('') : '';
-  //   const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
-  //   // const collectionString = `&collections[]=${encodeURIComponent('Test Collection One')}`;
-  //   const commGroupString = filters.comm_groups ? filters.comm_groups.map((comm_group) => `&comm_groups[]=${encodeURIComponent(comm_group.name)}`).join('') : '';
-  //   const tagString = filters.tags ? filters.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join('') : '';
-  //   const offset = currentPage < 1 ? currentPage * itemsPerLoad : (currentPage - 1) * itemsPerLoad;
-  //   const url = `/api/v1/archive_items/search?limit=${itemsPerLoad + 1}&offset=${offset}&q=${encodeURIComponent(searchString)}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}${pageTagString}${pageCollectionString}`;
-  //   return { url: url, itemsPerLoad: itemsPerLoad }
-  // }
 
   async function handleSubmitSearch(e) {
     e.preventDefault();
@@ -340,7 +359,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   placeholder="Select years..."
                   val={filterYear}
                   year={true}
-                  changeHandler={handleYearSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={yearSearchParams}
                   />
               </div>
@@ -350,7 +369,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   placeholder="Select medium..."
                   val={filterMedium}
                   medium={true}
-                  changeHandler={handleMediumSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={mediumSearchParams}
                 />
               </div>

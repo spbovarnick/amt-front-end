@@ -7,7 +7,8 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
-import { clearAllFilters } from "@/utils/api";
+// import { clearAllFilters } from "@/utils/api";
+import { clearAllFilters } from '@/utils/actions';
 import classnames from "classnames";
 import Image from 'next/image';
 

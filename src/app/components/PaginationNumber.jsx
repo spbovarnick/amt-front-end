@@ -13,6 +13,7 @@ export default function PaginationNumber ({
       className={`numEl ${isActive ? "current_page" : ""} ${isDisabled ? "ellipsis" : ""}`}
       id={page}
       href={href}
+      scroll={false}
     >
       {page}
     </Link>
