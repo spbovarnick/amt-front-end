@@ -13,6 +13,7 @@ export default function PaginationArrow ({ href, direction, isDisabled }){
     <Link
       href={href}
       className={`arrow_a ${isDisabled ? "disabled-pagination" : ""}`}
+      scroll={false}
     >
       <Image
         src={file}
