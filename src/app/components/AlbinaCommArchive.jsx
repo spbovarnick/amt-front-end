@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useTransition } from 'react';
 import Banner from "@/app/components/Banner"
 import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
 import NavPage from "@/app/components/NavPage"
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
-// import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
 import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
 import Drawer from '@/app/components/Drawer';
@@ -63,7 +62,8 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [paramsChecked, setParamsChecked] = useState(false);
-  const currentPage = searchParams.get("page")
+  const currentPage = searchParams.get("page");
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -71,9 +71,8 @@ export default function AlbinaCommArchive({ associatedData }) {
     (async () => {
       if (isFiltering && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
-        setArchiveResults([]);
+        setIsLoaded(false);
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
-        // data && setIsLoaded(true)
         const paginationData = await getPageCount({ filterData: filters, itemsPerLoad: itemsPerLoad, })
         paginationData && setPages(paginationData)
         paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
@@ -81,7 +80,7 @@ export default function AlbinaCommArchive({ associatedData }) {
         data && setIsLoaded(true)
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-        setArchiveResults([]);
+        setIsLoaded(false);
         const args = createSearchUrl({
           searchTerm: searchTerm,
           search: search,
@@ -90,7 +89,6 @@ export default function AlbinaCommArchive({ associatedData }) {
           itemsPerLoad: itemsPerLoad
         });
         const data = await getData(args.url, args.itemsPerLoad);
-        // data && setIsLoaded(true);
         const paginationData = await getPageCount({
           filterData: filters,
           itemsPerLoad: args.itemsPerLoad,
@@ -177,42 +175,39 @@ export default function AlbinaCommArchive({ associatedData }) {
     setIsLoaded(false);
   }
 
-  function handleYearSelect(val) {
+  function handleYearAndMediumSelect(val) {
     pageReset();
-    // if "Any" selected, 'year' param cleared from URL
-    if (val.value == "") {
-      // deletes 'year' URLSearchParam
-      searchParams.delete('year')
-      // navigates to updated URL
+    let param;
+    // check val.value against year and medium options
+    // to determine which Select element is being used
+    // and set `param`
+    yearOptions.forEach((y, i) => {
+      if (y.value === val.value) {
+        param = 'year';
+      };
+    });
+    mediumOptions.forEach((m, i) => {
+      if (m.value === val.value) {
+        param = 'medium';
+      };
+    });
+    // if "Any" selected, 'year' or 'medium' param cleared from URL
+    if (val.value === ""){
+      searchParams.delete(param);
       const newParams = searchParams.toString();
-      router.push(`${pathname}?${newParams}`, { scroll: false });
-      setFilterYear({ value: "", label: "Any" })
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
     } else {
-      // sets 'year' URLSearchParam
-      searchParams.set('year', val.value)
+      // sets 'year' or 'medium' URLSearchParam
+      searchParams.set(param, val.value);
       // navigates to updated URL
       const newParams = searchParams.toString();
-      router.push(`${pathname}?${newParams}`, { scroll: false });
-    }
-  }
-
-  function handleMediumSelect(val) {
-    pageReset();
-    // if "Any" selected, 'medium' param cleared from URL
-    if (val.value == "") {
-      // deletes 'medium' URLSearchParam
-      searchParams.delete('medium')
-      // navigates to updated URL
-      const newParams = searchParams.toString();
-      router.push(`${pathname}?${newParams}`, { scroll: false });
-    } else {
-      // sets 'medium' URLSearchParam
-      searchParams.set('medium', val.value)
-      // navigates to updated URL
-      const newParams = searchParams.toString();
-      router.push(`${pathname}?${newParams}`, { scroll: false })
-    }
-  }
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
+    };
+  };
 
   function handleToggleAdvancedDrawer() {
     let drawerTargetHeight = 0;
@@ -233,14 +228,18 @@ export default function AlbinaCommArchive({ associatedData }) {
     // navigate to new URL based on updated params
     const searchPath = searchParams.toString();
     searchParams.delete("page");
-    router.push(`${pathname}?${searchPath}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${searchPath}`, { scroll: false });
+    });
   }
 
   function clearSearch() {
     setSearchTerm('')
     searchParams.delete("search");
     const newParams = searchParams.toString();
-    router.push(`${pathname}?${newParams}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${newParams}`, { scroll: false });
+    });
   }
 
   function handleClickOutsideMenu(event) {
@@ -308,7 +307,7 @@ export default function AlbinaCommArchive({ associatedData }) {
                   placeholderText="Select years..."
                   val={filterYear}
                   year={true}
-                  changeHandler={handleYearSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={yearSearchParams}
                 />
               </div>
@@ -318,7 +317,7 @@ export default function AlbinaCommArchive({ associatedData }) {
                   placeholderText="Select years..."
                   val={filterMedium}
                   medium={true}
-                  changeHandler={handleMediumSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={mediumSearchParams}
                 />
               </div>
@@ -408,7 +407,7 @@ export default function AlbinaCommArchive({ associatedData }) {
               isFocused={isFocused}
               setIsFocused={setIsFocused}
               focusedRef={focusedRef}
-              currentPage={currentPage}
+              isPending={isPending}
             />
           </div>
         </div>

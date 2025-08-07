@@ -1,23 +1,14 @@
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ArchiveItem from "./ArchiveItem";
 import Pagination from "./Pagination";
+import LoadingSpinner from "./LoadingSpinner";
 
-const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, searchTerm, isFocused, setIsFocused, focusedRef, pages, currentPage }) => {
+const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, showPagination, searchTerm, isFocused, setIsFocused, focusedRef, pages, isPending }) => {
 
 
-    // if (!isLoaded && isFiltering || !isLoaded && isSearching) {
-    if (!isLoaded ) {
+    if (!isLoaded && isFiltering || !isLoaded && isSearching || isPending ) {
         return (
-            <div className="archive-loader">
-                LOADING
-                <div className="spinner-box">
-                    <div className="pulse-container">
-                        <div className="pulse-bubble pulse-bubble-1"></div>
-                        <div className="pulse-bubble pulse-bubble-2"></div>
-                        <div className="pulse-bubble pulse-bubble-3"></div>
-                    </div>
-                </div>
-            </div>
+            <LoadingSpinner />
         )
     } else if (isLoaded && isFiltering && archiveResults.length > 0 || isLoaded && isSearching && archiveResults.length > 0) {
         return (
@@ -41,14 +32,12 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                     <div className="archive-pagination_wrapper">
                         <Pagination
                             totalPages={pages}
-                            currentPage={currentPage}
                         />
                     </div>
                 }
             </>
         )
     } else if (isLoaded && isSearching && archiveResults.length < 1 ) {
-        // setTimeout(() => {
             return (
                 <div className='no-results'>
                     { isFiltering ? <p>Sorry, no results were found that match <b>"{searchTerm}"</b> and the filters you selected</p> : <p>Sorry, no results were found that match <b>"{searchTerm}."</b></p> }
@@ -64,9 +53,7 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                     </div>
                 </div>
             )
-        // }, 2000)
     } else if (isLoaded && isFiltering && archiveResults.length < 1) {
-        // setTimeout(() => {
             return (
                 <div className='no-results'>
                     <p>Sorry, no results were found matching the filters you selected</p>
@@ -75,7 +62,6 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                     </div>
                 </div>
             )
-        // }, 500);
     }
 }
 

@@ -2,13 +2,12 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useTransition } from 'react';
 import BannerPage from "@/app/components/BannerPage";
 import Carousel from '@/app/components/Carousel';
 import MissionStatement from '@/app/components/MissionStatement';
 import NavPage from "@/app/components/NavPage";
 import ArchiveItemModal from '@/app/components/ArchiveItemModal';
-// import { updateArchiveItems, getData, clearAllFilters, yearOptions, mediumOptions, getPageCount, createSearchUrl } from '@/utils/api';
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
 import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
@@ -66,7 +65,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [paramsChecked, setParamsChecked] = useState(false);
-  const currentPage = searchParams.get("page")
+  const currentPage = searchParams.get("page");
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from pages_index endpoint
@@ -74,9 +74,8 @@ export default function OrgPageArchive({ pageData, associatedData }) {
     (async () => {
       if (isFiltering > 0 && !isSearching) {
         // this block only refreshes archiveResults with fresh data when user only toggling filters
-        setArchiveResults([]);
+        setIsLoaded(false);
         const data = await updateArchiveItems(currentPage, itemsPerLoad, filters, slug);
-        // data && setIsLoaded(true);
         const paginationData = await getPageCount({filterData: filters, itemsPerLoad: itemsPerLoad, slug: slug });
         paginationData && setPages(paginationData)
         paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
@@ -84,7 +83,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
         data && setIsLoaded(true);
       } else if (isSearching) {
         // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-        setArchiveResults([]);
+        setIsLoaded(false);
         const args = createSearchUrl({
           searchTerm: searchTerm,
           search: search,
@@ -94,7 +93,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
           pageTag: pageData.tag
         });
         const data = await getData(args.url, itemsPerLoad)
-        // data && setIsLoaded(true)
         const paginationData = await getPageCount({
           filterData: filters,
           itemsPerLoad: itemsPerLoad,
@@ -180,6 +178,43 @@ export default function OrgPageArchive({ pageData, associatedData }) {
   function pageReset() {
     setIsLoaded(false);
   }
+
+  function handleYearAndMediumSelect(val) {
+    pageReset();
+    let param;
+    // check val.value against year and medium options
+    // to determine which Select element is being used
+    // and set `param`
+    yearOptions.forEach((y, i) => {
+      if (y.value === val.value) {
+        param = 'year';
+      };
+    });
+    mediumOptions.forEach((m, i) => {
+      if (m.value === val.value) {
+        param = 'medium';
+      };
+    });
+    // if "Any" selected, 'year' or 'medium' param cleared from URL
+    if (val.value === ""){
+      searchParams.delete(param);
+      // navigates to updated URL
+      const newParams = searchParams.toString();
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
+    } else {
+      // sets 'year' or 'medium' URLSearchParam
+      searchParams.set(param, val.value);
+      // navigates to updated URL
+      const newParams = searchParams.toString();
+      startTransition(() => {
+        router.push(`${pathname}?${newParams}`, { scroll: false });
+      });
+    }
+  }
+
+
 
   function handleYearSelect(val) {
     pageReset();
@@ -324,7 +359,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   placeholder="Select years..."
                   val={filterYear}
                   year={true}
-                  changeHandler={handleYearSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={yearSearchParams}
                   />
               </div>
@@ -334,7 +369,7 @@ export default function OrgPageArchive({ pageData, associatedData }) {
                   placeholder="Select medium..."
                   val={filterMedium}
                   medium={true}
-                  changeHandler={handleMediumSelect}
+                  changeHandler={handleYearAndMediumSelect}
                   searchParams={mediumSearchParams}
                 />
               </div>

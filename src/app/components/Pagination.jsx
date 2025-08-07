@@ -3,8 +3,6 @@
 import { useSearchParams, usePathname } from "next/navigation"
 import { useState, useEffect } from "react";
 import PaginationArrow from "./PaginationArrow"
-import Link from "next/link";
-// import { generatePagination } from "@/utils/api";
 import { generatePagination } from "@/utils/actions";
 import PaginationNumber from "./PaginationNumber";
 
