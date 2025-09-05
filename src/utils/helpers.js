@@ -6,12 +6,13 @@ export function getCloudfrontUrl(
 ) {
   // takes an activeRecord attachment path and returns a Cloudfront URL
   const url = new URL(path);
+  let key = decodeURIComponent(url.pathname.replace(/^\//, ""));
   if (process.env.NEXT_PUBLIC_TARGET_DB === "development") {
     return path
   } else {
     const request = {
       bucket: process.env.S3_BUCKET, // S3 bucket name
-      key: url.pathname.replace(/^\//, ""), // path to your file on the S3 bucket (ex. photos/face1.png)
+      key: key, // path to your file on the S3 bucket (ex. photos/face1.png)
       edits: {
         webp: true,
         jpeg: true,
