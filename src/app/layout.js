@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
 import './styles/application.scss';
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       <IndexPage />
       <body>
         {children}
+        <Analytics />
       </body>
     </html>
   );
