@@ -12,7 +12,9 @@ const ModalCarousel = ({item}) => {
     const [carouselItems, setCarouselItems] = useState([]);
     const [carouselFileNames, setCarouselFileNames] = useState([]);
     const [slideOffset, setSlideOffset] = useState(0)
+    const [redirectLinks, setRedirectLinks] = useState([])
     const carouselRef = useRef();
+
 
     useEffect(() => {
         const {
@@ -21,6 +23,8 @@ const ModalCarousel = ({item}) => {
             medium_photos_file_names = [],
             content_file_names = [],
             content_file_urls = [],
+            redirect_links = [],
+            content_redirect
         } = item;
 
         let items = [];
@@ -35,17 +39,21 @@ const ModalCarousel = ({item}) => {
             filenames = [...content_file_names];
         }
 
-        if (medium === "audio") {
-            if (content_file_urls.length <= 5) {
-                items = [...items, content_file_urls];
-            } else {
-                const slides = divideSlides(content_file_urls);
-                items = [...items, ...slides];
-                const dividedNames = divideSlides(content_file_names, slideOffset)
-                filenames = [...medium_photos_file_names, ...dividedNames]
-            }
+        if (content_redirect) {
+            setRedirectLinks(redirect_links)
         } else {
-            items = [...items, ...content_file_urls];
+            if (medium === "audio") {
+                if (content_file_urls.length <= 5) {
+                    items = [...items, content_file_urls];
+                } else {
+                    const slides = divideSlides(content_file_urls);
+                    items = [...items, ...slides];
+                    const dividedNames = divideSlides(content_file_names, slideOffset)
+                    filenames = [...medium_photos_file_names, ...dividedNames]
+                }
+            } else {
+                items = [...items, ...content_file_urls];
+            }
         }
 
         setCarouselItems(items);

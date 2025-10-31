@@ -140,7 +140,7 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
             <div className="modalContent">
                 <div className="modalArchiveItem">
                     <div className="view-pane" ref={viewPaneRef} >
-                        {modalItem?.content_file_urls[0] && viewContent &&
+                        {modalItem?.content_file_urls[0] || modalItem?.redirect_links[0] && viewContent &&
                             <ModalCarousel item={modalItem} tabRef={tabRef.current}/>
                         }
                         {locations && viewMap &&
