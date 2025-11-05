@@ -39,21 +39,29 @@ const ModalCarousel = ({item}) => {
             filenames = [...content_file_names];
         }
 
+
+        if (medium === "audio" && !content_redirect && content_file_urls.length > 0) {
+            if (content_file_urls.length <= 5) {
+                items = [...items, content_file_urls];
+            } else {
+                const slides = divideSlides(content_file_urls);
+                items = [...items, ...slides];
+                const dividedNames = divideSlides(content_file_names, slideOffset)
+                filenames = [...medium_photos_file_names, ...dividedNames]
+            }
+        } else {
+            items = [...items, ...content_file_urls];
+        }
+
         if (content_redirect) {
             setRedirectLinks(redirect_links)
-        } else {
-            if (medium === "audio") {
-                if (content_file_urls.length <= 5) {
-                    items = [...items, content_file_urls];
-                } else {
-                    const slides = divideSlides(content_file_urls);
-                    items = [...items, ...slides];
-                    const dividedNames = divideSlides(content_file_names, slideOffset)
-                    filenames = [...medium_photos_file_names, ...dividedNames]
-                }
+            if (redirect_links.length <= 5) {
+                items = [...items, redirect_links]
             } else {
-                items = [...items, ...content_file_urls];
+                const slides = divideSlides(redirect_links)
+                items = [...items, ...slides]
             }
+            // items = [ ...items, ...]
         }
 
         setCarouselItems(items);
@@ -110,7 +118,15 @@ const ModalCarousel = ({item}) => {
     let carousel
     if (carouselItems.length) {
         carousel = <div className='modal-carousel' >
-            {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
+            { carouselItems.length > 1 &&
+                <Image
+                    className='modal-carousel-btns'
+                    src={chevronLeft.src}
+                    width={24} height={24}
+                    alt="Previous image icon"
+                    onClick={prevImg}
+                />
+            }
             <div className='carousel-content' ref={carouselRef}>
                 {getFileType(carouselFileNames[fileIndex]) === "image" &&
                     <FullscreenImg
@@ -123,16 +139,24 @@ const ModalCarousel = ({item}) => {
                     />
                 }
                 { getFileType(carouselFileNames[fileIndex]) === "video" &&
-                    <video key={fileIndex} controls controlsList="nodownload" className="modalVideo">
+                    <video
+                        key={fileIndex}
+                        controls controlsList="nodownload"
+                        className="modalVideo"
+                    >
                         <source src={carouselItems[fileIndex]} type="video/mp4" />
                         Sorry, your browser doesn't support embedded videos.
                     </video>
                 }
                 {getFileType(carouselFileNames[fileIndex]) === "pdf" &&
-                    <iframe className="modalArticle" src={`${item?.content_file_urls[0]}#toolbar=0`} />
+                    <iframe
+                        className="modalArticle"
+                        src={`${item?.content_file_urls[0]}#toolbar=0`}
+                    />
                 }
-                {item.medium === "audio" && typeof carouselItems[fileIndex] === 'object'  &&
+                {item.medium === "audio" && !item.content_redirect && typeof carouselItems[fileIndex] === 'object'  &&
                     <div className='audio-container'>
+                        fart
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
                                 <span>{audioClipTitle(idx)}</span>
@@ -146,6 +170,15 @@ const ModalCarousel = ({item}) => {
                             </div>
                         ))}
                     </div>
+                }
+                {item.content_redirect && typeof carouselItems[fileIndex] === 'object' &&
+                    <ul>
+                        {carouselItems[fileIndex].map((rd, idx) => (
+                            <li key={idx}>
+                                <a href={rd.url} target="_blank">fart {rd.url_label}</a>
+                            </li>
+                        ))}
+                    </ul>
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
             </div>
