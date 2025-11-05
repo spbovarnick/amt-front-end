@@ -156,7 +156,6 @@ const ModalCarousel = ({item}) => {
                 }
                 {item.medium === "audio" && !item.content_redirect && typeof carouselItems[fileIndex] === 'object'  &&
                     <div className='audio-container'>
-                        fart
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
                                 <span>{audioClipTitle(idx)}</span>
