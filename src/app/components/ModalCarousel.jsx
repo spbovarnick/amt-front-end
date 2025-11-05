@@ -172,10 +172,17 @@ const ModalCarousel = ({item}) => {
                     </div>
                 }
                 {item.content_redirect && typeof carouselItems[fileIndex] === 'object' &&
-                    <ul>
+                    <ul className='redirectList'>
+                        <div>Links to Externally Hosted Content</div>
                         {carouselItems[fileIndex].map((rd, idx) => (
-                            <li key={idx}>
-                                <a href={rd.url} target="_blank">fart {rd.url_label}</a>
+                            <li key={idx} className="redirectListItem">
+                                <a
+                                    href={rd.url}
+                                    target="_blank"
+                                    className="redirectListItemLink"
+                                >
+                                    {rd.url_label}
+                                </a>
                             </li>
                         ))}
                     </ul>
