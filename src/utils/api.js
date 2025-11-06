@@ -291,9 +291,9 @@ export async function sendArchiveItemFeedback(comment, title, id) {
   .then(response => response.json())
   .then(data => {
     if (data.status === 'success') {
-        alert(data.message)
+        console.log(data.message)
     } else {
-        alert(data.error)
+        console.log(data.error)
     }
   })
   .catch(error => {
