@@ -1,5 +1,6 @@
 'use client';
 
+import toast from 'react-hot-toast'
 import React, { Fragment, useRef } from 'react';
 import Link from 'next/link';
 import Modal from 'react-modal';
@@ -109,9 +110,14 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
         }
     }
 
-    function handleCommentSubmission(e) {
+    async function handleCommentSubmission(e) {
         e.preventDefault();
-        sendArchiveItemFeedback(commentValue, modalItem.title, id)
+        const result = await sendArchiveItemFeedback(commentValue, modalItem.title, id)
+        if (result.status === "success") {
+            alert("Email sent!")
+        } else {
+            alert("Problem sending email. Please try again or contact us.")
+        }
         setCommentValue('');
     }
 
