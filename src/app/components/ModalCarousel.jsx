@@ -17,8 +17,6 @@ const ModalCarousel = ({item}) => {
     const [itemTitle, setItemTitle] = useState("");
     const carouselRef = useRef();
 
-    console.log('here', redirectBackground)
-
     useEffect(() => {
         const {
             medium,
@@ -202,7 +200,7 @@ const ModalCarousel = ({item}) => {
                             alt={`Media photo for ${itemTitle}`}
                             className="redirect-bg"
                             style={{
-                                width: "width: 100%",
+                                width: "100%",
                                 height: "auto",
                             }}
                             width={500}
