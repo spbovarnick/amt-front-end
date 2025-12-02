@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { getCloudfrontUrl } from '@/utils/helpers';
 import { useState, useEffect, useRef } from 'react';
 import chevronRight from 'public/images/chevron-right.svg'
 import chevronLeft from 'public/images/chevron-left.svg'
@@ -196,7 +197,7 @@ const ModalCarousel = ({item}) => {
                         </div>
                         {redirectBackground &&
                             <Image
-                                src={redirectBackground}
+                                src={getCloudfrontUrl(redirectBackground, carouselWidth * 2)}
                                 alt={`Media photo for ${itemTitle}`}
                                 className="redirect-bg"
                                 sizes="100vw"
