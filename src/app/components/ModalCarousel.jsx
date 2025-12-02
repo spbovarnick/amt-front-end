@@ -194,18 +194,20 @@ const ModalCarousel = ({item}) => {
                                 ))}
                             </ul>
                         </div>
-                        {redirectBackground && <Image
-                            src={redirectBackground}
-                            sizes="50vw"
-                            alt={`Media photo for ${itemTitle}`}
-                            className="redirect-bg"
-                            style={{
-                                width: "100%",
-                                height: "auto",
-                            }}
-                            width={500}
-                            height={500}
-                        />}
+                        {redirectBackground &&
+                            <Image
+                                src={redirectBackground}
+                                alt={`Media photo for ${itemTitle}`}
+                                className="redirect-bg"
+                                sizes="100vw"
+                                style={{
+                                    width: "100%",
+                                    height: "auto",
+                                }}
+                                width={500}
+                                height={500}
+                            />
+                        }
                     </div>
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
