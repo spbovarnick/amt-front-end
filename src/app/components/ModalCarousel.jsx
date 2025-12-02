@@ -14,7 +14,10 @@ const ModalCarousel = ({item}) => {
     const [slideOffset, setSlideOffset] = useState(0)
     const [redirectLinks, setRedirectLinks] = useState([])
     const [redirectBackground, setRedirectBackground] = useState();
+    const [itemTitle, setItemTitle] = useState("");
     const carouselRef = useRef();
+
+    console.log('here', redirectBackground)
 
     useEffect(() => {
         const {
@@ -24,12 +27,14 @@ const ModalCarousel = ({item}) => {
             content_file_names = [],
             content_file_urls = [],
             redirect_links = [],
-            content_redirect
+            content_redirect,
+            title,
         } = item;
 
         let items = [];
         let filenames = [];
 
+        title && setItemTitle(title);
 
         if (medium_photo_urls.length > 0 && !content_redirect) {
             items = [...medium_photo_urls];
@@ -194,7 +199,7 @@ const ModalCarousel = ({item}) => {
                         {redirectBackground && <Image
                             src={redirectBackground}
                             sizes="50vw"
-                            alt="Media photo for "
+                            alt={`Media photo for ${itemTitle}`}
                             className="redirect-bg"
                             style={{
                                 width: "width: 100%",
