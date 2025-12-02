@@ -13,8 +13,8 @@ const ModalCarousel = ({item}) => {
     const [carouselFileNames, setCarouselFileNames] = useState([]);
     const [slideOffset, setSlideOffset] = useState(0)
     const [redirectLinks, setRedirectLinks] = useState([])
+    const [redirectBackground, setRedirectBackground] = useState();
     const carouselRef = useRef();
-
 
     useEffect(() => {
         const {
@@ -31,7 +31,7 @@ const ModalCarousel = ({item}) => {
         let filenames = [];
 
 
-        if (medium_photo_urls.length > 0) {
+        if (medium_photo_urls.length > 0 && !content_redirect) {
             items = [...medium_photo_urls];
             filenames = [...medium_photos_file_names, ...content_file_names];
             setSlideOffset(medium_photo_urls.length)
@@ -55,13 +55,13 @@ const ModalCarousel = ({item}) => {
 
         if (content_redirect) {
             setRedirectLinks(redirect_links)
+            medium_photo_urls.length > 0 && setRedirectBackground(medium_photo_urls[0]);
             if (redirect_links.length <= 5) {
                 items = [...items, redirect_links]
             } else {
                 const slides = divideSlides(redirect_links)
                 items = [...items, ...slides]
             }
-            // items = [ ...items, ...]
         }
 
         setCarouselItems(items);
@@ -171,20 +171,39 @@ const ModalCarousel = ({item}) => {
                     </div>
                 }
                 {item.content_redirect && typeof carouselItems[fileIndex] === 'object' &&
-                    <ul className='redirectList'>
-                        <div>Links to Externally Hosted Content</div>
-                        {carouselItems[fileIndex].map((rd, idx) => (
-                            <li key={idx} className="redirectListItem">
-                                <a
-                                    href={rd.url}
-                                    target="_blank"
-                                    className="redirectListItemLink"
-                                >
-                                    {rd.url_label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                    <div className='redirect-frame'>
+                        <div className="list-container">
+                            <ul className='redirect-list'>
+                                {carouselItems[fileIndex].map((rd, idx) => (
+                                    <li
+                                        key={idx}
+                                        className="redirectListItem"
+                                        title="Click link to see archive material"
+                                    >
+                                        <a
+                                            href={rd.url}
+                                            target="_blank"
+                                            className="redirectListItemLink"
+                                        >
+                                            {rd.url_label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        {redirectBackground && <Image
+                            src={redirectBackground}
+                            sizes="50vw"
+                            alt="Media photo for "
+                            className="redirect-bg"
+                            style={{
+                                width: "width: 100%",
+                                height: "auto",
+                            }}
+                            width={500}
+                            height={500}
+                        />}
+                    </div>
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
             </div>
