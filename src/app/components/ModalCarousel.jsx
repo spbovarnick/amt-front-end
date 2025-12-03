@@ -209,6 +209,18 @@ const ModalCarousel = ({item}) => {
                                 height={500}
                             />
                         }
+                        {!redirectBackground &&
+                            <div
+                                style={{
+                                    width: "33vw",
+                                    height: "33vh",
+                                    borderRadius: "4px",
+                                    position: "relative",
+                                    backgroundColor: "#00000099",
+                                }}
+                            ></div>
+
+                        }
                     </div>
                 }
                 {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
