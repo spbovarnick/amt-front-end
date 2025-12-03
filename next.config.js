@@ -22,6 +22,10 @@ const nextConfig = {
         hostname: 'd3qyzflaqh7cpk.cloudfront.net'
       },
       {
+        protocol: 'https',
+        hostname: 'd1wllgx6trucp.cloudfront.net'
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3000'

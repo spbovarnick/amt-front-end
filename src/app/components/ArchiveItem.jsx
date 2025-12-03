@@ -125,7 +125,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                                 width={800}
                                 height={1000}
                                 placeholder="blur"
-                                blurDataURL={item.content_file_urls[0]}
+                                blurDataURL={item.poster_url}
                                 alt={item.title}
                                 loading="lazy"
                                 draggable="false"
@@ -153,7 +153,22 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                                 width={800}
                                 height={1000}
                                 placeholder="blur"
-                                blurDataURL={item.content_file_urls[0]}
+                                blurDataURL={item.poster_url}
+                                alt={item.title}
+                                loading="lazy"
+                                draggable="false"
+                            />
+                        </div>
+                    )}
+
+                    {item.content_redirect && item.redirect_links[0] && item.poster_url && (
+                        <div className="cmpt-archive-item__thumb">
+                            <Image
+                                src={getCloudfrontUrl(item.poster_url, 800)}
+                                width={800}
+                                height={1000}
+                                placeholder="blur"
+                                blurDataURL={item.poster_url}
                                 alt={item.title}
                                 loading="lazy"
                                 draggable="false"

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { getCloudfrontUrl } from '@/utils/helpers';
 import { useState, useEffect, useRef } from 'react';
 import chevronRight from 'public/images/chevron-right.svg'
 import chevronLeft from 'public/images/chevron-left.svg'
@@ -12,6 +13,9 @@ const ModalCarousel = ({item}) => {
     const [carouselItems, setCarouselItems] = useState([]);
     const [carouselFileNames, setCarouselFileNames] = useState([]);
     const [slideOffset, setSlideOffset] = useState(0)
+    const [redirectLinks, setRedirectLinks] = useState([])
+    const [redirectBackground, setRedirectBackground] = useState();
+    const [itemTitle, setItemTitle] = useState("");
     const carouselRef = useRef();
 
     useEffect(() => {
@@ -21,13 +25,17 @@ const ModalCarousel = ({item}) => {
             medium_photos_file_names = [],
             content_file_names = [],
             content_file_urls = [],
+            redirect_links = [],
+            content_redirect,
+            title,
         } = item;
 
         let items = [];
         let filenames = [];
 
+        title && setItemTitle(title);
 
-        if (medium_photo_urls.length > 0) {
+        if (medium_photo_urls.length > 0 && !content_redirect) {
             items = [...medium_photo_urls];
             filenames = [...medium_photos_file_names, ...content_file_names];
             setSlideOffset(medium_photo_urls.length)
@@ -35,7 +43,8 @@ const ModalCarousel = ({item}) => {
             filenames = [...content_file_names];
         }
 
-        if (medium === "audio") {
+
+        if (medium === "audio" && !content_redirect && content_file_urls.length > 0) {
             if (content_file_urls.length <= 5) {
                 items = [...items, content_file_urls];
             } else {
@@ -46,6 +55,17 @@ const ModalCarousel = ({item}) => {
             }
         } else {
             items = [...items, ...content_file_urls];
+        }
+
+        if (content_redirect) {
+            setRedirectLinks(redirect_links)
+            medium_photo_urls.length > 0 && setRedirectBackground(medium_photo_urls[0]);
+            if (redirect_links.length <= 5) {
+                items = [...items, redirect_links]
+            } else {
+                const slides = divideSlides(redirect_links)
+                items = [...items, ...slides]
+            }
         }
 
         setCarouselItems(items);
@@ -102,7 +122,15 @@ const ModalCarousel = ({item}) => {
     let carousel
     if (carouselItems.length) {
         carousel = <div className='modal-carousel' >
-            {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronLeft.src} width={24} height={24} alt="Previous image icon" onClick={prevImg} />}
+            { carouselItems.length > 1 &&
+                <Image
+                    className='modal-carousel-btns'
+                    src={chevronLeft.src}
+                    width={24} height={24}
+                    alt="Previous image icon"
+                    onClick={prevImg}
+                />
+            }
             <div className='carousel-content' ref={carouselRef}>
                 {getFileType(carouselFileNames[fileIndex]) === "image" &&
                     <FullscreenImg
@@ -115,15 +143,22 @@ const ModalCarousel = ({item}) => {
                     />
                 }
                 { getFileType(carouselFileNames[fileIndex]) === "video" &&
-                    <video key={fileIndex} controls controlsList="nodownload" className="modalVideo">
+                    <video
+                        key={fileIndex}
+                        controls controlsList="nodownload"
+                        className="modalVideo"
+                    >
                         <source src={carouselItems[fileIndex]} type="video/mp4" />
                         Sorry, your browser doesn't support embedded videos.
                     </video>
                 }
                 {getFileType(carouselFileNames[fileIndex]) === "pdf" &&
-                    <iframe className="modalArticle" src={`${item?.content_file_urls[0]}#toolbar=0`} />
+                    <iframe
+                        className="modalArticle"
+                        src={`${item?.content_file_urls[0]}#toolbar=0`}
+                    />
                 }
-                {item.medium === "audio" && typeof carouselItems[fileIndex] === 'object'  &&
+                {item.medium === "audio" && !item.content_redirect && typeof carouselItems[fileIndex] === 'object'  &&
                     <div className='audio-container'>
                         {carouselItems[fileIndex].map((clip, idx) => (
                             <div key={clip} className='clip-container'>
@@ -139,7 +174,65 @@ const ModalCarousel = ({item}) => {
                         ))}
                     </div>
                 }
-                {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
+                {item.content_redirect && typeof carouselItems[fileIndex] === 'object' &&
+                    <div className='redirect-frame'>
+                        <div className="list-container">
+                            <ul className='redirect-list'>
+                                {carouselItems[fileIndex].map((rd, idx) => (
+                                    <li
+                                        key={idx}
+                                        className="redirectListItem"
+                                        title="Click link to see archive material"
+                                    >
+                                        <a
+                                            href={rd.url}
+                                            target="_blank"
+                                            className="redirectListItemLink"
+                                        >
+                                            {rd.url_label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        {redirectBackground &&
+                            <Image
+                                src={getCloudfrontUrl(redirectBackground, carouselWidth * 2)}
+                                alt={`Media photo for ${itemTitle}`}
+                                className="redirect-bg"
+                                sizes="100vw"
+                                style={{
+                                    width: "100%",
+                                    height: "auto",
+                                }}
+                                width={500}
+                                height={500}
+                            />
+                        }
+                        {!redirectBackground &&
+                            <div
+                                style={{
+                                    width: "500px",
+                                    height: "33vh",
+                                    borderRadius: "4px",
+                                    position: "relative",
+                                    backgroundColor: "#00000099",
+                                }}
+                            ></div>
+
+                        }
+                    </div>
+                }
+                {carouselItems.length > 1 &&
+                    <span
+                        className='content-counter'
+                        style={{
+                            position: item.content_redirect ? "absolute" : "hidden",
+                            bottom: "10px"
+
+                        }}
+                    >{fileIndex + 1}/{carouselItems.length}</span>
+                }
             </div>
             {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronRight.src} width={24} height={24} alt="Next image icon" onClick={nextImg} />}
         </div>
