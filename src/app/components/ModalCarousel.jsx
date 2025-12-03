@@ -212,7 +212,7 @@ const ModalCarousel = ({item}) => {
                         {!redirectBackground &&
                             <div
                                 style={{
-                                    width: "33vw",
+                                    width: "500px",
                                     height: "33vh",
                                     borderRadius: "4px",
                                     position: "relative",
@@ -223,7 +223,16 @@ const ModalCarousel = ({item}) => {
                         }
                     </div>
                 }
-                {carouselItems.length > 1 && <span className='content-counter'>{fileIndex + 1}/{carouselItems.length}</span>}
+                {carouselItems.length > 1 &&
+                    <span
+                        className='content-counter'
+                        style={{
+                            position: item.content_redirect ? "absolute" : "hidden",
+                            bottom: "10px"
+
+                        }}
+                    >{fileIndex + 1}/{carouselItems.length}</span>
+                }
             </div>
             {carouselItems.length > 1 && <Image className='modal-carousel-btns' src={chevronRight.src} width={24} height={24} alt="Next image icon" onClick={nextImg} />}
         </div>
