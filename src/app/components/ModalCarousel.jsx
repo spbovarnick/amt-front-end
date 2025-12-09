@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
 import { getCloudfrontUrl } from '@/utils/helpers';
-import { useState, useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import chevronRight from 'public/images/chevron-right.svg'
 import chevronLeft from 'public/images/chevron-left.svg'
 import FullscreenImg from './FullscreenImg';
@@ -10,15 +9,57 @@ import Image from 'next/image';
 
 const ModalCarousel = ({item}) => {
     const [fileIndex, setFileIndex] = useState(0);
-    const [carouselItems, setCarouselItems] = useState([]);
-    const [carouselFileNames, setCarouselFileNames] = useState([]);
-    const [slideOffset, setSlideOffset] = useState(0)
-    const [redirectLinks, setRedirectLinks] = useState([])
-    const [redirectBackground, setRedirectBackground] = useState();
-    const [itemTitle, setItemTitle] = useState("");
+    const [carouselWidth, setCarouselWidth] = useState(0);
     const carouselRef = useRef();
 
-    useEffect(() => {
+    const divideSlides = (files, offset = 0) => {
+        let slideArr = []
+        for (let i = 0 + offset; i < files.length; i = i + 5) {
+            slideArr.push(files.slice(i, i + 5))
+        }
+        return slideArr
+    }
+
+
+
+    function get_url_extension(url) {
+        if (typeof url === 'string') {
+            return url.split(/[#?]/)[0].split('.').pop().trim();
+        } else {
+            return ""
+        }
+    }
+
+    const getFileType = useCallback((url)=> {
+        const validImageTypes = ["jpg", "jpeg", "png"];
+        const validVideoTypes = ["mp4", "mov", "qt", "webm"];
+
+        let fileType = get_url_extension(url).toLowerCase();
+        if (validImageTypes.includes(fileType)) {
+            return "image";
+        } else if (validVideoTypes.includes(fileType)) {
+            return "video";
+        } else if (fileType === "pdf") {
+            return "pdf";
+        } else {
+            return "other";
+        }
+    },[])
+
+    // function getFileType(url) {
+    //     let fileType = get_url_extension(url).toLowerCase();
+    //     if (validImageTypes.includes(fileType)) {
+    //         return "image";
+    //     } else if (validVideoTypes.includes(fileType)) {
+    //         return "video";
+    //     } else if (fileType === "pdf") {
+    //         return "pdf";
+    //     } else {
+    //         return "other";
+    //     }
+    // }
+
+    const { carouselItems, carouselFileNames, redirectBackground } = useMemo (() => {
         const {
             medium,
             medium_photo_urls = [],
@@ -27,22 +68,19 @@ const ModalCarousel = ({item}) => {
             content_file_urls = [],
             redirect_links = [],
             content_redirect,
-            title,
-        } = item;
+        } = item || {};
+
+        const slideOffset = medium_photo_urls.length || 0;
 
         let items = [];
         let filenames = [];
 
-        title && setItemTitle(title);
-
         if (medium_photo_urls.length > 0 && !content_redirect) {
             items = [...medium_photo_urls];
             filenames = [...medium_photos_file_names, ...content_file_names];
-            setSlideOffset(medium_photo_urls.length)
         } else {
             filenames = [...content_file_names];
         }
-
 
         if (medium === "audio" && !content_redirect && content_file_urls.length > 0) {
             if (content_file_urls.length <= 5) {
@@ -58,51 +96,40 @@ const ModalCarousel = ({item}) => {
         }
 
         if (content_redirect) {
-            setRedirectLinks(redirect_links)
-            medium_photo_urls.length > 0 && setRedirectBackground(medium_photo_urls[0]);
+            // setRedirectLinks(redirect_links)
+            const bg = medium_photo_urls.length > 0 ? medium_photo_urls[0] : undefined;
             if (redirect_links.length <= 5) {
                 items = [...items, redirect_links]
             } else {
                 const slides = divideSlides(redirect_links)
                 items = [...items, ...slides]
             }
+            return {
+                carouselItems: items,
+                carouselFileNames: filenames,
+                redirectBackground: bg,
+            };
+        };
+
+        return {
+            carouselItems: items,
+            carouselFileNames: filenames,
+            redirectBackground: undefined,
         }
+    },[item])
 
-        setCarouselItems(items);
-        setCarouselFileNames(filenames);
-    }, [item]);
+    useLayoutEffect(() => {
+        const width  = carouselRef.current.offsetWidth;
+        setCarouselWidth(width)
+    },[carouselRef]);
 
-    const validImageTypes = ["jpg", "jpeg", "png"];
-    const validVideoTypes = ["mp4", "mov", "qt", "webm"];
-
-    function get_url_extension( url ) {
-        if (typeof url === 'string') {
-            return url.split(/[#?]/)[0].split('.').pop().trim();
-        } else {
-            return ""
+    const currentSlide = useMemo(() => {
+        return {
+            item: carouselItems[fileIndex],
+            filename: carouselFileNames[fileIndex],
+            type: getFileType(carouselFileNames[fileIndex])
         }
-    }
-
-    function getFileType(url) {
-        let fileType = get_url_extension(url).toLowerCase();
-        if (validImageTypes.includes(fileType)) {
-            return "image";
-        } else if (validVideoTypes.includes(fileType)) {
-            return "video";
-        } else if (fileType === "pdf") {
-            return "pdf";
-        } else {
-            return "other";
-        }
-    }
-
-    const divideSlides = (files, offset = 0) => {
-        let slideArr = []
-        for (let i = 0 + offset; i < files.length; i = i + 5) {
-            slideArr.push(files.slice(i, i+5))
-        }
-        return slideArr
-    }
+    }, [carouselItems,carouselFileNames,fileIndex, getFileType])
 
     const audioClipTitle = (idx) => {
 
@@ -117,8 +144,6 @@ const ModalCarousel = ({item}) => {
         fileIndex === carouselItems.length - 1 ? setFileIndex(0) : setFileIndex(fileIndex + 1)
     }
 
-    const carouselWidth = carouselRef.current?.offsetWidth;
-
     let carousel
     if (carouselItems.length) {
         carousel = <div className='modal-carousel' >
@@ -132,9 +157,9 @@ const ModalCarousel = ({item}) => {
                 />
             }
             <div className='carousel-content' ref={carouselRef}>
-                {getFileType(carouselFileNames[fileIndex]) === "image" &&
+                {currentSlide.type === "image" &&
                     <FullscreenImg
-                        imgPath={carouselItems[fileIndex]}
+                        imgPath={currentSlide.item}
                         defaultWidth={carouselWidth * 2}
                         prevImg={prevImg}
                         nextImg={nextImg}
@@ -198,7 +223,8 @@ const ModalCarousel = ({item}) => {
                         {redirectBackground &&
                             <Image
                                 src={getCloudfrontUrl(redirectBackground, carouselWidth * 2)}
-                                alt={`Media photo for ${itemTitle}`}
+                                alt={`Media photo for ${item.title}`}
+
                                 className="redirect-bg"
                                 sizes="100vw"
                                 style={{
