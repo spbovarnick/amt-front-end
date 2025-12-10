@@ -1,4 +1,4 @@
-import ModalCarousel from "./ModalCarousel"
+import ModalCarousel from "./MediaCarousel"
 
 export default function ShowItem({ itemData }){
 

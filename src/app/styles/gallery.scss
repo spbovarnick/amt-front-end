@@ -242,25 +242,32 @@
 }
 
 .modal-carousel {
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
 }
 
-.modal-carousel-btns {
-  width: 40px;
-  height: auto;
-  cursor: pointer;
-  transition: transform .2s ease-in-out;
 
-  &:hover {
-    transform: scale(1.1);
-  }
+.carousel-ctrls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  &:active {
-    transform: scale(.9);
+  .modal-carousel-btn {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+    transition: transform .2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(.9);
+    }
   }
 }
 

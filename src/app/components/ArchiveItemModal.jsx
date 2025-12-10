@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { useEffect, useState} from 'react';
 import { getItem, getLocations, sendArchiveItemFeedback, fetchTimelineItems } from '@/utils/api';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import ModalCarousel from './ModalCarousel';
+import ModalCarousel from './MediaCarousel';
 import Map from './Map';
 import Timeline from './Timeline.jsx';
 
