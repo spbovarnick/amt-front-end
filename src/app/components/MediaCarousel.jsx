@@ -295,7 +295,6 @@ const ModalCarousel = ({item}) => {
                     <span
                         className='content-counter'
                         style={{
-                            position: item.content_redirect ? "absolute" : "hidden",
                             bottom: "10px",
                             width: "fit-content",
 

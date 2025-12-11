@@ -21,6 +21,7 @@ export default async function ItemIdPage({ params }){
       <ShowItem
         itemData={item}
       />
+
     </div>
   )
 }

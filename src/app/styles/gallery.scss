@@ -330,7 +330,6 @@
 }
 
 .redirect-frame {
-  position: absolute;
 
   .redirect-bg {
     object-fit: contain;
@@ -354,7 +353,7 @@
       padding: 0;
 
       li {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.5;
         text-decoration: underline;
         background-color: #00000099;
@@ -362,6 +361,10 @@
         padding: 4px;
         border-radius: 4px;
         list-style-type: none;
+
+        @media (min-width: variables.$bp-md) {
+          font-size: 20px;
+        }
       }
 
       a:hover {

@@ -1,0 +1,23 @@
+@use "variables";
+
+.info-box{
+  border: 2px solid white;
+  padding: 10px 15px;
+  margin: 20px;
+  display: grid;
+
+  .info-set {
+    margin-bottom: 8px;
+
+    .is-label{
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    a {
+      &:hover {
+        color: variables.$black-6;
+      }
+    }
+  }
+}
