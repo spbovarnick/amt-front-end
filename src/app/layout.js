@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable}`}>
       <IndexPage />
       <body>
+        <Toaster />
         {children}
         <Analytics />
       </body>

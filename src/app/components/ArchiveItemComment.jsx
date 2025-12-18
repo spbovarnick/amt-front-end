@@ -1,5 +1,6 @@
 'use client'
 
+import toast from "react-hot-toast";
 import Modal from "react-modal"
 import { useState } from "react";
 import { sendArchiveItemFeedback } from "@/utils/api";
@@ -27,9 +28,9 @@ export default function ArchiveItemComment({ id, uid, title, archiveComment }) {
     e.preventDefault();
     const result = await sendArchiveItemFeedback(title, id, uid, firstName, lastName, emailAddy, subjectLine, commentValue)
       if (result.status === "success") {
-          alert("Email sent!")
+          toast("✅ Comment sent!")
       } else {
-        alert("Problem sending email. Please try again or contact us.")
+        alert("❌ There was a problem sending your comment. Please try again or contact us another way.")
       }
       setFirstName("");
       setLastName("");
