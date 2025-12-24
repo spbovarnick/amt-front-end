@@ -33,7 +33,7 @@
   align-items: center;
 
   @media (min-width: variables.$bp-md) {
-    padding: 160px 0;
+    // padding: 160px 0;
   }
 }
 
@@ -241,35 +241,8 @@
   align-items: center;
 }
 
-.modal-carousel {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
 
 
-.carousel-ctrls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .modal-carousel-btn {
-    width: 40px;
-    height: auto;
-    cursor: pointer;
-    transition: transform .2s ease-in-out;
-
-    &:hover {
-      transform: scale(1.1);
-    }
-
-    &:active {
-      transform: scale(.9);
-    }
-  }
-}
 
 .modalArticle {
   width: 100%;

@@ -1,5 +1,5 @@
-import React, {useState, useRef, useEffect, memo, useCallback} from "react";
-import { TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
+import React, { useRef, useEffect, memo, useCallback} from "react";
+import { TransformWrapper, TransformComponent, } from 'react-zoom-pan-pinch';
 import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
 import zoomResetIcon from 'public/images/zoom-reset.svg';
@@ -10,11 +10,14 @@ const ControlPanel = memo(function ControlPanel({
     zoomIn,
     zoomOut,
     resetTransform,
-    // prevImg,
-    // nextImg,
     exitFullscreen,
-    // multiple
 }){
+    const handleExitFullScreen = (e) => {
+        e.preventDefault();
+        resetTransform;
+        exitFullscreen();
+    }
+
     return (
         <>
             <div className={`zoom-actions fullscreen-controls ${isFullscreen ? "fullscreen" : ""}`}>
@@ -63,8 +66,8 @@ const ControlPanel = memo(function ControlPanel({
                 <button
                     type='button'
                     className="fullscreenBtn exitFullscreen"
-                    onClick={exitFullscreen}
-                    onTouchStart={exitFullscreen}
+                    onClick={handleExitFullScreen}
+                    onTouchStart={handleExitFullScreen}
                     style={{
                         opacity: isFullscreen ? "1" : "0"
                     }}
@@ -75,15 +78,11 @@ const ControlPanel = memo(function ControlPanel({
 })
 
 const FullscreenImg = memo(function FullscreenImg({
-    // prevImg,
-    // nextImg,
-    // carouselItems,
+    isFullscreen,
     src,
 }) {
-    const [isFullscreen, setIsFullscreen] = useState(false);
-    // const [containerWidth, setContainerWidth] = useState(0);
     const fullScreenRef = useRef(null);
-    // const imgRef = useRef();
+    const imgRef = useRef();
 
     const exitFullscreen = useCallback(() => {
         if (document.fullscreenElement) document.exitFullscreen();
@@ -97,24 +96,14 @@ const FullscreenImg = memo(function FullscreenImg({
         };
     }, [isFullscreen, exitFullscreen]);
 
-    useEffect(() => {
-        const handler = () => {
-            if (!document.fullscreenElement) {
-                setIsFullscreen(false)
-            } else {
-                setIsFullscreen(true)
-            }
-        }
-
-        document.addEventListener("fullscreenchange", handler);
-        return () => document.removeEventListener("fullscreenchange", handler);
-    }, [])
-
     return (
         <>
             <div className='zpp-container' ref={fullScreenRef}>
                 <TransformWrapper
                     disabled={!isFullscreen}
+                    // panning={{ disabled: !isFullscreen }}
+                    // wheel={{ disabled: !isFullscreen }}
+                    // pinch={{ disabled: !isFullscreen }}
                     wrapperClass="magnify-wrapper"
                 >
                     {({ zoomIn, zoomOut, resetTransform}) => (
@@ -136,6 +125,7 @@ const FullscreenImg = memo(function FullscreenImg({
                                 }}
                             >
                                 <img
+                                    ref={imgRef}
                                     className='modalImage'
                                     src={src}
                                     alt=""

@@ -15,10 +15,14 @@
 }
 
 .open-modal-btn {
-  background-color: black;
   color: white;
-  border: none;
   text-decoration: underline;
+  display: inline;
+  cursor: pointer;
+
+  &:hover {
+    color: variables.$black-6;
+  }
 }
 
 .comment-modal {

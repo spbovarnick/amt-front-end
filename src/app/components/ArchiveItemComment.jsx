@@ -107,7 +107,7 @@ export default function ArchiveItemComment({ id, uid, title, archiveComment }) {
       </Modal>
 
       <div className="info-set">
-        Would you like to contribute to this archive item?<button className="open-modal-btn" onClick={(e)=>openModal(e)}>Click here.</button>
+        Would you like to contribute to this archive item? <span className="open-modal-btn" onClick={(e)=>openModal(e)}>Click here.</span>
       </div>
     </>
   )

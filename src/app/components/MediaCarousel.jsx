@@ -1,11 +1,11 @@
 'use client';
 
 import { getCloudfrontUrl } from '@/utils/helpers';
-import React, { useLayoutEffect, useState, useRef, useMemo, useCallback } from 'react';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import React, { useLayoutEffect, useState, useRef, useMemo, useCallback, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import chevronRight from 'public/images/chevron-right.svg'
-import chevronLeft from 'public/images/chevron-left.svg'
+import chevronRight from 'public/images/chevron-right-black.svg'
+import chevronLeft from 'public/images/chevron-left-black.svg'
 import FullscreenImg from './FullscreenImg';
 import Image from 'next/image';
 import "swiper/css";
@@ -13,10 +13,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 
-const ModalCarousel = ({item}) => {
+const MediaCarousel = ({item}) => {
     const [fileIndex, setFileIndex] = useState(0);
     const [carouselWidth, setCarouselWidth] = useState(0);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef();
+    const swiperRef = useRef(null)
 
     const divideSlides = (files, offset = 0) => {
         let slideArr = []
@@ -33,6 +35,31 @@ const ModalCarousel = ({item}) => {
             return ""
         }
     }
+
+    useEffect(() => {
+        if (!swiperRef.current) return;
+
+        if (isFullscreen) {
+            swiperRef.current.allowTouchMove = false;
+            swiperRef.current.detachEvents();
+        } else {
+            swiperRef.current.attachEvents();
+            swiperRef.current.allowTouchMove = true;
+        }
+    }, [isFullscreen]);
+
+    useEffect(() => {
+        const handler = () => {
+            if (!document.fullscreenElement) {
+                setIsFullscreen(false)
+            } else {
+                setIsFullscreen(true)
+            }
+        }
+
+        document.addEventListener("fullscreenchange", handler);
+        return () => document.removeEventListener("fullscreenchange", handler);
+    }, [])
 
     const getFileType = useCallback((url)=> {
         const validImageTypes = ["jpg", "jpeg", "png"];
@@ -126,14 +153,6 @@ const ModalCarousel = ({item}) => {
         return () => window.removeEventListener("resize", handleResize);
     },[containerRef]);
 
-    const currentSlide = useMemo(() => {
-        return {
-            item: carouselItems[fileIndex],
-            filename: carouselFileNames[fileIndex],
-            type: getFileType(carouselFileNames[fileIndex])
-        }
-    }, [carouselItems,carouselFileNames,fileIndex, getFileType])
-
     const audioClipTitle = (idx, clipIdx) => {
         const nameEntry = carouselFileNames[idx];
         if (Array.isArray(nameEntry)) return nameEntry[clipIdx];
@@ -147,24 +166,33 @@ const ModalCarousel = ({item}) => {
     }
 
     return (
-        <div className='modal-carousel' ref={containerRef} >
+        <div
+            className={`media-carousel ${isFullscreen ? "fullscreen" : ""}`}
+            ref={containerRef}
+        >
             <Swiper
+                onSwiper={(swiper) => {
+                    swiperRef.current = swiper;
+                }}
                 pagination={{
                     type: "fraction",
                     el: ".content-counter",
                     renderFraction: (currentClass, totalClass) => {
                         return '<span class="' + currentClass + '"></span>' + '/' + '<span class="' + totalClass + '"span></span>';
-                    }
+                    },
                 }}
                 navigation={{
-                    nextEl: ".modal-next-btn",
-                    prevEl: ".modal-prev-btn",
+                    nextEl: ".media-next-btn",
+                    prevEl: ".media-prev-btn",
                 }}
                 modules={[Navigation, Pagination]}
                 slidesPerView={1}
                 spaceBetween={20}
                 className='carousel-content'
                 loop={true}
+                allowTouchMove={!isFullscreen}
+                simulateTouch={!isFullscreen}
+                touchStartPreventDefault={false}
             >
             {carouselItems.map((slide, idx) => {
                 const rawFilename = carouselFileNames[idx];
@@ -178,10 +206,7 @@ const ModalCarousel = ({item}) => {
                                 key={"fullscreen"}
                                 src={processedUrls[idx]}
                                 defaultWidth={carouselWidth * 2}
-                                // prevImg={prevImg}
-                                // nextImg={nextImg}
-                                // fileIndex={fileIndex}
-                                // carouselItems={carouselItems}
+                                isFullscreen={isFullscreen}
                             />
                         }
                         {/* ------------ VIDEO MEDIUM ------------ */}
@@ -286,12 +311,14 @@ const ModalCarousel = ({item}) => {
 
             {carouselItems.length > 1 &&
                 <div className='carousel-ctrls'>
+                    <button className='media-carousel-btn media-prev-btn'>
                     <Image
-                        className='modal-carousel-btn modal-prev-btn'
+
                         src={chevronLeft.src}
                         width={24} height={24}
                         alt="Previous image icon"
                     />
+                    </button>
                     <span
                         className='content-counter'
                         style={{
@@ -300,17 +327,19 @@ const ModalCarousel = ({item}) => {
 
                         }}
                     ></span>
+                    <button className='media-carousel-btn media-next-btn'>
                     <Image
-                        className='modal-carousel-btn modal-next-btn'
+
                         src={chevronRight.src}
                         width={24}
                         height={24}
                         alt="Next image icon"
                     />
+                    </button>
                 </div>
             }
         </div>
     )
 }
 
-export default ModalCarousel
+export default MediaCarousel
