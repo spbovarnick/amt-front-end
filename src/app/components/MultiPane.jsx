@@ -31,7 +31,7 @@ export default function MultiPane({
         {notes.body &&
           <div className="info-set">
             <div className="is-label">NOTES:</div>
-            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(cleanNotes) }} />
+            <div dangerouslySetInnerHTML={{ __html: cleanNotes }} />
           </div>
         }
         {tags.length > 0 &&
