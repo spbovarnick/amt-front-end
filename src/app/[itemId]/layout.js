@@ -1,4 +1,4 @@
-export default function ItemIdLayout({ children, params }){
+export default function ItemIdLayout({ children }){
   return (
     <>
       {children}
