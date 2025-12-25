@@ -27,7 +27,7 @@ export default function InfoBox({ item }){
       {item.collections.length > 0 &&
         <div className="top-info-set">
           <div className="is-label">COURTESY OF:</div>
-          {item.people.map((i, idx) => (
+          {item.collections.map((i, idx) => (
             <Fragment key={i.id}>
               <Link href={`/?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.collections.length - 1 ? ", " : ""}
             </Fragment>
