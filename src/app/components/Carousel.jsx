@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { getCloudfrontUrl } from "@/utils/helpers";
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -11,11 +11,19 @@ import { useRouter } from "next/navigation";
 import { clearAllFilters } from '@/utils/actions';
 import classnames from "classnames";
 import Image from 'next/image';
+import "swiper/css";
+import "swiper/css/navigation";
 
 const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = false, pathname, searchParams }) => {
     let router = useRouter();
     const slideRef = useRef();
-    const slidelWidth = slideRef.current?.offsetWidth;
+    const [slideWidth, setSlideWidth] = useState(0);
+
+    useEffect(() => {
+        if (slideRef.current) {
+            setSlideWidth(slideRef.current.offsetWidth)
+        }
+    },[])
 
     function handlePageSlideClick(slide) {
         // if user has clicked Load More, current page needs to be reset, and userLoadsMore state needs to be set to false
@@ -76,7 +84,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         <div onClick={() => handlePageSlideClick(slide)} className="carousel-item" ref={slideRef}>
                                             { slide.image_url &&
                                                 <Image
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
+                                                    src={getCloudfrontUrl(slide.image_url, slideWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}
@@ -93,7 +101,7 @@ const Carousel = ({ slides, onPage, pageReset, slidesPerView = 1.5, isShort = fa
                                         <Link href={`/page/${slide.link}`} className="carousel-item" target={"_blank"} ref={slideRef}>
                                             { slide.image_url &&
                                                 <Image
-                                                    src={getCloudfrontUrl(slide.image_url, slidelWidth * 2)}
+                                                    src={getCloudfrontUrl(slide.image_url, slideWidth * 2)}
                                                     width={800}
                                                     height={250}
                                                     alt={`Image for slide to ${slide.title}`}

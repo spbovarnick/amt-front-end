@@ -276,27 +276,27 @@ export async function fetchTimelineItems(pageTag) {
   }
 }
 
-export async function sendArchiveItemFeedback(comment, title, id) {
-  fetch(`${rootURL}/api/v1/comments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        text: comment,
+export async function sendArchiveItemFeedback(title, id, uid, firstName, lastName, emailAddy, subject, comment) {
+  try {
+    const respone = await fetch(`${rootURL}/api/v1/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         title: title,
-        id: id
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.status === 'success') {
-        console.log(data.message)
-    } else {
-        console.log(data.error)
-    }
-  })
-  .catch(error => {
-    console.error('Error sending archive item feedback:', error)
-  });
+        id: id,
+        uid: uid,
+        first_name: firstName,
+        last_name: lastName,
+        email_addy: emailAddy,
+        subject: subject,
+        comment: comment,
+      })
+    });
+
+    return await respone.json();
+  } catch (error) {
+    return { status: "error", error: error.message}
+  }
 }

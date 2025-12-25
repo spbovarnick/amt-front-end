@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { useEffect, useState} from 'react';
 import { getItem, getLocations, sendArchiveItemFeedback, fetchTimelineItems } from '@/utils/api';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import ModalCarousel from './ModalCarousel';
+import ModalCarousel from './MediaCarousel';
 import Map from './Map';
 import Timeline from './Timeline.jsx';
 
@@ -109,9 +109,14 @@ const ArchiveItemModal = ({ pageTag, focusedRef }) => {
         }
     }
 
-    function handleCommentSubmission(e) {
+    async function handleCommentSubmission(e) {
         e.preventDefault();
-        sendArchiveItemFeedback(commentValue, modalItem.title, id)
+        const result = await sendArchiveItemFeedback(commentValue, modalItem.title, id)
+        if (result.status === "success") {
+            alert("Email sent!")
+        } else {
+            alert("Problem sending email. Please try again or contact us.")
+        }
         setCommentValue('');
     }
 

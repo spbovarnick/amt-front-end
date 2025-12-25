@@ -2,7 +2,8 @@ import OrgPageArchive from "@/app/components/OrgPageArchive";
 import { fetchPageData, fetchAssociatedData } from "@/utils/api";
 
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata(props, parent) {
+  const params = await props.params;
   const pageData = params.slug && params.slug !== 'react_devtools_backend_compact.js.map' ? await fetchPageData(params.slug) : null;
 
   const previousImages = (await parent).openGraph?.images || [];
@@ -19,7 +20,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
   }
 }
 
-export default async function PagePage({ params, searchParams }) {
+export default async function PagePage(props) {
+  const params = await props.params;
   const pageData = params.slug && params.slug !== 'react_devtools_backend_compact.js.map' ? await fetchPageData(params.slug) : null;
   const associatedData = await fetchAssociatedData(true, pageData?.title);
 

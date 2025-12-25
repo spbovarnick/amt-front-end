@@ -1,0 +1,50 @@
+@use "variables";
+
+.info-box{
+  border: 2px solid white;
+  height: fit-content;
+  margin: 20px 0 0 0;
+  display: grid;
+
+  .top-info-set {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+
+    .is-label {
+      font-size: 10px;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      color: variables.$black-6;
+    }
+  }
+
+  .info-pane {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: solid white 1px;
+
+    .info-set {
+      margin-bottom: 8px;
+      padding: 10px 15px;
+      font-size: 10px;
+
+      @media (min-width: variables.$bp-lg) {
+        font-size: 12px;
+      }
+
+      .is-label{
+        // font-size: 10px;
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+  @media (min-width: variables.$bp-lg) {
+    order: 1;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, memo} from "react";
-import { FixedSizeList as List } from "react-window";
+import {  List } from "react-window";
 import { InView } from "react-intersection-observer";
 import audioIcon from 'public/images/timeline-audio-icon.jpg';
 import videoIcon from 'public/images/timeline-video-icon.jpg';
@@ -112,7 +112,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                 outer.removeEventListener("mouseleave", handleDragMouseLeave);
             }
         }
-        
+
     }, [outerContainer.current, handleDragMouseDown, handleDragMouseMove, handleDragMouseUp]);
 
     // give inertia to scroll events, including drag
@@ -143,7 +143,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
             outerContainer.current.scrollLeft = listScrollX + deltaX;
         }
     }
-    
+
     function handleDragMouseUp(e) {
         if (isDragging) {
             setIsDragging(false);
@@ -158,7 +158,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
     function isTimelineCard(target) {
         return target.closest('.timelineCard');
     }
-    
+
     function handleDragMouseLeave(e) {
         setIsDragging(false);
         setIsInertiaScrolling(true);
@@ -196,7 +196,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
             return {height: viewPane.current?.offsetHeight, width: viewPane.current?.offsetWidth}
         }
     }
-    
+
     // sourcer picker returns some image; users can click media tab to view all contents
     function pickSource(item) {
         if (item.content_file_url && item.medium !== "audio" && item.medium !== "film") {
@@ -241,7 +241,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
             return
         }
     }
-    
+
     function handleZoomOut() {
         findZoomOffset();
         if (zoom < 3) {
@@ -269,7 +269,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
         }
     }
 
-    // .timelineCard onMouseOver handler 
+    // .timelineCard onMouseOver handler
     // hover handled through DOM manipulation in order to be responsive to zoom state
     function handleCardHover(id) {
         setHoveredItemId(id);
@@ -281,7 +281,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
         }
         container.style.zIndex = "100";
     }
-    
+
     // .timelineCard onMouseLeave handler
     function handleEndCardHover(id) {
         setHoveredItemId(null);
@@ -307,24 +307,24 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
         for (let i = 1940; i <= 2020; i += 10) {
             if (checkRangeExists(i)) {
                 buttons.push(
-                    <button 
+                    <button
                         key={i}
                         id={i}
                         className="button-round sml decade-button"
-                        type="button" 
+                        type="button"
                         onClick={(e)=>handleDecadeSelect(e)}
                     >{i}</button>
                 )
             }
         }
         return buttons
-    } 
+    }
 
     // Column object is memoized to improve performance
     const Column = memo(function Column({ index, style}) {
         const item = items[index]
         return (
-            <InView 
+            <InView
                 as="div"
                 style={style}
                 className="item-container"
@@ -332,8 +332,8 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                 rootMargin="0% -50% 0% -50%"
                 root={innerContainer.current?.offsetParent}
                 id={`container-${item.id}`}
-            >                
-                <div 
+            >
+                <div
                     className={`timeline-line ${item.date_is_approx && "date_is_approx"}`}
                     style={{
                         visibility: (item.id === centeredItemId && item.id !== hoveredItemId) ? "visible" : "hidden",
@@ -344,18 +344,18 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                         style={{
                             border:  item.id === id ?  "#5444ec solid 3px" : undefined,
                             borderRadius:  item.id === id ? "8px" : undefined,
-                        }} 
+                        }}
                         >
                         {item.year}
                         {item.date_is_approx &&
                             <>
                             <span className="tooltip">Date is approximate<span className="triangle-icon"></span></span>
-                            
+
                             </>
                         }
                     </div>
                 </div>
-                <div 
+                <div
                     ref={item.id === id ? activeItemRef : null}
                     className="timelineCard"
                     onClick={() => handleClick(item.id)}
@@ -367,8 +367,8 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                     onMouseOver={() => handleCardHover(item.id)}
                     onMouseLeave={() => handleEndCardHover(item.id)}
                 >
-                    <div 
-                        className="timelineItemTitle" 
+                    <div
+                        className="timelineItemTitle"
                         onClick={() => handleClick(item.id)}
                         style={{
                             cursor: item.id === id ? "default" : "pointer",
@@ -379,11 +379,11 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                     >
                         <b>{item.title}</b>
                     </div>
-                    <Image 
-                        src={ item.poster_image_url && getCloudfrontUrl(item.poster_image_url, 1000) || item.medium_photo_url && getCloudfrontUrl(item.medium_photo_url, 1000) || pickSource(item)} 
+                    <Image
+                        src={ item.poster_image_url && getCloudfrontUrl(item.poster_image_url, 1000) || item.medium_photo_url && getCloudfrontUrl(item.medium_photo_url, 1000) || pickSource(item)}
                         width={500}
                         height={1200}
-                        className="timelineMedia" 
+                        className="timelineMedia"
                         style={ !item.poster_image_url && !item.medium_photo_url && !item.content_file_url ? {objectFit:contain} : {objectFit: "cover"}}
                         alt={item.title}
                     />
@@ -394,14 +394,14 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
     })
 
     const dragStyling = isDragging ? {cursor: 'grabbing',} : {cursor: 'grab'};
-    
+
     return (
         isLoading ? (
         // if loading show animated placeholder
-        <div 
+        <div
             className='suspenseful-container'
         >
-            <div 
+            <div
                 className="timeline-loader"
             >
                 <span className="shimmer">LOADING</span>
@@ -412,7 +412,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                         <div className="pulse-bubble pulse-bubble-3"></div>
                     </div>
                 </div>
-            </div> 
+            </div>
             </div>
         ) : (
             <div className="list-container">
@@ -429,17 +429,17 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                     style={dragStyling}
                 >
                     {Column}
-                </List> 
+                </List>
                     <div className="zoom-actions">
-                        <button 
-                            className="zoom-button button-round" 
+                        <button
+                            className="zoom-button button-round"
                             onClick={handleZoomIn}
                             disabled={zoom === 0 ? true : false}
                         >
                             <Image src={zoomInIcon.src} width={24} height={24} alt="Zoom in icon" />
                         </button>
-                        <button 
-                            className="zoom-button button-round" 
+                        <button
+                            className="zoom-button button-round"
                             onClick={handleZoomOut}
                             disabled={zoom === 3 ? true : false}
                         >

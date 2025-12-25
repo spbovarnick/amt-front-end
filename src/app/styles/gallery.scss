@@ -33,7 +33,7 @@
   align-items: center;
 
   @media (min-width: variables.$bp-md) {
-    padding: 160px 0;
+    // padding: 160px 0;
   }
 }
 
@@ -241,28 +241,8 @@
   align-items: center;
 }
 
-.modal-carousel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
 
-.modal-carousel-btns {
-  width: 40px;
-  height: auto;
-  cursor: pointer;
-  transition: transform .2s ease-in-out;
 
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(.9);
-  }
-}
 
 .modalArticle {
   width: 100%;
@@ -323,7 +303,6 @@
 }
 
 .redirect-frame {
-  position: absolute;
 
   .redirect-bg {
     object-fit: contain;
@@ -347,7 +326,7 @@
       padding: 0;
 
       li {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.5;
         text-decoration: underline;
         background-color: #00000099;
@@ -355,6 +334,10 @@
         padding: 4px;
         border-radius: 4px;
         list-style-type: none;
+
+        @media (min-width: variables.$bp-md) {
+          font-size: 20px;
+        }
       }
 
       a:hover {

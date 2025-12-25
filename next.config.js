@@ -3,7 +3,11 @@ const { hostname } = require('os');
 const path = require('path');
 
 const nextConfig = {
+  turbopack: {
+    root: path.join(__dirname, ".."),
+  },
   images: {
+    dangerouslyAllowLocalIP: true, // Only for private networks,
     remotePatterns: [
       {
         protocol: 'https',

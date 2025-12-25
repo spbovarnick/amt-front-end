@@ -17,9 +17,7 @@
 @use "work-block";
 @use "donate-block";
 @use "sponsors";
-@use "swiper-core";
 @use "swiper-navigation";
-@use "swiper-bundle";
 @use "divider";
 @use "archive";
 @use "archive-item";
@@ -34,3 +32,7 @@
 @use "map";
 @use "mission-statement";
 @use "pagination";
+@use "show-wrapper";
+@use "info-box";
+@use "archive-item-comment";
+@use "media-carousel";
