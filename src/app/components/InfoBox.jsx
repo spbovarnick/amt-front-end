@@ -1,10 +1,10 @@
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from 'sanitize-html'
 import Link from "next/link"
 import { Fragment } from "react"
 import MultiPane from "./MultiPane"
 
 export default function InfoBox({ item }){
-  const cleanNotes = DOMPurify.sanitize(item.content_notes.body)
+  const cleanNotes = sanitizeHtml(item.content_notes.body)
 
   return (
     <div className="info-box">
