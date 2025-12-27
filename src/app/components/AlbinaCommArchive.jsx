@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef, useTransition } from 'react';
 import Banner from "@/app/components/Banner"
 import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
-import NavPage from "@/app/components/NavPage"
-import ArchiveItemModal from '@/app/components/ArchiveItemModal';
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
 import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
@@ -154,6 +152,12 @@ export default function AlbinaCommArchive({ associatedData }) {
     setSearch(searchParams.get("search"));
   }, [sP]);
 
+  function handleClickOutsideMenu(event) {
+    if (mobileDrawerRef.current && !mobileDrawerRef.current.contains(event.target)) {
+      setAdvancedSearchOpen(false)
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutsideMenu);
     return () => {
@@ -242,15 +246,8 @@ export default function AlbinaCommArchive({ associatedData }) {
     });
   }
 
-  function handleClickOutsideMenu(event) {
-    if (mobileDrawerRef.current && !mobileDrawerRef.current.contains(event.target)) {
-      setAdvancedSearchOpen(false)
-    }
-  }
-
   return (
     <div className="page-wrapper --is-dark">
-      <NavPage />
       <Banner
         themeLight={false}
         alignLeft={true}
@@ -413,9 +410,6 @@ export default function AlbinaCommArchive({ associatedData }) {
         </div>
       </section>
       <Footer />
-      <ArchiveItemModal
-        focusedRef={focusedRef}
-      />
     </div>
   )
 }

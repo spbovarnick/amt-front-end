@@ -1,0 +1,94 @@
+@use "variables";
+
+.mobile-nav {
+  background: black;
+  height: 62px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px white solid;
+  padding: 0 15px;
+
+  .hidden {
+    opacity: 0 !important;
+    cursor: default;
+  }
+
+  .not-hidden {
+    opacity: 100;
+  }
+
+  .fader {
+    transition: opacity .2s ease;
+  }
+
+  .search-wrapper {
+    position: relative;
+
+    .mobile-nav-search-btn {
+        border: none;
+        background: black;
+        padding: 0;
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+      }
+
+      .mobile-nav-search-icon {
+        transform: scaleX(-1);
+      }
+
+    .search-opened {
+      display: flex;
+      position: absolute;
+      top: 0;
+      width: calc(100vw - 30px);
+
+      .close-search-btn {
+        opacity: .8;
+        cursor: pointer;
+      }
+
+      .mobile-nav-search-form {
+        position: relative;
+        display: flex;
+
+        input {
+          width: 100%;
+          border-radius: 8px;
+        }
+
+        .mobile-nav-clear-search {
+          position: absolute;
+          right: 5px;
+          height: 100%;
+          cursor: pointer;
+          background: none;
+          border: none;
+          padding: 0;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .nav-logo {
+    display: flex;
+    height: 37px;
+    font-size: 11px;
+    line-height: 1;
+
+    .nav-logo-text {
+      margin-left: 12px;
+      align-content: center;
+    }
+  }
+
+  .amt-logo-icon {
+    background: black;
+    height: 37px;
+    width: auto;
+  }
+}
