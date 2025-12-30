@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 const MobileNavSearch = ({
   searchOpen,
   setSearchOpen,
+  menuOpen,
 }) => {
   const [searchTerm, setSearchTerm] = useState("")
   const searchParams = useSearchParams();
@@ -32,7 +33,7 @@ const MobileNavSearch = ({
   return (
     <div className="search-wrapper">
       <button
-          className={`mobile-nav-search-btn fader ${searchOpen ? "hidden" : "not-hidden"}`}
+        className={`mobile-nav-search-btn fader ${searchOpen ? "hidden" : menuOpen ? "hidden" : "not-hidden"}`}
           onClick={() => setSearchOpen(!searchOpen)}
       >
           <Image

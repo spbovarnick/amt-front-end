@@ -10,6 +10,7 @@
   border-bottom: 2px white solid;
   padding: 0 15px;
 
+  // toggles hiding for sliding elements
   .hidden {
     opacity: 0 !important;
     cursor: default;
@@ -90,5 +91,51 @@
     background: black;
     height: 37px;
     width: auto;
+  }
+
+  .mobile-menu-wrapper {
+    position: relative;
+
+    .slide-menu-exit {
+      font-size: 24px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .slide-menu {
+      position: absolute;
+      right: -15px;
+      top: 46px;
+      background-color: black;
+      width: 100vw;
+      z-index: 999;
+
+      .mobile-menu-list {
+        list-style: none;
+        padding: 0 15px;
+        margin: 32px 0 0 0 0;
+        font-size: 18px;
+
+        li {
+          padding: 15px;
+          border-bottom: solid white 2px;
+        }
+      }
+
+      .mobile-aux-links-div {
+        font-size: 14px;
+
+        .mobile-aux-links-list {
+          list-style: none;
+          padding: 40px 30px;
+
+          li {
+            margin-bottom: 12px;
+          }
+
+
+        }
+      }
+    }
   }
 }
