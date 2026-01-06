@@ -6,27 +6,29 @@ import { AnimatePresence, motion } from "motion/react";
 const MobileNavSlideMenu = ({
   menuOpen,
   setMenuOpen,
-  searchOpen
+  searchOpen,
+  menuOpenRef,
+  exitMenuRef
 }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-
     setMenuOpen(!menuOpen)
   }
 
   return(
-    <div className="mobile-menu-wrapper">
+    <div className={`mobile-menu-wrapper ${searchOpen ? "hidden" : "not-hidden"}`}>
       { !menuOpen ?
         <Image
             src={Hamburger.src}
             alt="Hamburger menu icon"
-            className={`mobile-nav-hamburger-icon`}
+          className={`mobile-nav-hamburger-icon`}
             width={30}
             height={30}
             onClick={e => handleClick(e)}
         /> :
         <div
+          ref={exitMenuRef}
           className="slide-menu-exit"
           onClick={e => handleClick(e)}
         >X</div>
@@ -34,6 +36,7 @@ const MobileNavSlideMenu = ({
       <AnimatePresence initial={false}>
         { menuOpen &&
           <motion.div
+            ref={menuOpenRef}
             className="slide-menu"
             initial={{ x: "200%" }}
             exit={{ x: "250%" }}
@@ -60,6 +63,11 @@ const MobileNavSlideMenu = ({
           </motion.div>
         }
       </AnimatePresence>
+      <div className={`slide-menu-underlay`}
+        style={{
+          display: menuOpen ? "block" : "none"
+        }}
+      ></div>
     </div>
   )
 }
