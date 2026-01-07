@@ -9,6 +9,7 @@
 
   &.fullscreen {
     pointer-events: none;
+    touch-action: none;
   }
 
   .carousel-ctrls {

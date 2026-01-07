@@ -2,7 +2,10 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
+import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
+import DesktopNav from "./components/DesktopNav";
+import Footer from "./components/Footer";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -33,9 +36,12 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable}`}>
       <IndexPage />
       <body>
+        <MobileNav />
+        <DesktopNav />
         <Toaster />
         {children}
         <Analytics />
+        <Footer />
       </body>
     </html>
   );

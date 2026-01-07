@@ -4,8 +4,6 @@ import React, { useState, useEffect, useRef, useTransition } from 'react';
 import Banner from "@/app/components/Banner"
 import Carousel from "@/app/components/Carousel"
 import MissionStatement from "@/app/components/MissionStatement"
-import NavPage from "@/app/components/NavPage"
-import ArchiveItemModal from '@/app/components/ArchiveItemModal';
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
 import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import searchIcon from "public/images/search-icon.svg";
@@ -154,6 +152,12 @@ export default function AlbinaCommArchive({ associatedData }) {
     setSearch(searchParams.get("search"));
   }, [sP]);
 
+  function handleClickOutsideMenu(event) {
+    if (mobileDrawerRef.current && !mobileDrawerRef.current.contains(event.target)) {
+      setAdvancedSearchOpen(false)
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutsideMenu);
     return () => {
@@ -242,29 +246,22 @@ export default function AlbinaCommArchive({ associatedData }) {
     });
   }
 
-  function handleClickOutsideMenu(event) {
-    if (mobileDrawerRef.current && !mobileDrawerRef.current.contains(event.target)) {
-      setAdvancedSearchOpen(false)
-    }
-  }
-
   return (
     <div className="page-wrapper --is-dark">
-      <NavPage />
-      <Banner
+      {/* <Banner
         themeLight={false}
         alignLeft={true}
         headline="Albina<br/>Community Archive"
         subtitle="Documenting Albina's historic arts and culture legacy"
         className="--has-graphic --is-archive"
-      />
-      <MissionStatement
+      /> */}
+      {/* <MissionStatement
         text="Developed by Albina Music Trust, the Albina Community Archive is a digital repository documenting Albina's arts and culture legacy. Our mission is to engage community members and mission-aligned organizations to preserve digital versions of the Albina community's historical materials. We encourage you to revisit the archive as new items are added on a regular basis. These items include photography, film, audio, articles, and printed materials."
-      />
-      <Carousel
+      /> */}
+      {/* <Carousel
         slides={carouselSlides}
         onPage={false}
-      />
+      /> */}
       <section className="archive-wrapper">
         <div className="archive-content global-container">
           <div className="archive-search" id="archive-search">
@@ -412,10 +409,6 @@ export default function AlbinaCommArchive({ associatedData }) {
           </div>
         </div>
       </section>
-      <Footer />
-      <ArchiveItemModal
-        focusedRef={focusedRef}
-      />
     </div>
   )
 }

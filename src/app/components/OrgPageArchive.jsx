@@ -465,7 +465,6 @@ export default function OrgPageArchive({ pageData, associatedData }) {
           </div>
         </div>
       </section>
-      <Footer archive={true} mailListLink={pageData?.mail_list_url} mailListName={pageData?.title} />
       {filters.pageTag &&
         <ArchiveItemModal
           focusedRef={focusedRef}

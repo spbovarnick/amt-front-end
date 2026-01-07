@@ -41,9 +41,9 @@ const MediaCarousel = ({item}) => {
 
         if (isFullscreen) {
             swiperRef.current.allowTouchMove = false;
-            swiperRef.current.detachEvents();
+            // swiperRef.current.detachEvents();
         } else {
-            swiperRef.current.attachEvents();
+            // swiperRef.current.attachEvents();
             swiperRef.current.allowTouchMove = true;
         }
     }, [isFullscreen]);
