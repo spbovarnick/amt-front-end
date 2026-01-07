@@ -248,20 +248,20 @@ export default function AlbinaCommArchive({ associatedData }) {
 
   return (
     <div className="page-wrapper --is-dark">
-      <Banner
+      {/* <Banner
         themeLight={false}
         alignLeft={true}
         headline="Albina<br/>Community Archive"
         subtitle="Documenting Albina's historic arts and culture legacy"
         className="--has-graphic --is-archive"
-      />
-      <MissionStatement
+      /> */}
+      {/* <MissionStatement
         text="Developed by Albina Music Trust, the Albina Community Archive is a digital repository documenting Albina's arts and culture legacy. Our mission is to engage community members and mission-aligned organizations to preserve digital versions of the Albina community's historical materials. We encourage you to revisit the archive as new items are added on a regular basis. These items include photography, film, audio, articles, and printed materials."
-      />
-      <Carousel
+      /> */}
+      {/* <Carousel
         slides={carouselSlides}
         onPage={false}
-      />
+      /> */}
       <section className="archive-wrapper">
         <div className="archive-content global-container">
           <div className="archive-search" id="archive-search">
@@ -409,7 +409,6 @@ export default function AlbinaCommArchive({ associatedData }) {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   )
 }

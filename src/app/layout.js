@@ -4,6 +4,7 @@ import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
 import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
+import DesktopNav from "./components/DesktopNav";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
       <IndexPage />
       <body>
         <MobileNav />
+        <DesktopNav />
         <Toaster />
         {children}
         <Analytics />

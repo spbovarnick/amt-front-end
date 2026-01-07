@@ -9,13 +9,13 @@ export default async function ItemIdPage({ params }){
 
   return (
     <div className="page-wrapper --is-dark">
-      <Banner
+      {/* <Banner
         themeLight={false}
         alignLeft={true}
         headline="Albina<br/>Community Archive"
         subtitle="Documenting Albina's historic arts and culture legacy"
         className="--has-graphic --is-archive"
-      />
+      /> */}
       <ShowItem
         itemData={item}
       />
