@@ -5,6 +5,7 @@ import IndexPage from './components/IndexPage';
 import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
 import DesktopNav from "./components/DesktopNav";
+import Footer from "./components/Footer";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         <Toaster />
         {children}
         <Analytics />
+        <Footer />
       </body>
     </html>
   );

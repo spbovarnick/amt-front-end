@@ -26,12 +26,12 @@ export default function TermsOfUsePage() {
         headline="Copyright,<br/> Terms of Use<br/>& Policies"
         className="--has-graphic --is-archive"
       />
-      <TextBlock 
-        themeLight={true} 
-        heading="About" 
-        leftText={leftTextAbout} 
-        rightText={rightTextAbout} 
-        vPadding="lg" 
+      <TextBlock
+        themeLight={true}
+        heading="About"
+        leftText={leftTextAbout}
+        rightText={rightTextAbout}
+        vPadding="lg"
       />
       <div className="cmpt-text-block --is-ligh copyright">
         <div className="global-container">
@@ -72,7 +72,6 @@ export default function TermsOfUsePage() {
           </div>
         </div>
       </div>
-      <Footer archive={true} />
     </div>
   )
 }

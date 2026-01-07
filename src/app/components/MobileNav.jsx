@@ -6,6 +6,7 @@ import MobileNavSlideMenu from "./MobileNavSlideMenu";
 import logo from "@/../public/images/AMT-Logo.png"
 import { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 
 const MobileNav = ({}) => {
@@ -59,7 +60,7 @@ const MobileNav = ({}) => {
                 setSearchOpen={setSearchOpen}
                 menuOpen={menuOpen}
             />
-            <div className={`nav-logo fader ${searchOpen ? "hidden" : "not-hidden"}`}>
+            <Link href={"/"} className={`nav-logo fader ${searchOpen ? "hidden" : "not-hidden"}`}>
               <Image
                 src={logo}
                 alt="AMT Logo"
@@ -70,7 +71,7 @@ const MobileNav = ({}) => {
                 <div>COMMUNITY</div>
                 <div>ARCHIVE</div>
               </div>
-            </div>
+            </Link>
             <div className={`fader`}>
                 <MobileNavSlideMenu
                     menuOpen={menuOpen}
