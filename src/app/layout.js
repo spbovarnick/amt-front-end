@@ -6,6 +6,7 @@ import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
 import DesktopNav from "./components/DesktopNav";
 import Footer from "./components/Footer";
+import DesktopSidebar from "./components/DesktopSidebar";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -39,7 +40,10 @@ export default function RootLayout({ children }) {
         <MobileNav />
         <DesktopNav />
         <Toaster />
-        {children}
+        <div className="main-content-wrap">
+          <DesktopSidebar />
+          {children}
+        </div>
         <Analytics />
         <Footer />
       </body>
