@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import chevronLeft from "@/../public/images/chevron-left.svg"
 import xIcon from "@/../public/images/x.svg";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 
 const MobileNavSearch = ({
@@ -12,20 +12,23 @@ const MobileNavSearch = ({
   setSearchOpen,
   menuOpen,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
   const searchParams = useSearchParams();
+  const { replace } = useRouter();
 
-
-  function handleSearch( term ) {
+  const handleSearch = ( e ) => {
+    e.preventDefault();
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("search", term)
+    if (searchTerm) {
+      params.set("search", searchTerm);
     } else {
-      params.delete("search")
+      params.delete("search");
     }
+    replace(`/archive?${params.toString()}`);
+    setSearchOpen(false);
   }
 
-  function clearTerm(e) {
+  const clearTerm = (e) => {
     e.preventDefault();
     setSearchTerm("")
   }
@@ -65,22 +68,23 @@ const MobileNavSearch = ({
               />
             <form
               className="mobile-nav-search-form"
-
+              onSubmit={e => handleSearch(e)}
             >
               <input
                 placeholder="Search the archive"
                 onChange={(e) => setSearchTerm(e.target.value)}
                 value={searchTerm}
               />
-              <button className="mobile-nav-clear-search">
-                <Image
-                  src={xIcon.src}
-                  width={20}
-                  height={20}
-                  alt="X icon to clear search terms"
-                  onClick={e => clearTerm(e)}
-                />
-              </button>
+              { searchTerm.length > 0 &&
+                <button className="mobile-nav-clear-search">
+                  <Image
+                    src={xIcon.src}
+                    width={20}
+                    height={20}
+                    alt="X icon to clear search terms"
+                    onClick={e => clearTerm(e)}
+                  />
+                </button>}
             </form>
           </motion.div>
         }

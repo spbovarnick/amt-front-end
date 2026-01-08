@@ -1,8 +1,6 @@
 export const dynamic = "force-dynamic";
 
 import { Suspense } from "react";
-import AlbinaCommArchive from "@/app/components/AlbinaCommArchive";
-import { fetchAssociatedData } from "@/utils/api";
 
 export const metadata = {
   title: "Albina Community Archive",
@@ -18,14 +16,11 @@ export const metadata = {
 };
 
 export default async function Page(){
-  const associatedData = await fetchAssociatedData();
 
   return(
     <>
     <Suspense >
-      <AlbinaCommArchive 
-        associatedData={associatedData} 
-      />
+
     </Suspense>
     </>
   )

@@ -1,15 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useTransition } from 'react';
-import Banner from "@/app/components/Banner"
-import Carousel from "@/app/components/Carousel"
-import MissionStatement from "@/app/components/MissionStatement"
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
 import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
-import searchIcon from "public/images/search-icon.svg";
 import Drawer from '@/app/components/Drawer';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
-import Footer from '@/app/components/Footer';
 import SelectUI from '@/app/components/SelectUI';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -115,7 +110,6 @@ export default function AlbinaCommArchive({ associatedData }) {
     if (search) {
       setIsSearching(true)
       setSearchTerm(search)
-      archiveGalleryEl.current?.scrollIntoView({ behavior: "instant" })
     } else {
       setIsSearching(false)
     }
@@ -136,9 +130,9 @@ export default function AlbinaCommArchive({ associatedData }) {
     setParamsChecked(true);
   }, [commGroupsSearchParams, tagsSearchParams, locationsSearchParams, peopleSearchParams, collectionsSearchParams, yearSearchParams]);
 
-  useEffect(() => {
-    isFiltering > 0 && archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
-  }, [isFiltering])
+  // useEffect(() => {
+  //   isFiltering > 0 && archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
+  // }, [isFiltering])
 
   // on location change, state updated with .get(), .getAll() URLSearchParams methods, triggers downstream effect hook dependencies
   useEffect(() => {
@@ -165,11 +159,11 @@ export default function AlbinaCommArchive({ associatedData }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
-      archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
-    }
-  }, [archiveGalleryEl, archiveResults])
+  // useEffect(() => {
+  //   if (archiveGalleryEl.current && archiveResults.length > 0 && !focusedRef.current ) {
+  //     archiveGalleryEl.current.scrollIntoView({ behavior: "instant" })
+  //   }
+  // }, [archiveGalleryEl, archiveResults])
 
   // pageReset is called whenever a filter is selected
   // this ensures that in the effect hook that hydrates archiveResults
@@ -221,21 +215,23 @@ export default function AlbinaCommArchive({ associatedData }) {
     setAdvancedDrawerHeight(drawerTargetHeight);
   }
 
-  async function handleSubmitSearch(e) {
-    e.preventDefault();
-    // searching clears filters effect hooks and sets currentPage to 0, effectively beginning user interaction with archive db
-    clearAllFilters(searchParams);
-    // close advanced drawer if open
-    setAdvancedDrawerHeight(0);
-    // set 'search' param with searchTerm
-    searchParams.set("search", searchTerm);
-    // navigate to new URL based on updated params
-    const searchPath = searchParams.toString();
-    searchParams.delete("page");
-    startTransition(() => {
-      router.push(`${pathname}?${searchPath}`, { scroll: false });
-    });
-  }
+  // async function handleSubmitSearch(e) {
+  //   e.preventDefault();
+  //   // searching clears filters effect hooks and sets currentPage to 0, effectively beginning user interaction with archive db
+  //   clearAllFilters(searchParams);
+  //   // close advanced drawer if open
+  //   setAdvancedDrawerHeight(0);
+  //   // set 'search' param with searchTerm
+  //   searchParams.set("search", searchTerm);
+  //   // navigate to new URL based on updated params
+  //   const searchPath = searchParams.toString();
+  //   console.log("searchPath", searchPath)
+  //   console.log("pathname", pathname)
+  //   searchParams.delete("page");
+  //   startTransition(() => {
+  //     router.push(`${pathname}?${searchPath}`, { scroll: false });
+  //   });
+  // }
 
   function clearSearch() {
     setSearchTerm('')
@@ -263,9 +259,9 @@ export default function AlbinaCommArchive({ associatedData }) {
         onPage={false}
       /> */}
       <section className="archive-wrapper">
-        <div className="archive-content global-container">
+        <div className="archive-content ">
           <div className="archive-search" id="archive-search">
-            <div className="archive__label">Search</div>
+            {/* <div className="archive__label">Search</div>
             <form onSubmit={(e) => {
               handleSubmitSearch(e)
             }
@@ -293,7 +289,7 @@ export default function AlbinaCommArchive({ associatedData }) {
                   </span>
                 </button>
               </div>
-            </form>
+            </form> */}
           </div>
 
           <div className={`archive-tags ${advancedSearchOpen ? "advanced-search-open" : ""}`}>
@@ -392,6 +388,9 @@ export default function AlbinaCommArchive({ associatedData }) {
             </div>
 
           </div>
+          {searchTerm && archiveResults.length > 0 &&
+            <div className='search-results-for'>Search results for "{searchTerm}"</div>
+          }
           <div id="archive-gallery" ref={archiveGalleryEl} className={`${advancedSearchOpen ? "advanced-search-open" : ""}`}>
             <ArchiveGallery
               isLoaded={isLoaded}
