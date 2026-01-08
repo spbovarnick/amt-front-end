@@ -260,8 +260,8 @@ export default function AlbinaCommArchive({ associatedData }) {
       /> */}
       <section className="archive-wrapper">
         <div className="archive-content ">
-          <div className="archive-search" id="archive-search">
-            {/* <div className="archive__label">Search</div>
+          {/* <div className="archive-search" id="archive-search">
+            <div className="archive__label">Search</div>
             <form onSubmit={(e) => {
               handleSubmitSearch(e)
             }
@@ -289,8 +289,8 @@ export default function AlbinaCommArchive({ associatedData }) {
                   </span>
                 </button>
               </div>
-            </form> */}
-          </div>
+            </form>
+          </div> */}
 
           <div className={`archive-tags ${advancedSearchOpen ? "advanced-search-open" : ""}`}>
             <div className="archive-filters">
