@@ -1,0 +1,23 @@
+@use "variables";
+
+.mobile-filter {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 70px 30px 30px 30px;
+  overflow-x: clip;
+  top: 62px;
+  background: black;
+  z-index: 999;
+
+  .mobile-filter__x-icon {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+  }
+
+  @media (min-width: variables.$bp-md) {
+    display: none;
+  }
+}

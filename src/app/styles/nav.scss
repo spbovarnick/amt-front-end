@@ -93,16 +93,7 @@
     width: auto;
   }
 
-  // opaque overlay beneath open slide menu
-  .slide-menu-underlay {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    right: -15px;
-    top: 46px;
-    background-color: #00000045;
-    z-index: 998;
-  }
+
 
   .mobile-menu-wrapper {
     position: relative;
@@ -116,7 +107,7 @@
       align-items: center;
     }
 
-    .slide-menu {
+    .nav-slide-menu {
       position: absolute;
       right: -15px;
       top: 46px;
@@ -195,4 +186,16 @@
   @media (min-width: variables.$bp-md) {
     display: grid;
   }
+}
+
+// opaque overlay beneath open slide menu
+// also use in MobileFiltering.jsx
+.slide-menu-underlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  right: -15px;
+  top: 46px;
+  background-color: #00000045;
+  z-index: 998;
 }

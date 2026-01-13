@@ -1,0 +1,89 @@
+import { AnimatePresence, motion } from "motion/react";
+import Drawer from "./Drawer";
+import xIcon from "@/../public/images/x-white.svg"
+import Image from "next/image";
+
+const MobileFiltering = ({
+  advancedSearchOpen,
+  setAdvancedSearchOpen,
+  mobileDrawerRef,
+  commGroups,
+  people,
+  locations,
+  tags,
+  collections,
+  commGroupsSearchParams,
+  peopleSearchParams,
+  locationsSearchParams,
+  tagsSearchParams,
+  collectionsSearchParams,
+  advancedSearchOpenRef,
+  exitAdvancedSearchOpenRef
+}) => {
+
+  return (
+    <>
+    <AnimatePresence initial={false} >
+      { advancedSearchOpen &&
+      <motion.div
+        ref={advancedSearchOpenRef}
+        className="mobile-filter"
+        initial={{ x: "-100%" }}
+        exit={{ x: "-150%" }}
+        animate={{ x: 0 }}
+        transition={{
+          type: "spring",
+          bounce: 0
+        }}
+      >
+        <Image
+          src={xIcon}
+          width={48}
+          height={48}
+          alt={"X icon"}
+          className="mobile-filter__x-icon"
+          onClick={() => setAdvancedSearchOpen(false)}
+          ref={exitAdvancedSearchOpenRef}
+        />
+        <Drawer
+          label="Community Groups"
+          data={commGroups}
+          filterCateogry="comm_groups"
+          filterSearchParams={commGroupsSearchParams}
+        />
+        <Drawer
+          label="People"
+          data={people}
+          filterCateogry="people"
+          filterSearchParams={peopleSearchParams}
+        />
+        <Drawer
+          label="Location"
+          data={locations}
+          filterCateogry="locations"
+          filterSearchParams={locationsSearchParams}
+        />
+        <Drawer
+          label="Tagged with"
+          data={tags}
+          filterCateogry="tags"
+          filterSearchParams={tagsSearchParams}
+        />
+        <Drawer
+          label="Collections"
+          data={collections}
+          filterCateogry="collections"
+          filterSearchParams={collectionsSearchParams}
+        />
+      </motion.div>}
+    </AnimatePresence>
+    <div className={`slide-menu-underlay`}
+      style={{
+        display: advancedSearchOpen ? "block" : "none"
+      }}
+    ></div>
+    </>
+  )
+}
+
+export default MobileFiltering

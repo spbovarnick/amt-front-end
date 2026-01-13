@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useRef, useTransition } from 'react';
 import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
-import { clearAllFilters, createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
-import Drawer from '@/app/components/Drawer';
+import { createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
-import SelectUI from '@/app/components/SelectUI';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import filterIcon from "@/../public/images/filter.svg";
+import MobileFiltering from './MobileFiltering';
 
 export default function AlbinaCommArchive({ associatedData }) {
   const itemsPerLoad = 20;
@@ -15,6 +15,8 @@ export default function AlbinaCommArchive({ associatedData }) {
   const mobileDrawerRef = useRef(null);
   const focusedRef = useRef(null);
   const archiveGalleryEl = useRef(null);
+  const advancedSearchOpenRef = useRef(null);
+  const exitAdvancedSearchOpenRef = useRef(null);
   const pathname = usePathname();
   const sP = useSearchParams();
   const searchParams = new URLSearchParams(sP);
@@ -24,7 +26,6 @@ export default function AlbinaCommArchive({ associatedData }) {
   const tags = associatedData.tags;
   const commGroups = associatedData.comm_groups;
   const people = associatedData.people;
-  const carouselSlides = associatedData.carousel_slides;
   const collections = associatedData.collections;
 
   const [search, setSearch] = useState(sP.get("search"));
@@ -57,6 +58,20 @@ export default function AlbinaCommArchive({ associatedData }) {
   const [paramsChecked, setParamsChecked] = useState(false);
   const currentPage = searchParams.get("page");
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    const clickListener = (e) => {
+      if (advancedSearchOpenRef.current && !advancedSearchOpenRef.current?.contains(e.target)) {
+          setAdvancedSearchOpen(!advancedSearchOpen)
+      }
+    }
+
+    document.addEventListener("click", clickListener)
+
+    return () => {
+      document.removeEventListener("click", clickListener)
+    }
+  }, [advancedSearchOpen])
 
   useEffect(() => {
     // this effect hook only re-hydrates archiveResults from index endpoint
@@ -244,150 +259,44 @@ export default function AlbinaCommArchive({ associatedData }) {
 
   return (
     <div className="page-wrapper --is-dark">
-      {/* <Banner
-        themeLight={false}
-        alignLeft={true}
-        headline="Albina<br/>Community Archive"
-        subtitle="Documenting Albina's historic arts and culture legacy"
-        className="--has-graphic --is-archive"
-      /> */}
-      {/* <MissionStatement
-        text="Developed by Albina Music Trust, the Albina Community Archive is a digital repository documenting Albina's arts and culture legacy. Our mission is to engage community members and mission-aligned organizations to preserve digital versions of the Albina community's historical materials. We encourage you to revisit the archive as new items are added on a regular basis. These items include photography, film, audio, articles, and printed materials."
-      /> */}
-      {/* <Carousel
-        slides={carouselSlides}
-        onPage={false}
-      /> */}
       <section className="archive-wrapper">
         <div className="archive-content ">
-          {/* <div className="archive-search" id="archive-search">
-            <div className="archive__label">Search</div>
-            <form onSubmit={(e) => {
-              handleSubmitSearch(e)
-            }
-            }
-              className="archive__search-form"
+          {/* <div className='advanced-filter'> */}
+            <MobileFiltering
+              advancedSearchOpen={advancedSearchOpen}
+              setAdvancedSearchOpen={setAdvancedSearchOpen}
+              mobileDrawerRef={mobileDrawerRef}
+              commGroups={commGroups}
+              people={people}
+              locations={locations}
+              tags={tags}
+              collections={collections}
+              commGroupsSearchParams={commGroupsSearchParams}
+              peopleSearchParams={peopleSearchParams}
+              locationsSearchParams={locationsSearchParams}
+              tagsSearchParams={tagsSearchParams}
+              collectionsSearchParams={collectionsSearchParams}
+              advancedSearchOpenRef={advancedSearchOpenRef}
+              exitAdvancedSearchOpenRef={exitAdvancedSearchOpenRef}
+            />
+          {/* </div> */}
+          {/* <div className={`archive-tags ${advancedSearchOpen ? "advanced-search-open" : ""}`}> */}
+            <button
+              onClick={() => {
+                setAdvancedSearchOpen(!advancedSearchOpen)
+              }}
+              className={`advanced-search__toggle-mobile ${advancedSearchOpen ? "" : ""}`}
             >
-              <div className="search-field-container">
-                <input value={searchTerm} type="text" name="search" className="archive__search-field" onChange={e => setSearchTerm(e.target.value)} />
-                {searchTerm &&
-                  <button
-                    type='button'
-                    id='clear-search'
-                    onClick={clearSearch}
-                  >
-                    <span id='clear-search-text'>clear</span>
-                    <span id='clear-search-x'>x</span>
-                  </button>
-                }
-              </div>
-              <div>
-                <button type="submit" className="archive__search-submit button-round --secondary">
-                  <Image className='search-button-icon' src={searchIcon.src} width={24} height={24} alt={"Search icon"} />
-                  <span className='search-button-text'>
-                    Search
-                  </span>
-                </button>
-              </div>
-            </form>
-          </div> */}
-
-          <div className={`archive-tags ${advancedSearchOpen ? "advanced-search-open" : ""}`}>
-            <div className="archive-filters">
-              <div className="archive-filters__col">
-                <div className="archive__label">Year</div>
-                <SelectUI
-                  placeholderText="Select years..."
-                  val={filterYear}
-                  year={true}
-                  changeHandler={handleYearAndMediumSelect}
-                  searchParams={yearSearchParams}
-                />
-              </div>
-              <div className="archive-filters__col">
-                <div className="archive__label">Medium</div>
-                <SelectUI
-                  placeholderText="Select years..."
-                  val={filterMedium}
-                  medium={true}
-                  changeHandler={handleYearAndMediumSelect}
-                  searchParams={mediumSearchParams}
-                />
-              </div>
-              <div className="archive-filters__col --clear">
-                {Object.values(filters).some(filter => filter.length > 0 || filter > 0) &&
-                  <button
-                    className='clear-filters button-round sml'
-                    onClick={() => {
-                      clearAllFilters(searchParams);
-                      const newParams = searchParams.toString();
-                      router.push(`${pathname}?${newParams}`, { scroll: false })
-                    }}
-                  >Clear Filters</button>
-                }
-              </div>
-            </div>
-            <div className='toggle-clear-ui'>
-              <button
-                onClick={handleToggleAdvancedDrawer} className="advanced-search__toggle"
-              >
-                {advancedDrawerHeight > 0 ? "Hide advanced search options" : "Show advanced search options"}
-              </button>
-              <button
-                onClick={() => {
-                  setAdvancedSearchOpen(!advancedSearchOpen)
-                }}
-                className={`advanced-search__toggle-mobile ${advancedSearchOpen ? "advanced-search-open" : ""}`}
-              >
-                {advancedSearchOpen ? "Hide advanced search options" : "Show advanced search options"}
-              </button>
-            </div>
-            <div ref={mobileDrawerRef} className={`advanced-search__drawer ${advancedSearchOpen ? "advanced-search-open" : ""}`} style={{ height: `${advancedDrawerHeight}px` }}>
-              <div ref={advancedDrawerRef}>
-                <Drawer
-                  label="Community Groups"
-                  data={commGroups}
-                  pageReset={pageReset}
-                  archiveGallery={archiveGalleryEl.current}
-                  filterCateogry="comm_groups"
-                  filterSearchParams={commGroupsSearchParams}
-                />
-                <Drawer
-                  label="People"
-                  data={people}
-                  pageReset={pageReset}
-                  archiveGallery={archiveGalleryEl.current}
-                  filterCateogry="people"
-                  filterSearchParams={peopleSearchParams}
-                />
-                <Drawer
-                  label="Location"
-                  data={locations}
-                  pageReset={pageReset}
-                  archiveGallery={archiveGalleryEl.current}
-                  filterCateogry="locations"
-                  filterSearchParams={locationsSearchParams}
-                />
-                <Drawer
-                  label="Tagged with"
-                  data={tags}
-                  pageReset={pageReset}
-                  archiveGallery={archiveGalleryEl.current}
-                  filterCateogry="tags"
-                  filterSearchParams={tagsSearchParams}
-                />
-                <Drawer
-                  label="Collections"
-                  data={collections}
-                  pageReset={pageReset}
-                  archiveGallery={archiveGalleryEl.current}
-                  filterCateogry="collections"
-                  filterSearchParams={collectionsSearchParams}
-                />
-              </div>
-            </div>
-
-          </div>
+              <Image
+                src={filterIcon}
+                width={20}
+                height={20}
+                alt='Filter icon'
+                className='mobile-filter-icon'
+              />
+              Show advanced search options
+            </button>
+          {/* </div> */}
           {searchTerm && archiveResults.length > 0 &&
             <div className='search-results-for'>Search results for "{searchTerm}"</div>
           }
