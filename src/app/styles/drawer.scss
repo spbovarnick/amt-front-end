@@ -29,6 +29,11 @@
     }
 }
 
+.show-all-drawerBtns {
+    text-decoration: underline;
+    margin: 8px 0;
+}
+
 @media (max-width: variables.$bp-sm) {
     .archive__label {
         display: flex;

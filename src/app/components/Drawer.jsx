@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DrawerButton from "./DrawerButton";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import chevronDown from 'public/images/chevron-down.svg'
@@ -12,7 +12,38 @@ const Drawer = ({ label, data, filterCateogry, filterSearchParams }) => {
     const searchParams = new URLSearchParams(sp);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [showAll, setShowAll] = useState(false);
+    // const [showAll, setShowAll] = useState(false);
+    const [btnOffset, setBtnOffset] = useState(-1)
+    const [drawerBtns, setDrawerBtns] = useState(null);
+
+    useEffect(() => {
+        const sliceStart = 25 + (25 * btnOffset);
+        const sliceEnd = 50 + (25 * btnOffset);
+        if (btnOffset < 0 ){
+            setDrawerBtns(data?.slice(0, 25).map(item =>
+                <DrawerButton
+                    item={item}
+                    label={item.name}
+                    key={item.id}
+                    handleClick={toggleTag}
+                    // button selection determined by inclusion in filterSearchParams
+                    isActive={filterSearchParams?.includes(item.name)}
+                />
+            ))
+            return;
+        }
+        const newSlice = data?.slice(sliceStart, sliceEnd).map(item =>
+            <DrawerButton
+                item={item}
+                label={item.name}
+                key={item.id}
+                handleClick={toggleTag}
+                // button selection determined by inclusion in filterSearchParams
+                isActive={filterSearchParams?.includes(item.name)}
+            />
+        );
+        setDrawerBtns([...drawerBtns, ...newSlice]);
+    }, [btnOffset])
 
     const toggleTag = (name) => {
         if(filterSearchParams.filter(i => i === name).length > 0) {
@@ -37,6 +68,23 @@ const Drawer = ({ label, data, filterCateogry, filterSearchParams }) => {
         }
     }
 
+    const showMoreOrLess = (e) => {
+        e.preventDefault();
+        data?.length > 50 + (25 * btnOffset) ? setBtnOffset(btnOffset + 1) : setBtnOffset(-1);
+    }
+
+
+    const allDrawerBtns = data?.slice(25).map(item =>
+        <DrawerButton
+            item={item}
+            label={item.name}
+            key={item.id}
+            handleClick={toggleTag}
+            // button selection determined by inclusion in filterSearchParams
+            isActive={filterSearchParams?.includes(item.name)}
+        />
+    )
+
     return (
         <div className="cmpt-drawer">
             <div className="archive__label" onClick={() => { setIsOpen(!isOpen) }}>
@@ -49,16 +97,11 @@ const Drawer = ({ label, data, filterCateogry, filterSearchParams }) => {
                     />
             </div>
             <div className={`button-scroll ${isOpen ? "open-drawer" : ""}`}>
-                {data?.map(item =>
-                    <DrawerButton
-                    item={item}
-                    label={item.name}
-                    key={item.id}
-                    handleClick={toggleTag}
-                    // button selection determined by inclusion in filterSearchParams
-                    isActive={filterSearchParams?.includes(item.name)}
-                    />
-                    )}
+                {drawerBtns && drawerBtns}
+                <div
+                    className={`show-all-drawerBtns`}
+                    onClick={(e) => showMoreOrLess(e)}
+                >{data?.length > 50 + (25 * btnOffset) ? "Show more" : "Show less"}</div>
             </div>
             { label !== "Collections" && <span className="cmpt-drawer-separator"></span>}
         </div>
