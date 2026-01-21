@@ -68,7 +68,7 @@ export function generatePagination({ currentPage, totalPages, width }) {
 };
 
 export const yearOptions = [
-  { value: "", name: "Any" },
+  // { value: "", name: "Any" },
   { value: 1930, name: "1930s" },
   { value: 1940, name: "1940s" },
   { value: 1950, name: "1950s" },
@@ -82,7 +82,7 @@ export const yearOptions = [
 ];
 
 export const mediumOptions = [
-  { value: "", name: "Any" },
+  // { value: "", name: "Any" },
   { value: "photo", name: "Photos" },
   { value: "film", name: "Film" },
   { value: "audio", name: "Audio" },

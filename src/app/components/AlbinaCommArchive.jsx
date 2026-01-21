@@ -9,6 +9,7 @@ import Image from 'next/image';
 import filterIcon from "@/../public/images/filter.svg";
 import MobileFiltering from './MobileFiltering';
 import useFilters from '@/utils/useFilters';
+import AppliedFilters from './AppliedFilters';
 
 export default function AlbinaCommArchive({ associatedData }) {
   const itemsPerLoad = 20;
@@ -149,6 +150,7 @@ export default function AlbinaCommArchive({ associatedData }) {
             />
             Show advanced search options
           </button>
+          <AppliedFilters />
           {searchTerm && archiveResults.length > 0 &&
             <div className='search-results-for'>Search results for "{searchTerm}"</div>
           }

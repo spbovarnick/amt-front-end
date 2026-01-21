@@ -58,10 +58,14 @@ const Drawer = ({
                         mediumOrYear={mediumOrYear}
                     />
                 ))}
-                <div
-                    className={`show-all-drawerBtns`}
-                    onClick={(e) => updateOffset(e)}
-                >{data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}</div>
+                {data?.length > 25 &&
+                    <div
+                        className={`show-all-drawerBtns`}
+                        onClick={(e) => updateOffset(e)}
+                    >
+                        {data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}
+                    </div>
+            }
             </div>
             { label !== "Collections" && <span className="cmpt-drawer-separator"></span>}
         </div>
