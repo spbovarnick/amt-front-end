@@ -4,6 +4,11 @@ const rootURL = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC
 
 import axios from "axios";
 
+const arrayParamString = (key, values, mapper = v => v) => {
+  if  (!Array.isArray(values) || values.length === 0) return "";
+  return values.map(v => `&${key}[]=${encodeURIComponent(mapper(v))}`).join("")
+}
+
 export async function fetchAssociatedData(callFromPage=false, pageTitle) {
   const tags = [
     "locations",
@@ -70,15 +75,13 @@ export async function getPageCount({
 }) {
   let url;
   let endpoint = isSearching ? 'search_page_count' : 'page_count';
-  let searchString = "";
-  if (isSearching) {
-    searchString = `&q=${encodeURIComponent(searchTerm ? searchTerm : search)}`;
-  };
+  let searchString
+  isSearching ? searchString = `&q=${encodeURIComponent(searchTerm ? searchTerm : search)}` : searchString = "";
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('filterData' here) into the query params
   // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
-  const yearString = filterData.year ? `&year=${filterData.year}` : "";
-  const mediumString = filterData.medium ? `&medium=${filterData.medium}` : "";
+  const yearString = arrayParamString("year", filterData.year);
+  const mediumString = arrayParamString("medium", filterData.medium);
   const peopleString = filterData.people
     ? filterData.people
       .map((person) => `&people[]=${encodeURIComponent(person.name)}`)
@@ -106,22 +109,10 @@ export async function getPageCount({
   const tagString = filterData.tags
     ? filterData.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join("")
     : "";
-  // if (!slug) {
-  //   // always request one more than will be shown to check if more are available
-  //   url = `/api/v1/archive_items/${endpoint}?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
-  // } else {
-    // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
-    const pageTagsArr = filterData.pageTag?.split(", ");
-    const pageTagString = pageTagsArr
-      ? pageTagsArr
-        .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
-        .join("")
-      : "";
 
-    // always request one more than will be shown to check if more are available
-    // endpoint for api queries from pages is to `archive_items/pages_index`
-    url = `/api/v1/archive_items/${endpoint}?${searchString}${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
-  // }
+  // always request one more than will be shown to check if more are available
+  url = `/api/v1/archive_items/${endpoint}?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+
   try {
     const res = await axios.get(rootURL + url)
     const count = await res.data
@@ -145,8 +136,8 @@ export async function updateArchiveItems(
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('data' here) into the query params
   // format for passing array values: &tags[]=Test+tag&tags[]=Another+tag
-  const yearString = data.year ? `&year=${data.year}` : "";
-  const mediumString = data.medium ? `&medium=${data.medium}` : "";
+  const yearString = arrayParamString("year", data.year);
+  const mediumString = arrayParamString("medium", data.medium);
   const peopleString = data.people
     ? data.people
         .map((person) => `&people[]=${encodeURIComponent(person.name)}`)
@@ -174,26 +165,26 @@ export async function updateArchiveItems(
   const tagString = data.tags
     ? data.tags.map((tag) => `&tags[]=${encodeURIComponent(tag.name)}`).join("")
     : "";
-  if (!slug) {
+  // if (!slug) {
     // always request one more than will be shown to check if more are available
     url = `/api/v1/archive_items/index?limit=${
       itemsPerLoad + 1
     }&offset=${offset}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
-  } else {
-    // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
-    const pageTagsArr = data.pageTag?.split(", ");
-    const pageTagString = pageTagsArr
-      ? pageTagsArr
-          .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
-          .join("")
-      : "";
+  // } else {
+  //   // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
+  //   const pageTagsArr = data.pageTag?.split(", ");
+  //   const pageTagString = pageTagsArr
+  //     ? pageTagsArr
+  //         .map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`)
+  //         .join("")
+  //     : "";
 
-    // always request one more than will be shown to check if more are available
-    // endpoint for api queries from pages is to `archive_items/pages_index`
-    url = `/api/v1/archive_items/pages_index?limit=${
-      itemsPerLoad + 1
-    }&offset=${offset}${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
-  }
+  //   // always request one more than will be shown to check if more are available
+  //   // endpoint for api queries from pages is to `archive_items/pages_index`
+  //   url = `/api/v1/archive_items/pages_index?limit=${
+  //     itemsPerLoad + 1
+  //   }&offset=${offset}${yearString}${mediumString}${locationString}${peopleString}${collectionString}${pageTagString}${commGroupString}${tagString}`;
+  // }
   try {
     return getData(url, itemsPerLoad);
   } catch (error) {
@@ -203,6 +194,7 @@ export async function updateArchiveItems(
 }
 
 export async function getItem(id) {
+
   const res = await axios.get(`${rootURL}/api/v1/archive_items/${id}`);
   const data = await res.data;
   return data;

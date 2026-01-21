@@ -1,15 +1,12 @@
-// "use client";
-
 import { AnimatePresence, motion } from "motion/react";
 import Drawer from "./Drawer";
 import xIcon from "@/../public/images/x-white.svg"
 import Image from "next/image";
-// import { useEffect, useRef, useState } from "react";
+import { yearOptions, mediumOptions } from "@/utils/actions";
 
 const MobileFiltering = ({
   advancedSearchOpen,
   setAdvancedSearchOpen,
-  mobileDrawerRef,
   commGroups,
   people,
   locations,
@@ -21,21 +18,10 @@ const MobileFiltering = ({
   tagsSearchParams,
   collectionsSearchParams,
   advancedSearchOpenRef,
-  exitAdvancedSearchOpenRef
+  exitAdvancedSearchOpenRef,
+  mediumSearchParams,
+  yearSearchParams,
 }) => {
-  // const [bodyHeight, setBodyHeight] = useState(0)
-  // const bodyHeightRef = useRef(0)
-
-  // useEffect(() => {
-  //   const nav = document?.querySelector(".mobile-nav");
-  //   if (!nav) return;
-
-  //   setBodyHeight(document?.body.scrollHeight - nav.scrollHeight)
-  // },[])
-
-
-  // get body height, less nav for underlay
-  // const bodyHeight = (document !== 'undefined' && document) && document?.body.scrollHeight - document?.querySelector(".mobile-nav").scrollHeight;
 
   return (
     <div className="mobile-filter-wrapper">
@@ -60,6 +46,20 @@ const MobileFiltering = ({
             className="mobile-filter__x-icon"
             onClick={() => setAdvancedSearchOpen(false)}
             ref={exitAdvancedSearchOpenRef}
+          />
+          <Drawer
+            label="Media"
+            data={mediumOptions}
+            filterCateogry="medium"
+            filterSearchParams={mediumSearchParams}
+            mediumOrYear={true}
+            />
+          <Drawer
+            label="Year"
+            data={yearOptions}
+            filterCateogry="year"
+            filterSearchParams={yearSearchParams}
+            mediumOrYear={true}
           />
           <Drawer
             label="Community Groups"

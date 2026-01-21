@@ -14,36 +14,12 @@ const sfPro = localFont({
     { path: "../../public/fonts/SF-Pro-Italic.ttf" },
     { path: "../../public/fonts/SF-Pro.ttf" },
   ],
-  variable: "--font-sans",
+  variable: "--font-sfPro",
 });
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  display: 'swap',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  adjustFontFallback: false,
-})
-
-const roboto_mono = Roboto_Mono({
-  subsets: ['latin'],
-  variable: '--font-roboto-mono',
-  display: 'swap',
-  weight: "variable",
-  adjustFontFallback: false,
-})
-
-const newsreader = Newsreader({
-  subsets: ['latin'],
-  variable: '--font-newsreader',
-  display: 'swap',
-  weight: "variable",
-  adjustFontFallback: false,
-})
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable} ${sfPro.variable}`}>
+    <html lang="en" className={` ${sfPro.variable}`}>
       <IndexPage />
       <body>
         <MobileNav />

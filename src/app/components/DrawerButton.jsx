@@ -1,12 +1,18 @@
 import Image from 'next/image';
 import xIcon from "@/../public/images/x.svg"
 
-const DrawerButton = ({item, label, isActive = false, handleClick}) => {
+const DrawerButton = ({item, label, isActive, toggleTag, mediumOrYear}) => {
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        mediumOrYear ? toggleTag(item.value) : toggleTag(item.name);
+        return
+    }
     return (
         <button
             type="button"
             className={`cmpt-drawer-button ${isActive && "active"}`}
-            onClick={() => { handleClick(item.name) }}
+            onClick={(e) => handleClick(e)}
         >
             {isActive &&
                 <Image
