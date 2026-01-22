@@ -170,6 +170,9 @@ export async function updateArchiveItems(
     url = `/api/v1/archive_items/index?limit=${
       itemsPerLoad + 1
     }&offset=${offset}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+
+    // keeping all the dead weight below for reference when API gets cleaned out
+
   // } else {
   //   // parse the pageTag passed to filters from the fetchPageData function in Page.jsx
   //   const pageTagsArr = data.pageTag?.split(", ");

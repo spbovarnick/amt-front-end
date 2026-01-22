@@ -87,3 +87,5 @@ const useArchiveQuery = ({
     isLoaded,
   };
 }
+
+export default useArchiveQuery;

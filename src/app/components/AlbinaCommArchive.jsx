@@ -10,6 +10,7 @@ import filterIcon from "@/../public/images/filter.svg";
 import MobileFiltering from './MobileFiltering';
 import useFilters from '@/utils/useFilters';
 import AppliedFilters from './AppliedFilters';
+import useArchiveQuery from '@/utils/useArchiveQuery';
 
 export default function AlbinaCommArchive({ associatedData }) {
   const itemsPerLoad = 20;
@@ -30,14 +31,15 @@ export default function AlbinaCommArchive({ associatedData }) {
   const searchTerm = search;
   const isSearching = Boolean(search);
 
-  const [archiveResults, setArchiveResults] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [showPagination, setShowPagination] = useState(false);
-  const [pages, setPages] = useState(0)
+  // const [archiveResults, setArchiveResults] = useState([]);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [showPagination, setShowPagination] = useState(false);
+  // const [pages, setPages] = useState(0)
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
-  const currentPage = searchParams.get("page") || 1;
   const [isPending, startTransition] = useTransition();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const { filters, isFiltering } = useFilters({
     yearOptions,
@@ -47,7 +49,20 @@ export default function AlbinaCommArchive({ associatedData }) {
     commGroups,
     people,
     collections,
-  })
+  });
+
+  const {
+    archiveResults,
+    pages,
+    showPagination,
+    isLoaded,
+  } = useArchiveQuery({
+    filters,
+    search,
+    searchTerm,
+    currentPage,
+    itemsPerLoad,
+  });
 
   useEffect(() => {
     const clickListener = (e) => {
@@ -62,116 +77,6 @@ export default function AlbinaCommArchive({ associatedData }) {
       document.removeEventListener("click", clickListener)
     }
   }, [advancedSearchOpen])
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadArchive () {
-      setIsLoaded(false);
-
-      try {
-        let results;
-        let totalPages;
-
-        if (isSearching) {
-          const args = createSearchUrl({
-            searchTerm,
-            search,
-            filters,
-            currentPage,
-            itemsPerLoad,
-          });
-
-          results = await getData(args.url, args.itemsPerLoad);
-
-          totalPages = await getPageCount({
-            filterData: filters,
-            itemsPerLoad,
-            isSearching: true,
-            search,
-          });
-        } else {
-          results = await updateArchiveItems(
-            currentPage,
-            itemsPerLoad,
-            filters
-          );
-
-          totalPages = await getPageCount({
-            filterData: filters,
-            itemsPerLoad,
-          });
-        }
-
-        if (cancelled) return;
-
-        setArchiveResults(results?.adjustedResults ?? []);
-        setPages(totalPages ?? 0);
-        setShowPagination((totalPages ?? 0) > 1);
-        setIsLoaded(true);
-      } catch (err) {
-        if (!cancelled) {
-          console.error("Archive load failed", err);
-          setIsLoaded(true);
-        }
-      }
-    }
-
-    loadArchive();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [filters, search, currentPage])
-
-  // useEffect(() => {
-  //   // this effect hook only re-hydrates archiveResults from index endpoint
-  //   // when currentPage changes and filters has updated
-  //   (async () => {
-  //     if (isFiltering && !isSearching) {
-  //       // this block only refreshes archiveResults with fresh data when user only toggling filters
-  //       setIsLoaded(false);
-  //       const data = await updateArchiveItems(currentPage, itemsPerLoad, filters)
-  //       const paginationData = await getPageCount({ filterData: filters, itemsPerLoad: itemsPerLoad, })
-  //       paginationData && setPages(paginationData)
-  //       paginationData && setShowPagination(paginationData > 1 || currentPage > 1);
-  //       data && setArchiveResults(data.adjustedResults);
-  //       data && setIsLoaded(true)
-  //     } else if (isSearching) {
-  //       // this block refreshes archiveResults when users have searched and are filtering search results with advanced filter options
-  //       setIsLoaded(false);
-  //       const args = createSearchUrl({
-  //         searchTerm: searchTerm,
-  //         search: search,
-  //         filters: filters,
-  //         currentPage: currentPage,
-  //         itemsPerLoad: itemsPerLoad
-  //       });
-  //       const data = await getData(args.url, args.itemsPerLoad);
-  //       const paginationData = await getPageCount({
-  //         filterData: filters,
-  //         itemsPerLoad: args.itemsPerLoad,
-  //         isSearching: true,
-  //         search,
-  //         searchTerm
-  //       });
-  //       paginationData && setPages(paginationData);
-  //       paginationData && setShowPagination(paginationData > 1);
-  //       data && setArchiveResults(data.adjustedResults);
-  //       data && setIsLoaded(true)
-  //     }
-  //   })();
-  // }, [filters, isSearching]);
-
-  // useEffect(() => {
-  //   // if 'search' URL param present, set isSearching to true and searchTerm to 'search' URL param string
-  //   if (search) {
-  //     setIsSearching(true)
-  //     setSearchTerm(search)
-  //   } else {
-  //     setIsSearching(false)
-  //   }
-  // }, [search]);
 
   return (
     <div className="page-wrapper --is-dark">
