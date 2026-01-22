@@ -10,6 +10,7 @@ const useArchiveQuery = ({
   searchTerm,
   currentPage,
   itemsPerLoad,
+  filterKey
 }) => {
   const [archiveResults, setArchiveResults] = useState([]);
   const [pages, setPages] = useState(0);
@@ -73,7 +74,7 @@ const useArchiveQuery = ({
       isActive = false;
     };
   }, [
-    filters,
+    filterKey,
     search,
     searchTerm,
     currentPage,

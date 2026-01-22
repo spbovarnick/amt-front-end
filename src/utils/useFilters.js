@@ -71,6 +71,27 @@ const useFilters = ({
     filterCollections,
   ]);
 
+  // pass filterKey to useArchiveQuery as stable ref to prevent render loop
+  const filterKey = useMemo(() => {
+    return JSON.stringify({
+      year: [...filterYear.map(y => y.value)].sort(),
+      medium: [...filterMedium.map(m => m.value)].sort(),
+      locations: [...filterLocations.map(l => l.name)].sort(),
+      tags: [...filterTags.map(t => t.name)].sort(),
+      comm_groups: [...filterCommGroups.map(c => c.name)].sort(),
+      people: [...filterPeople.map(p => p.name)].sort(),
+      collections: [...filterCollections.map(c => c.name)].sort(),
+    });
+  },[
+    filterYear,
+    filterMedium,
+    filterLocations,
+    filterTags,
+    filterCommGroups,
+    filterPeople,
+    filterCollections,
+  ])
+
   const isFiltering = useMemo(
     () => Object.values(filters).some(v => Array.isArray(v) && v.length > 0),
     [filters]
@@ -78,6 +99,7 @@ const useFilters = ({
 
   return {
     filters,
+    filterKey,
     isFiltering,
     filterYear,
     filterMedium,

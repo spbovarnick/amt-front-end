@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useTransition } from 'react';
-import { updateArchiveItems, getData, getPageCount } from '@/utils/api';
-import { createSearchUrl, yearOptions, mediumOptions } from '@/utils/actions';
+import { yearOptions, mediumOptions } from '@/utils/actions';
 import ArchiveGallery from '@/app/components/ArchiveGallery';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -11,8 +10,17 @@ import MobileFiltering from './MobileFiltering';
 import useFilters from '@/utils/useFilters';
 import AppliedFilters from './AppliedFilters';
 import useArchiveQuery from '@/utils/useArchiveQuery';
+import { useAssociatedData } from '../context/AssociatedDataContext';
 
-export default function AlbinaCommArchive({ associatedData }) {
+export default function AlbinaCommArchive({ }) {
+  const {
+    collections,
+    comm_groups,
+    locations,
+    people,
+    tags
+  } = useAssociatedData();
+
   const itemsPerLoad = 20;
   const focusedRef = useRef(null);
   const archiveGalleryEl = useRef(null);
@@ -21,32 +29,22 @@ export default function AlbinaCommArchive({ associatedData }) {
   const sP = useSearchParams();
   const searchParams = new URLSearchParams(sP);
 
-  const locations = associatedData.locations;
-  const tags = associatedData.tags;
-  const commGroups = associatedData.comm_groups;
-  const people = associatedData.people;
-  const collections = associatedData.collections;
-
   const search = sP.get("search") || "";
   const searchTerm = search;
   const isSearching = Boolean(search);
 
-  // const [archiveResults, setArchiveResults] = useState([]);
-  // const [isLoaded, setIsLoaded] = useState(false);
-  // const [showPagination, setShowPagination] = useState(false);
-  // const [pages, setPages] = useState(0)
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(null);
   const [isPending, startTransition] = useTransition();
 
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  const { filters, isFiltering } = useFilters({
+  const { filters, isFiltering, filterKey } = useFilters({
     yearOptions,
     mediumOptions,
     locations,
     tags,
-    commGroups,
+    comm_groups,
     people,
     collections,
   });
@@ -62,6 +60,7 @@ export default function AlbinaCommArchive({ associatedData }) {
     searchTerm,
     currentPage,
     itemsPerLoad,
+    filterKey
   });
 
   useEffect(() => {
@@ -85,7 +84,7 @@ export default function AlbinaCommArchive({ associatedData }) {
           <MobileFiltering
             advancedSearchOpen={advancedSearchOpen}
             setAdvancedSearchOpen={setAdvancedSearchOpen}
-            commGroups={commGroups}
+            comm_groups={comm_groups}
             people={people}
             locations={locations}
             tags={tags}

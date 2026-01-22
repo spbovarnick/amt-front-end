@@ -7,7 +7,7 @@ import { yearOptions, mediumOptions } from "@/utils/actions";
 const MobileFiltering = ({
   advancedSearchOpen,
   setAdvancedSearchOpen,
-  commGroups,
+  comm_groups,
   people,
   locations,
   tags,
@@ -63,7 +63,7 @@ const MobileFiltering = ({
           />
           <Drawer
             label="Community Groups"
-            data={commGroups}
+            data={comm_groups}
             filterCateogry="comm_groups"
             filterSearchParams={commGroupsSearchParams}
           />

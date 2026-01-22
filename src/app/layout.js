@@ -8,6 +8,8 @@ import DesktopNav from "./components/DesktopNav";
 import Footer from "./components/Footer";
 import DesktopSidebar from "./components/DesktopSidebar";
 import localFont from "next/font/local"
+import { AssociatedDataProvider } from "./context/AssociatedDataContext";
+import { fetchAssociatedData } from "@/utils/api";
 
 const sfPro = localFont({
   src: [
@@ -17,7 +19,9 @@ const sfPro = localFont({
   variable: "--font-sfPro",
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const associatedData = await fetchAssociatedData();
+
   return (
     <html lang="en" className={` ${sfPro.variable}`}>
       <IndexPage />
@@ -26,8 +30,10 @@ export default function RootLayout({ children }) {
         <DesktopNav />
         <Toaster />
         <div className="main-content-wrap">
-          <DesktopSidebar />
-          {children}
+          <AssociatedDataProvider value={associatedData} >
+            <DesktopSidebar />
+            {children}
+          </AssociatedDataProvider>
         </div>
         <Analytics />
         <Footer />
