@@ -75,7 +75,7 @@ export async function getPageCount({
 }) {
   let url;
   let endpoint = isSearching ? 'search_page_count' : 'page_count';
-  let searchString
+  let searchString;
   isSearching ? searchString = `&q=${encodeURIComponent(searchTerm ? searchTerm : search)}` : searchString = "";
   // parameter strings that are identical whether updateArchiveItems called from ArchiveBeta.jsx or Page.jsx
   // parse all tags from the filters object ('filterData' here) into the query params

@@ -30,11 +30,9 @@ const AppliedFilters = ({ }) => {
     router.push(`${pathname}?${next}`, { scroll: false });
   };
 
-
-  console.log (filters)
   return (
     <div className="applied_filters">
-      {filters.map(({ key, value, label, facetLabel }) => (
+      {filters.map(({ key, value, label }) => (
         <button
           key={`${key}:${value}`}
           className="applied_filters-button"
