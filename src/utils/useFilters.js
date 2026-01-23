@@ -8,7 +8,7 @@ const useFilters = ({
   mediumOptions = [],
   locations = [],
   tags = [],
-  commGroups = [],
+  comm_groups = [],
   people = [],
   collections = [],
 }) => {
@@ -40,8 +40,8 @@ const useFilters = ({
 
   const filterCommGroups = useMemo(() => {
     const vals = getAll('comm_groups');
-    return commGroups.filter(c => vals.includes(c.name));
-  }, [getAll, commGroups]);
+    return comm_groups.filter(c => vals.includes(c.name));
+  }, [getAll, comm_groups]);
 
   const filterPeople = useMemo(() => {
     const vals = getAll('people');
