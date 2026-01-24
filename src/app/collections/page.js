@@ -1,8 +1,12 @@
+import { Suspense } from "react";
+
 const CollectionsPage = ({}) => {
 
   return(
     <>
-      Collections
+      <Suspense fallback={null}>
+        Collections
+      </Suspense>
     </>
   );
 };
