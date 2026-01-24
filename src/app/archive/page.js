@@ -1,13 +1,12 @@
-import { Suspense } from "react";
+"use client";
+
 import AlbinaCommArchive from "../components/AlbinaCommArchive";
 
 export default function ArchivePage({}) {
 
   return(
     <>
-      <Suspense fallback={null}>
-        <AlbinaCommArchive />
-      </Suspense>
+      <AlbinaCommArchive />
     </>
   )
 }
