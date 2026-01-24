@@ -21,7 +21,7 @@ const Footer = ({  }) => {
                         EIN: 99-3975378
                     </div>
                     <div className='donate-btn-div'>
-                        <button className='pill-btn'>Donate</button>
+                        <button className='pill-btn'><Link href={"https://www.paypal.com/donate/?hosted_button_id=Y5CY72BKFT9VE"}>Donate</Link></button>
                     </div>
                 </div>
                 <div className='footer-newsletter'>
@@ -29,7 +29,7 @@ const Footer = ({  }) => {
                         Sign up for our newsletter
                     </div>
                     <div className='signup-btn-div'>
-                        <Link className='signup-btn pill-btn' href={"https://albinamusictrust.us14.list-manage.com/subscribe/post"}>Sign Up</Link>
+                        <Link className='signup-btn pill-btn' href={"http://eepurl.com/h58Han"}>Sign Up</Link>
                     </div>
                 </div>
                 <div className='footer-links'>

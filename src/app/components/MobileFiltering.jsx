@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimatePresence, motion } from "motion/react";
 import Drawer from "./Drawer";
 import xIcon from "@/../public/images/x-white.svg"
