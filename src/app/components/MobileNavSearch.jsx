@@ -6,7 +6,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import chevronLeft from "@/../public/images/chevron-left.svg"
 import xIcon from "@/../public/images/x.svg";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 const MobileNavSearch = ({
@@ -15,18 +15,17 @@ const MobileNavSearch = ({
   menuOpen,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const searchParams = useSearchParams();
   const { replace } = useRouter();
 
   const handleSearch = ( e ) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams);
-    if (searchTerm) {
-      params.set("search", searchTerm);
-    } else {
-      params.delete("search");
-    }
+
+    if (!searchTerm || searchTerm.length < 1) return;
+    const params = new URLSearchParams();
+    params.set("search", searchTerm);
+
     replace(`/archive?${params.toString()}`);
+
     setSearchOpen(false);
   }
 

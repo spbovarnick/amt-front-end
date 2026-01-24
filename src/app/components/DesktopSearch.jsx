@@ -4,21 +4,19 @@ import searchIcon from "@/../public/images/search-icon.svg";
 import Image from "next/image";
 import xIcon from "@/../public/images/x.svg"
 import { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const DesktopSearch = ({}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const searchParams = useSearchParams();
   const { replace } = useRouter();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams);
-    if (searchTerm && searchTerm.length > 1) {
-      params.set("search", searchTerm);
-    } else {
-      params.delete("search");
-    }
+
+    if (!searchTerm || searchTerm.length < 1) return;
+    const params = new URLSearchParams();
+    params.set("search", searchTerm);
+
     replace(`/archive?${params.toString()}`);
   }
 
