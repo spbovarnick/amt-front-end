@@ -9,6 +9,7 @@ import DesktopSidebar from "./components/DesktopSidebar";
 import localFont from "next/font/local"
 import { AssociatedDataProvider } from "./context/AssociatedDataContext";
 import { fetchAssociatedData } from "@/utils/api";
+import { Suspense } from "react";
 
 const sfPro = localFont({
   src: [
@@ -39,10 +40,12 @@ export default async function RootLayout({ children }) {
         <DesktopNav />
         <Toaster />
         <div className="main-content-wrap">
-          <AssociatedDataProvider value={associatedData} >
-            <DesktopSidebar />
-            {children}
-          </AssociatedDataProvider>
+          <Suspense fallback={null}>
+            <AssociatedDataProvider value={associatedData} >
+              <DesktopSidebar />
+              {children}
+            </AssociatedDataProvider>
+          </Suspense>
         </div>
         <Analytics />
         <Footer />
