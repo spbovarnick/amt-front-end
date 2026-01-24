@@ -3,7 +3,7 @@
 import { useAssociatedData } from "../context/AssociatedDataContext";
 import { yearOptions, mediumOptions } from "@/utils/actions";
 import Drawer from "./Drawer";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 
 const DesktopFiltering = ({ }) => {
   const {
@@ -14,11 +14,14 @@ const DesktopFiltering = ({ }) => {
     tags
   } = useAssociatedData();
 
+  const pathname = usePathname();
   const sP = useSearchParams();
   const searchParams = new URLSearchParams(sP);
 
+  console.log(pathname)
+
   return (
-    <div className="desktop-drawer-set">
+    <div className={`desktop-drawer-set ${pathname === "/archive" ? "on-route" : ""}`}>
       <Drawer
         label="Media"
         data={mediumOptions}

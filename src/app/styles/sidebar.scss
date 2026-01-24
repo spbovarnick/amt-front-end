@@ -5,6 +5,14 @@
 
   @media (min-width: variables.$bp-md) {
     display: block;
+
+    .desktop-drawer-set {
+      display: none;
+
+      &.on-route {
+        display: block;
+      }
+    }
   }
 }
 
