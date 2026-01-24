@@ -143,6 +143,8 @@ const MediaCarousel = ({item}) => {
         })
     }, [carouselItems])
 
+    const pickLayoutOrEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
     useLayoutEffect(() => {
         function handleResize(){
             setCarouselWidth(containerRef.current.offsetWidth || 0)

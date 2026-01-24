@@ -11,7 +11,7 @@ export default function Pagination ({ totalPages }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
-  const [innerWidth, setInnerWidth] = useState(window.innerWidth)
+  const [innerWidth, setInnerWidth] = useState(0)
 
   useEffect(() => {
     const handleResize = () => {

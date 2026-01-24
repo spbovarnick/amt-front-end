@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo} from "react";
+import React, { useEffect, useState, useRef, memo, useMemo} from "react";
 import {  List } from "react-window";
 import { InView } from "react-intersection-observer";
 import audioIcon from 'public/images/timeline-audio-icon.jpg';
@@ -14,7 +14,7 @@ import { fetchTimelineItems } from "@/utils/api";
 const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoading, setViewContent, setViewMap, setViewTimeline, viewPane, pathname, searchParams }) => {
     const activeItemRef = useRef(null)
     const [activeItemIndex, setActiveItemIndex] = useState(null);
-    const [screenSize, setScreenSize] = useState(getCurrentWindowWidth());
+    const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
     const [zoom, setZoom] = useState(0);
     const [itemSize, setItemSize] = useState(250);
     const [zoomOffsetRatio, setZoomOffsetRatio] = useState(null);
@@ -62,8 +62,13 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
 
     useEffect(() => {
         const updateDimension = () => {
-            setScreenSize(getCurrentWindowWidth())
+            setScreenSize({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
         }
+
+        updateDimension();
         window.addEventListener('resize', updateDimension);
 
         return(() => {
@@ -183,19 +188,17 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
         return items.findIndex(item => item.id === itemId)
     }
 
-    function getCurrentWindowWidth() {
-        return {
-            width: window.innerWidth,
-            height: window.innerHeight
-        }
-    }
-
     // gets height of .view-pane, to set List same height of other element inside of modal
-    function getCurrentViewPaneDimensions() {
-        if (viewPane.current) {
-            return {height: viewPane.current?.offsetHeight, width: viewPane.current?.offsetWidth}
+    const viewPaneDimensions = useMemo(() => {
+        if (!viewPane?.current) {
+            return { width: 0, height: 0 };
         }
-    }
+
+        return {
+            width: viewPane.current.offsetWidth,
+            height: viewPane.current.offsetHeight,
+        };
+    }, [viewPane?.current])
 
     // sourcer picker returns some image; users can click media tab to view all contents
     function pickSource(item) {
@@ -421,7 +424,7 @@ const Timeline = ({ pageTag, id, setModalItem, setLocations, setIsLoading, isLoa
                     innerRef={innerContainer}
                     outerRef={outerContainer}
                     height={"100%"}
-                    width={getCurrentViewPaneDimensions().width}
+                    width={viewPaneDimensions.width}
                     itemCount={items.length}
                     itemSize={itemSize}
                     className="list"
