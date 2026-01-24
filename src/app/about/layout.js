@@ -1,4 +1,4 @@
-export default function AboutLayout({ children }) {
+const AboutLayout = ({ children }) => {
 
   return(
     <>
@@ -6,3 +6,5 @@ export default function AboutLayout({ children }) {
     </>
   );
 }
+
+export default AboutLayout

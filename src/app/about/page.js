@@ -1,4 +1,4 @@
-export default function AboutPage(){
+const AboutPage = () => {
 
   return(
     <>
@@ -6,3 +6,5 @@ export default function AboutPage(){
     </>
   );
 }
+
+export default AboutPage;
