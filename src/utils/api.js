@@ -119,7 +119,6 @@ export async function getPageCount({
     return Math.ceil(count/itemsPerLoad)
   } catch (error) {
     console.log("Error getting total page count:", error);
-    window.location.href = "/";
   }
 }
 
@@ -192,7 +191,6 @@ export async function updateArchiveItems(
     return getData(url, itemsPerLoad);
   } catch (error) {
     console.log("Error updating archive items:", error);
-    window.location.href = "/";
   }
 }
 
