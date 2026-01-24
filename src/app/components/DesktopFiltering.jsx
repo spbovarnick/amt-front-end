@@ -18,8 +18,6 @@ const DesktopFiltering = ({ }) => {
   const sP = useSearchParams();
   const searchParams = new URLSearchParams(sP);
 
-  console.log(pathname)
-
   return (
     <div className={`desktop-drawer-set ${pathname === "/archive" ? "on-route" : ""}`}>
       <Drawer
