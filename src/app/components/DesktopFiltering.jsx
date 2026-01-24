@@ -18,7 +18,7 @@ const DesktopFiltering = ({ }) => {
   const searchParams = new URLSearchParams(sP);
 
   return (
-    <div>
+    <div className="desktop-drawer-set">
       <Drawer
         label="Media"
         data={mediumOptions}

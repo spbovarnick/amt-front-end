@@ -32,30 +32,37 @@
 .show-all-drawerBtns {
     text-decoration: underline;
     margin: 8px 0;
+    color: white;
 }
 
-@media (max-width: variables.$bp-sm) {
-    .archive__label {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.archive__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    color: white;
+}
+.cmpt-drawer {
+    margin-bottom: 8px;
+
+    .button-scroll {
+        display: none;
     }
-    .cmpt-drawer {
-        margin-bottom: 8px;
 
-        .button-scroll {
-            display: none;
-        }
+    .button-scroll.open-drawer {
+        display: block;
+        // max-height: none;
+    }
 
-        .button-scroll.open-drawer {
-            display: block;
-            max-height: none;
-        }
+    .cmpt-drawer-separator {
+        display: block;
+        background: variables.$black-3;
+        height: 1px;
+    }
+}
 
-        .cmpt-drawer-separator {
-            display: block;
-            background: variables.$black-3;
-            height: 1px;
-        }
+@media (min-width: variables.$bp-md) {
+    .button-scroll.open-drawer {
+        max-height: 400px;
     }
 }

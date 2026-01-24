@@ -1,6 +1,5 @@
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
-import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
 import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
@@ -19,11 +18,21 @@ const sfPro = localFont({
   variable: "--font-sfPro",
 });
 
+const martinXBold = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Martin/VTCMartinTrial-XBold.woff"
+    },
+
+  ],
+  variable: "--font-martinXBold",
+});
+
 export default async function RootLayout({ children }) {
   const associatedData = await fetchAssociatedData();
 
   return (
-    <html lang="en" className={` ${sfPro.variable}`}>
+    <html lang="en" className={`${martinXBold.variable} ${sfPro.variable}`}>
       <IndexPage />
       <body>
         <MobileNav />
