@@ -1,13 +1,16 @@
 import DesktopFiltering from "./DesktopFiltering";
 import DesktopSearch from "./DesktopSearch";
+import { Suspense } from "react";
 
 const DesktopSidebar = ({}) => {
 
 
   return (
     <div className="desktop-sidebar">
-      <DesktopSearch />
-      <DesktopFiltering />
+      <Suspense fallback={null}>
+        <DesktopSearch />
+        <DesktopFiltering />
+      </Suspense>
     </div>
   )
 }
