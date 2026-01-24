@@ -36,4 +36,8 @@
     align-items: center;
     cursor: pointer;
   }
+
+  @media (min-width: variables.$bp-md) {
+    margin-bottom: 2em;
+  }
 }

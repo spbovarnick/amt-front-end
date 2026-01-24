@@ -70,6 +70,7 @@
           padding: 0;
           display: flex;
           align-items: center;
+          z-index: 999;
         }
       }
     }
@@ -93,16 +94,7 @@
     width: auto;
   }
 
-  // opaque overlay beneath open slide menu
-  .slide-menu-underlay {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    right: -15px;
-    top: 46px;
-    background-color: #00000045;
-    z-index: 998;
-  }
+
 
   .mobile-menu-wrapper {
     position: relative;
@@ -116,7 +108,7 @@
       align-items: center;
     }
 
-    .slide-menu {
+    .nav-slide-menu {
       position: absolute;
       right: -15px;
       top: 46px;
@@ -195,4 +187,15 @@
   @media (min-width: variables.$bp-md) {
     display: grid;
   }
+}
+
+
+.slide-menu-underlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  right: -15px;
+  top: 46px;
+  background-color: #00000045;
+  z-index: 998;
 }

@@ -1,48 +1,48 @@
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
-import { Poppins, Newsreader, Roboto_Mono, } from 'next/font/google';
 import IndexPage from './components/IndexPage';
 import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
 import DesktopNav from "./components/DesktopNav";
 import Footer from "./components/Footer";
 import DesktopSidebar from "./components/DesktopSidebar";
+import localFont from "next/font/local"
+import { AssociatedDataProvider } from "./context/AssociatedDataContext";
+import { fetchAssociatedData } from "@/utils/api";
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  display: 'swap',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  adjustFontFallback: false,
-})
+const sfPro = localFont({
+  src: [
+    { path: "../../public/fonts/SF-Pro-Italic.ttf" },
+    { path: "../../public/fonts/SF-Pro.ttf" },
+  ],
+  variable: "--font-sfPro",
+});
 
-const roboto_mono = Roboto_Mono({
-  subsets: ['latin'],
-  variable: '--font-roboto-mono',
-  display: 'swap',
-  weight: "variable",
-  adjustFontFallback: false,
-})
+const martinXBold = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Martin/VTCMartinTrial-XBold.woff"
+    },
 
-const newsreader = Newsreader({
-  subsets: ['latin'],
-  variable: '--font-newsreader',
-  display: 'swap',
-  weight: "variable",
-  adjustFontFallback: false,
-})
+  ],
+  variable: "--font-martinXBold",
+});
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const associatedData = await fetchAssociatedData();
+
   return (
-    <html lang="en" className={`${poppins.variable} ${roboto_mono.variable} ${newsreader.variable}`}>
+    <html lang="en" className={`${martinXBold.variable} ${sfPro.variable}`}>
       <IndexPage />
       <body>
         <MobileNav />
         <DesktopNav />
         <Toaster />
         <div className="main-content-wrap">
-          <DesktopSidebar />
-          {children}
+          <AssociatedDataProvider value={associatedData} >
+            <DesktopSidebar />
+            {children}
+          </AssociatedDataProvider>
         </div>
         <Analytics />
         <Footer />

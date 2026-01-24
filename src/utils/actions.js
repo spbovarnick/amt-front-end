@@ -68,24 +68,24 @@ export function generatePagination({ currentPage, totalPages, width }) {
 };
 
 export const yearOptions = [
-  { value: "", label: "Any" },
-  { value: 1930, label: "1930s" },
-  { value: 1940, label: "1940s" },
-  { value: 1950, label: "1950s" },
-  { value: 1960, label: "1960s" },
-  { value: 1970, label: "1970s" },
-  { value: 1980, label: "1980s" },
-  { value: 1990, label: "1990s" },
-  { value: 2000, label: "2000s" },
-  { value: 2010, label: "2010s" },
-  { value: 2020, label: "2020s" },
+  // { value: "", name: "Any" },
+  { value: 1930, name: "1930s" },
+  { value: 1940, name: "1940s" },
+  { value: 1950, name: "1950s" },
+  { value: 1960, name: "1960s" },
+  { value: 1970, name: "1970s" },
+  { value: 1980, name: "1980s" },
+  { value: 1990, name: "1990s" },
+  { value: 2000, name: "2000s" },
+  { value: 2010, name: "2010s" },
+  { value: 2020, name: "2020s" },
 ];
 
 export const mediumOptions = [
-  { value: "", label: "Any" },
-  { value: "photo", label: "Photos" },
-  { value: "film", label: "Film" },
-  { value: "audio", label: "Audio" },
-  { value: "article", label: "Articles" },
-  { value: "printed material", label: "Printed Material" }
+  // { value: "", name: "Any" },
+  { value: "photo", name: "Photos" },
+  { value: "film", name: "Film" },
+  { value: "audio", name: "Audio" },
+  { value: "article", name: "Articles" },
+  { value: "printed material", name: "Printed Material" }
 ];

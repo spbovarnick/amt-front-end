@@ -70,20 +70,6 @@
     }
 }
 
-.archive__label {
-  margin-bottom: 8px;
-
-  .cmpt-drawer-toggle {
-    display: none;
-  }
-}
-
-.archive-tags {
-  margin-bottom: 60px;
-  display: grid;
-  position: relative;
-}
-
 .archive-pagination_wrapper {
   margin-top: 50px;
   text-align: center;
@@ -157,10 +143,6 @@
   }
 }
 
-.advanced-search__drawer {
-  overflow: hidden;
-}
-
 .advanced-search__toggle {
   display: inline;
   width: fit-content;
@@ -176,12 +158,6 @@
 
 .advanced-search__toggle-mobile {
   display: none;
-}
-
-@media (min-width: variables.$bp-sm) {
-  .advanced-search__drawer {
-    transition: height 200ms ease-in-out;
-  }
 }
 
 @media (min-width: variables.$bp-md) {
@@ -222,19 +198,6 @@
     }
   }
 
-  .archive-tags {
-
-    &.advanced-search-open{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 11;
-      background-color: rgba(0, 0, 0, .5);
-    }
-  }
-
   .advanced-search__toggle {
     display: none;
     width: fit-content;
@@ -248,7 +211,8 @@
   }
 
   .advanced-search__toggle-mobile {
-    display: inline;
+    display: flex;
+    align-items: center;
     width: fit-content;
     background: none;
     color: #fff;
@@ -258,39 +222,13 @@
     font-size: 14px;
     font-weight: normal;
 
-    &.advanced-search-open {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(to top, rgba(0,0,0,1) 50%, rgba(0,0,0,0.6) 70%, transparent);
-      padding: 2rem;
-      width: 80vw;
-      z-index: 12;
-      animation: slidefromleft 200ms ease-in-out none;
+    .mobile-filter-icon {
+      margin-right: 7px;
     }
   }
 
-  .advanced-search__drawer {
-    transition: left 200ms ease-in-out;
-    position: fixed;
-    top: 0;
-    left: -80vw;
-
-    &.advanced-search-open {
-      overflow: scroll;
-      height: 100vh !important;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: rgba(0,0,0,0.93);
-      padding: 10vw 10vw 81px 10vw;
-      z-index: 11;
-      width: 80vw;
-    }
-
-    &:not(.advanced-search-open) {
-      left: -80vw;
-    }
+  .advanced-search__open {
+    display: none;
   }
 
   #archive-gallery.advanced-search-open {
@@ -301,7 +239,7 @@
 }
 
 .search-results-for {
-  margin-bottom: 78px;
+  margin: 12px 0 24px 0;
 }
 
 @keyframes slidefromleft {

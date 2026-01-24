@@ -37,7 +37,7 @@ const MobileNavSlideMenu = ({
         { menuOpen &&
           <motion.div
             ref={menuOpenRef}
-            className="slide-menu"
+            className="nav-slide-menu"
             initial={{ x: "200%" }}
             exit={{ x: "250%" }}
             animate={{ x: 0 }}
