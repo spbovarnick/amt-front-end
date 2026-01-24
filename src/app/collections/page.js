@@ -1,12 +1,10 @@
-import { Suspense } from "react";
+export const dynamic = "force-dynamic"
 
 const CollectionsPage = ({}) => {
 
   return(
     <>
-      <Suspense fallback={null}>
-        Collections
-      </Suspense>
+      Collections
     </>
   );
 };
