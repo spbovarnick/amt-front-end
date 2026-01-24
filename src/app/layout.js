@@ -1,11 +1,9 @@
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
-import IndexPage from './components/IndexPage';
 import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
 import DesktopNav from "./components/DesktopNav";
 import Footer from "./components/Footer";
-import DesktopSidebar from "./components/DesktopSidebar";
 import localFont from "next/font/local"
 import { AssociatedDataProvider } from "./context/AssociatedDataContext";
 import { fetchAssociatedData } from "@/utils/api";
@@ -48,7 +46,6 @@ export default async function RootLayout({ children }) {
         <div className="main-content-wrap">
           <Suspense fallback={null}>
             <AssociatedDataProvider value={associatedData} >
-              <DesktopSidebar />
               {children}
             </AssociatedDataProvider>
           </Suspense>

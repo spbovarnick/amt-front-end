@@ -1,4 +1,4 @@
-import AlbinaCommArchive from "../components/AlbinaCommArchive";
+import AlbinaCommArchive from "../../components/AlbinaCommArchive";
 
 export default function ArchivePage({}) {
 

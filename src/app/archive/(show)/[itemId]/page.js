@@ -1,5 +1,5 @@
 import { getItem } from "@/utils/api";
-import ShowItem from "../components/ShowItem";
+import ShowItem from "@/app/components/ShowItem";
 
 export default async function ItemIdPage({ params }){
   const { itemId } = await params
@@ -11,7 +11,6 @@ export default async function ItemIdPage({ params }){
       <ShowItem
         itemData={item}
       />
-
     </div>
   )
 }

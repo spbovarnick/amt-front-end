@@ -19,8 +19,10 @@
 .desktop-search {
   display: flex;
   position: relative;
+  margin-bottom: 2em;
 
   input {
+    font-family: var(--font-sfPro), sans-serif;
     border: none;
     border-radius: 10px;
     padding: 0 5px;
@@ -43,9 +45,5 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-  }
-
-  @media (min-width: variables.$bp-md) {
-    margin-bottom: 2em;
   }
 }
