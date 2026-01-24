@@ -4,7 +4,7 @@ export default function ArchiveLayout({ children }) {
 
   return(
     <>
-    <Suspense>
+    <Suspense fallback={null}>
       { children }
     </Suspense>
     </>

@@ -1,15 +1,12 @@
-"use client";
+export const dynamic = "force-dynamic";
 
-import { Suspense } from "react";
 import AlbinaCommArchive from "../components/AlbinaCommArchive";
 
 export default function ArchivePage({}) {
 
   return(
     <>
-      <Suspense fallback={null} >
-        <AlbinaCommArchive />
-      </Suspense>
+      <AlbinaCommArchive />
     </>
   )
 }
