@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
-const { hostname } = require('os');
-const path = require('path');
+import { hostname } from 'os';
+import { join } from 'path';
 
 const nextConfig = {
-  turbopack: {
-    root: path.join(__dirname, ".."),
-  },
   images: {
     dangerouslyAllowLocalIP: true, // Only for private networks,
     remotePatterns: [
@@ -37,8 +34,8 @@ const nextConfig = {
     ]
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'src/app/styles')],
+    includePaths: [join(__dirname, 'src/app/styles')],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
