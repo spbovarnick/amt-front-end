@@ -1,7 +1,6 @@
 @use "util";
 @use "normalize";
 @use "type";
-@use "banner";
 @use "global-nav";
 @use "homepage";
 @use "text-block";
@@ -25,7 +24,6 @@
 @use "drawer";
 @use "drawer-button";
 @use "give-guide";
-@use "carousel";
 @use "news-block";
 @use "timeline";
 @use "zoom-pan-pinch";
@@ -36,3 +34,7 @@
 @use "info-box";
 @use "archive-item-comment";
 @use "media-carousel";
+@use "nav";
+@use "sidebar";
+@use "advanced-filter";
+@use "applied-filters";
