@@ -1,5 +1,16 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import React, { useRef, useEffect, memo, useCallback} from "react";
-import { TransformWrapper, TransformComponent, } from 'react-zoom-pan-pinch';
+const TransformWrapper = dynamic(
+    () => import('react-zoom-pan-pinch').then(m => m.TransformWrapper),
+    { ssr: false }
+);
+const TransformComponent = dynamic(
+    () => import('react-zoom-pan-pinch').then(m => m.TransformComponent),
+    { ssr: false }
+)
+// import { TransformWrapper, TransformComponent, } from 'react-zoom-pan-pinch';
 import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
 import zoomResetIcon from 'public/images/zoom-reset.svg';
@@ -14,7 +25,7 @@ const ControlPanel = memo(function ControlPanel({
 }){
     const handleExitFullScreen = (e) => {
         e.preventDefault();
-        resetTransform;
+        resetTransform();
         exitFullscreen();
     }
 
@@ -85,10 +96,14 @@ const FullscreenImg = memo(function FullscreenImg({
     const imgRef = useRef();
 
     const exitFullscreen = useCallback(() => {
+        if (typeof document === "undefined") return;
+
         if (document.fullscreenElement) document.exitFullscreen();
     }, []);
 
     const toggleFullscreen = useCallback(() => {
+        if (typeof document === "undefined") return;
+
         if (!isFullscreen) {
             fullScreenRef.current?.requestFullscreen();
         } else {
