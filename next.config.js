@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
-import { hostname } from 'os';
-import { join } from 'path';
+const { hostname } = require('os');
+const path = require('path');
 
 const nextConfig = {
   images: {
@@ -34,8 +34,8 @@ const nextConfig = {
     ]
   },
   sassOptions: {
-    includePaths: [join(__dirname, 'src/app/styles')],
+    includePaths: [path.join(__dirname, 'src/app/styles')],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
