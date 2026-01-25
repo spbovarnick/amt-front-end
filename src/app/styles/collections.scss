@@ -4,7 +4,7 @@
   margin: 20px auto;
 
   .collections.heading {
-    margin-bottom: 2.5em;
+    margin-bottom: 2em;
   }
 
   .collections-alpha-group {
@@ -23,7 +23,6 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 10vw;
-    padding: 30px calc(12vw - 30px);
   }
 }
 

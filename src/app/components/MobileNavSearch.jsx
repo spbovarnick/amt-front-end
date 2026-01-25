@@ -15,7 +15,7 @@ const MobileNavSearch = ({
   menuOpen,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const handleSearch = ( e ) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const MobileNavSearch = ({
     const params = new URLSearchParams();
     params.set("search", searchTerm);
 
-    replace(`/archive?${params.toString()}`);
+    push(`/archive?${params.toString()}`);
 
     setSearchOpen(false);
   }

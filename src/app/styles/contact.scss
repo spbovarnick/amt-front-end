@@ -1,0 +1,29 @@
+@use "variables";
+
+.contact-wrapper {
+  margin: 20px auto;
+
+  .contact-heading {
+    margin-bottom: 2em;
+  }
+
+  .quick-links {
+    display: none;
+  }
+
+  @media (min-width: variables.$bp-md) {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.5fr;
+    gap: 10%;
+
+    .quick-links {
+      display: block;
+
+      .quick-links-list {
+        list-style: none;
+        padding: 0;
+        line-height: 2;
+      }
+    }
+  }
+}

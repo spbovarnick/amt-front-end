@@ -1,4 +1,4 @@
-import ArchiveItemComment from "./ArchiveItemComment"
+import ArchiveItemCommentModal from "./ArchiveItemCommentModal"
 import Link from "next/link"
 import { Fragment } from "react"
 
@@ -69,11 +69,10 @@ export default function MultiPane({
             ))}
           </div>
         }
-        <ArchiveItemComment
+        <ArchiveItemCommentModal
           id={id}
           uid={uid}
           title={title}
-          archiveComment={true}
         />
       </div>
     </div>
