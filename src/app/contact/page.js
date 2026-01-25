@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Contact from "../components/ContactForm";
 import DesktopSidebar from "../components/DesktopSidebar";
+import { Suspense } from "react";
 
 
 const ContactPage = ({}) => {
@@ -10,9 +11,11 @@ const ContactPage = ({}) => {
       <DesktopSidebar />
       <div>
         <div className="contact-heading heading">CONTACT US</div>
-        <Contact
-          archiveComment={false}
-        />
+        <Suspense fallback={null}>
+          <Contact
+            archiveComment={false}
+          />
+        </Suspense>
       </div>
       <div className="quick-links">
           <div className="heading quick-links-heading">QUICK LINKS</div>
