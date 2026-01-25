@@ -1,0 +1,19 @@
+@use "variables";
+
+.collections-layout {
+  margin: 20px auto;
+
+  .collections.heading {
+    margin-bottom: 2.5em;
+  }
+
+  .collections-alpha-group {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0 2em 0;
+
+    .collections-li {
+
+    }
+  }
+}

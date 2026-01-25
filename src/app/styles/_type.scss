@@ -17,6 +17,15 @@ h5 {
   margin: 0;
 }
 
+.heading {
+  font-family: var(--font-martinXBold), sans-serif;
+  font-size: 18px;
+
+  &.xl {
+    font-size: 32px;
+  }
+}
+
 .heading-xl {
   font-family: var(--font-sfPro), sans-serif;
   font-style: normal;

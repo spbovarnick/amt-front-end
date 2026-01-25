@@ -78,7 +78,7 @@ export default function AlbinaCommArchive({ }) {
   }, [advancedSearchOpen])
 
   return (
-    <div className="page-wrapper --is-dark">
+    <div className="page-wrapper">
       <section className="archive-wrapper">
         <div className="archive-content ">
           <MobileFiltering
