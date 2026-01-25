@@ -24,6 +24,14 @@ h5 {
   &.xl {
     font-size: 32px;
   }
+
+  @media (min-width: variables.$bp-md) {
+    font-size: 24px;
+
+    &.xl {
+      font-size: 42px;
+    }
+  }
 }
 
 .heading-xl {

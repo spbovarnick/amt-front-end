@@ -11,28 +11,30 @@ const Collections = ({ collections }) => {
   return (
     <div className="page-wrapper">
       <div className="collections heading">COLLECTIONS</div>
-      {Object.entries(groupedColl).map(([letter, items]) => (
-        <div key={letter}>
-          <div className="heading xl">{letter}</div>
-          <ul
+      <div className="collections-columns">
+        {Object.entries(groupedColl).map(([letter, items]) => (
+          <div key={letter}>
+            <div className="heading xl">{letter}</div>
+            <ul
 
-            className="collections-alpha-group"
-          >
-            {items.map(c => (
-              <li
-                key={c.id}
-                className="collections-li"
-              >
-                <Link
-                  href={`/archive?collections=${encodeURIComponent(c.name)}`}
+              className="collections-alpha-group"
+            >
+              {items.map(c => (
+                <li
+                  key={c.id}
+                  className="collections-li"
                 >
-                  {c.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+                  <Link
+                    href={`/archive?collections=${encodeURIComponent(c.name)}`}
+                  >
+                    {c.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

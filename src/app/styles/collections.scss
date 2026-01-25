@@ -12,8 +12,25 @@
     padding: 0;
     margin: 1em 0 2em 0;
 
-    .collections-li {
+    @media (min-width: variables.$bp-md) {
+      padding-left: 20px;
+      font-size: 24px;
 
     }
+  }
+
+  @media (min-width: variables.$bp-md) {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10vw;
+    padding: 30px calc(12vw - 30px);
+  }
+}
+
+@media (min-width: variables.$bp-md) {
+  .collections-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10%;
   }
 }
