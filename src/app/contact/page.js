@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Contact from "../components/ContactForm";
 import DesktopSidebar from "../components/DesktopSidebar";
 
@@ -12,6 +13,20 @@ const ContactPage = ({}) => {
         <Contact
           archiveComment={false}
         />
+      </div>
+      <div className="quick-links">
+          <div className="heading quick-links-heading">QUICK LINKS</div>
+            <ul className="quick-links-list">
+              <li>
+                <Link href={"/about#collections-development-policy"}>Collections Development Policy</Link>
+              </li>
+              <li>
+                <Link href={"/about#terms-of-use"}>Terms & Conditions</Link>
+              </li>
+              <li>
+                <Link href={"/about#privacy-policy"}>Privacy Policy</Link>
+              </li>
+            </ul>
       </div>
     </div>
   )
