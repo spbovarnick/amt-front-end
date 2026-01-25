@@ -9,7 +9,7 @@ const arrayParamString = (key, values, mapper = v => v) => {
   return values.map(v => `&${key}[]=${encodeURIComponent(mapper(v))}`).join("")
 }
 
-export async function fetchAssociatedData(callFromPage=false, pageTitle) {
+export async function fetchAssociatedData() {
   const tags = [
     "locations",
     "tags",
@@ -22,15 +22,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
   const dataObj = {};
   for (const tagNameString of tags) {
     let url = `${rootURL}/api/v1/${tagNameString}/index`;
-    if (callFromPage && tagNameString === "carousel_slides") {
-      continue
-    }
-    if (!callFromPage && tagNameString === "page_carousel_slides") {
-      continue
-    }
-    if (callFromPage && tagNameString === "page_carousel_slides") {
-      url = `${rootURL}/api/v1/${tagNameString}/index?page_title=${encodeURIComponent(pageTitle)}`
-    }
+
     try {
       const res = await axios.get(url);
       const data = await res.data;
@@ -41,21 +33,7 @@ export async function fetchAssociatedData(callFromPage=false, pageTitle) {
     }
   }
   return dataObj;
-}
-
-export async function fetchPageData(slug) {
-  if (slug === undefined) {
-    return;
-  };
-  try {
-    const url = `${rootURL}/api/v1/pages/${slug}`;
-    const res = await axios.get(url);
-    return res.data;
-  } catch (error) {
-    console.log(error)
-    throw new Error(`Error fetching org page data with slug: ${slug}`, error);
-  }
-}
+};
 
 export async function getData(url, itemsPerLoad, ) {
   const res = await axios.get(rootURL + url);
