@@ -1,5 +1,5 @@
 @use "variables";
 
 .main-content-wrap {
-  padding: 0 30px;
+  padding: 30px calc(12vw - 30px);
 }

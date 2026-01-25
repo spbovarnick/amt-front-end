@@ -247,14 +247,25 @@ export async function fetchTimelineItems(pageTag) {
   }
 }
 
-export async function sendArchiveItemFeedback(title, id, uid, firstName, lastName, emailAddy, subject, comment) {
+export async function sendArchiveItemFeedback(title=undefined, id=undefined, uid=undefined, firstName, lastName, emailAddy, subject, comment, archiveComment) {
   try {
+    const itemCommentBody = JSON.stringify({
+      title: title,
+      id: id,
+      uid: uid,
+      first_name: firstName,
+      last_name: lastName,
+      email_addy: emailAddy,
+      subject: subject,
+      comment: comment,
+    })
     const respone = await fetch(`${rootURL}/api/v1/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        item_comment: archiveComment,
         title: title,
         id: id,
         uid: uid,

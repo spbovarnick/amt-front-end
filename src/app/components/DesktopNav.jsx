@@ -28,8 +28,6 @@ const DesktopNav = ({}) => {
         <li><Link href={"https://www.albinamusictrust.com/"}>ALBINA MUSIC TRUST</Link></li>
         {/* <li><DesktopSearch /></li> */}
       </ul>
-      <div>
-      </div>
     </nav>
   )
 }

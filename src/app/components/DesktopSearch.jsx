@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const DesktopSearch = ({}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { replace } = useRouter();
+  const { push } = useRouter();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ const DesktopSearch = ({}) => {
     const params = new URLSearchParams();
     params.set("search", searchTerm);
 
-    replace(`/archive?${params.toString()}`);
+    push(`/archive?${params.toString()}`);
   }
 
   const clearTerm = (e) => {
