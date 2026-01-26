@@ -19,7 +19,7 @@ export default function InfoBox({ item }){
           <div className="is-label">PEOPLE:</div>
           {item.people.map((i, idx) => (
             <Fragment key={i.id}>
-              <Link href={`/?people=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.people.length - 1 ? ", " : ""}
+              <Link href={`/archive?people=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.people.length - 1 ? ", " : ""}
             </Fragment>
           ))}
         </div>
@@ -29,7 +29,7 @@ export default function InfoBox({ item }){
           <div className="is-label">COURTESY OF:</div>
           {item.collections.map((i, idx) => (
             <Fragment key={i.id}>
-              <Link href={`/?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.collections.length - 1 ? ", " : ""}
+              <Link href={`/archive?collections=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.collections.length - 1 ? ", " : ""}
             </Fragment>
           ))}
         </div>
