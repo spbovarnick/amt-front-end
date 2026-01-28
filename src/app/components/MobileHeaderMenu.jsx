@@ -40,16 +40,16 @@ const MobileHeaderMenu = ({ isOpen }) => {
                     <Link href={"/"}>Archive</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"albinamusictrust.org/projects"}>Projects</Link>
+                    <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"albinamusictrust.org/upcoming-events"}>Events</Link>
+                    <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Events</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"albinamusictrust.org/our-records"}>Record Label</Link>
+                    <Link href={"https://www.albinamusictrust.org/our-records"}>Record Label</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"albinamusictrust.org/about-us"}>About</Link>
+                    <Link href={"https://www.albinamusictrust.org/about-us"}>About</Link>
                   </div>
                 </div>
               </div>
