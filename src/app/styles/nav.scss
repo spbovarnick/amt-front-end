@@ -1,7 +1,7 @@
 @use "variables";
 
 .mobile-nav {
-  background: black;
+  background: variables.$charc;
   height: 62px;
   color: white;
   display: flex;
@@ -25,11 +25,12 @@
   }
 
   .search-wrapper {
-    position: relative;
+    position: fixed;
+    padding: 6vw;
 
     .mobile-nav-search-btn {
         border: none;
-        background: black;
+        background: variables.$charc;
         padding: 0;
         height: 30px;
         width: 30px;
@@ -88,11 +89,7 @@
     }
   }
 
-  .amt-logo-icon {
-    background: black;
-    height: 37px;
-    width: auto;
-  }
+
 
 
 
@@ -157,7 +154,7 @@
   grid-template-rows: 2fr 1fr;
   width: 100%;
   height: 196px;
-  background-color: black;
+  background-color: variables.$charc;
   color: white;
   height: fit-content;
 
@@ -198,7 +195,6 @@
   }
 }
 
-
 .slide-menu-underlay {
   width: 100vw;
   height: 100vh;
@@ -207,4 +203,119 @@
   top: 46px;
   background-color: #00000045;
   z-index: 998;
+}
+
+.amt-header {
+  position: fixed;
+  width: 100%;
+}
+
+.header-content {
+  padding: 6vw;
+  display: flex;
+  justify-content: space-between;
+  width: auto;
+  position: relative;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.nav-burger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  background: none;
+  border: none;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.burger-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+
+}
+
+.inner-burger-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.top-bun {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  width: 100%;
+  transition: transform 250ms cubic-bezier(.2, .6, .3, 1), width 250ms cubic-bezier(.2, .6, .3, 1);
+  will-change: transform, width;
+  height: 1px;
+  background-color: white;
+  transform: translatey(-5.5px);
+
+  &.burger--active {
+    transform: translatex(3.5px) rotate(-135deg);
+    width: 28px;
+  }
+}
+
+.patty {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  width: 100%;
+  transition: transform 250ms cubic-bezier(.2, .6, .3, 1), width 250ms cubic-bezier(.2, .6, .3, 1);
+  will-change: transform, width;
+  transform: scale(0);
+  height: 1px;
+}
+
+.bottom-bun {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  content: '';
+  width: 100%;
+  transition: transform 250ms cubic-bezier(.2, .6, .3, 1), width 250ms cubic-bezier(.2, .6, .3, 1);
+  will-change: transform, width;
+  transform: translatey(5.5px);
+  height: 1px;
+  background-color: white;
+
+  &.burger--active {
+    transform: translatex(3.5px) rotate(135deg);
+    width: 28px;
+  }
+}
+
+.amt-logo-icon {
+  background: variables.$charc;
+  max-height: 50px;
+  width: auto;
+
+  @media (max-width: variables.$bp-md) {
+    max-height: 30px;
+  }
 }

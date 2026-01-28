@@ -1,13 +1,12 @@
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
-import MobileNav from "./components/MobileNav";
 import './styles/application.scss';
-import DesktopNav from "./components/DesktopNav";
 import Footer from "./components/Footer";
 import localFont from "next/font/local"
 import { AssociatedDataProvider } from "./context/AssociatedDataContext";
 import { fetchAssociatedData } from "@/utils/api";
 import { Suspense } from "react";
+import Nav from "./components/Nav";
 
 const sfPro = localFont({
   src: [
@@ -40,8 +39,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`${martinXBold.variable} ${sfPro.variable}`}>
       <body>
-        <MobileNav />
-        <DesktopNav />
+        <Nav />
         <Toaster />
         <div className="main-content-wrap">
           <Suspense fallback={null}>

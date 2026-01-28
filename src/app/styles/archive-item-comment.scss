@@ -26,7 +26,7 @@
 }
 
 .comment-modal {
-  background-color: black;
+  background-color: variables.$charc;
   width: 90%;
   height: 90%;
   display: flex;
@@ -79,7 +79,7 @@
   #subjectLine {
     width: 100%;
     color: white;
-    background-color: black;
+    background-color: variables.$charc;
     border: white solid 2px;
   }
 
