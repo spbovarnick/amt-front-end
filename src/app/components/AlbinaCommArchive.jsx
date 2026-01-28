@@ -99,7 +99,7 @@ export default function AlbinaCommArchive({ }) {
             advancedSearchOpenRef={advancedSearchOpenRef}
             exitAdvancedSearchOpenRef={exitAdvancedSearchOpenRef}
           />
-          <button
+          {/* <button
             onClick={() => {
               setAdvancedSearchOpen(!advancedSearchOpen)
             }}
@@ -113,7 +113,7 @@ export default function AlbinaCommArchive({ }) {
               className='mobile-filter-icon'
             />
             Show advanced search options
-          </button>
+          </button> */}
           <AppliedFilters />
           {searchTerm && archiveResults.length > 0 &&
             <div className='search-results-for'>Search results for "{searchTerm}"</div>

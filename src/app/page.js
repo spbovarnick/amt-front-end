@@ -6,7 +6,7 @@ export default async function Page(){
 
   return(
     <div className="archive-layout">
-      <DesktopSidebar />
+      {/* <DesktopSidebar /> */}
       <Suspense >
         <AlbinaCommArchive />
       </Suspense>
