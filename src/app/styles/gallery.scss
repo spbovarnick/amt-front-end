@@ -4,25 +4,6 @@
   background: variables.$black-7;
 }
 
-.cmpt-gallery__wrapper, .cmpt-gallery-staff {
-  .swiper-wrapper {
-    width: 5000%;
-
-      &:hover {
-        // cursor: url("../../../public/cursor-drag.svg") 45 45, grab;
-        cursor: url("../../../public//images/cursor-drag.svg") 45 45, grab;
-      }
-    }
-
-        .cmpt-gallery__button {
-          padding: 0;
-          border: 0;
-
-          &:hover {
-            cursor: url("../../../public/images/cursor-view.svg") 45 45, grab;
-          }
-        }
-}
 
 .swiper {
   width: 100%;
