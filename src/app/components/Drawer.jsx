@@ -39,33 +39,36 @@ const Drawer = ({
     return (
         <div className="cmpt-drawer">
             <div className="archive__label" onClick={() => { setIsOpen(!isOpen) }}>
-                    {label}
-                    <Image
-                        src={isOpen ? chevronUp.src : chevronDown.src}
-                        width={24}
-                        height={24}
-                        alt="Chevron icon"
-                    />
+                {label}
+                <Image
+                    src={isOpen ? chevronUp.src : chevronDown.src}
+                    width={24}
+                    height={24}
+                    alt="Chevron icon"
+                />
             </div>
-            <div className={`button-scroll ${isOpen ? "open-drawer" : ""}`}>
-                {visibleItems.map(item => (
-                    <DrawerButton
-                        key={item.id + item.name}
-                        item={item}
-                        label={item.name}
-                        toggleTag={onToggle}
-                        isActive={mediumOrYear ? selected.includes(String(item.value)) : selected.includes(item.name)}
-                        mediumOrYear={mediumOrYear}
-                    />
-                ))}
-                {data?.length > 25 &&
-                    <div
-                        className={`show-all-drawerBtns`}
-                        onClick={(e) => updateOffset(e)}
-                    >
-                        {data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}
-                    </div>
-            }
+            <div className={`drawer-outer button-scroll ${isOpen ? "open-drawer" : ""}`}>
+                <div className="drawer-inner">
+                    {visibleItems.map((item, i) => (
+                        <DrawerButton
+                            key={item.id + item.name}
+                            item={item}
+                            label={item.name}
+                            toggleTag={onToggle}
+                            isActive={mediumOrYear ? selected.includes(String(item.value)) : selected.includes(item.name)}
+                            mediumOrYear={mediumOrYear}
+                            style={{ "--i": i}}
+                        />
+                    ))}
+                    {data?.length > 25 &&
+                        <div
+                            className={`show-all-drawerBtns`}
+                            onClick={(e) => updateOffset(e)}
+                        >
+                            {data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}
+                        </div>
+                    }
+                </div>
             </div>
             { label !== "Collections" && <span className="cmpt-drawer-separator"></span>}
         </div>

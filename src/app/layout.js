@@ -41,13 +41,11 @@ export default async function RootLayout({ children }) {
       <body>
         <Nav />
         <Toaster />
-        <div className="main-content-wrap">
           <Suspense fallback={null}>
             <AssociatedDataProvider value={associatedData} >
               {children}
             </AssociatedDataProvider>
           </Suspense>
-        </div>
         <Analytics />
         <Footer />
       </body>

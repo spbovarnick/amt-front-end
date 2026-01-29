@@ -1,0 +1,61 @@
+@use "variables";
+
+.hero-landing-wrapepr {
+  width: 100%;
+  height: 100vh;
+  display: relative;
+}
+
+.hero-landing-pic {
+  width: 100vw;
+  height: 100%;
+}
+
+.hero-search-filter {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media (min-width: variables.$bp-md) {
+    width: 36.25vw
+  }
+}
+
+.hero-filter-toggle {
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &.hide {
+    margin-top: 2em;
+  }
+}
+
+.mission-text {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.hero-drawer-set {
+  background: variables.$charc;
+  padding: 1em;
+  border-radius: 20px;
+  transform-origin: top;
+  animation: drawerDrop 240ms ease-out;
+}
+
+@keyframes drawerDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

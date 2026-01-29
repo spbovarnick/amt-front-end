@@ -20,7 +20,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                 !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase())) &&
 
             <div className="cmpt-archive-item" ref={isFocused === item.id ? focusedRef : null}>
-                <Link href={`archive/${item.id.toString()}`}>
+                <Link href={`/${item.id.toString()}`}>
                     {item.medium === "photo" && item.content_file_urls[0] && (
                         <div className="cmpt-archive-item__thumb">
                             <Image

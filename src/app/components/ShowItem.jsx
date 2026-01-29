@@ -1,11 +1,18 @@
+"use client";
+
+import useHeaderHeight from "@/utils/useHeaderHeight"
 import InfoBox from "./InfoBox"
 import MediaCarousel from "./MediaCarousel"
 import Link from "next/link"
 
 export default function ShowItem({ itemData }){
+  const headerHeight = useHeaderHeight();
 
   return(
-    <div className="show-wrapper">
+    <div
+      className="show-wrapper"
+      style={{ paddingTop: headerHeight }}
+    >
       <MediaCarousel item={itemData} />
       <InfoBox
         item={itemData}

@@ -1,7 +1,9 @@
 @use "variables";
 
 .collections-layout {
-  margin: 20px auto;
+  margin: 2em auto;
+  padding-left: calc(6vw - 11px);
+  padding-right: calc(6vw - 11px);
 
   .collections.heading {
     margin-bottom: 2em;

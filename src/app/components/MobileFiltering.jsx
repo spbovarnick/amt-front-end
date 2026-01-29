@@ -5,6 +5,7 @@ import Drawer from "./Drawer";
 import xIcon from "@/../public/images/x-white.svg"
 import Image from "next/image";
 import { yearOptions, mediumOptions } from "@/utils/actions";
+import Search from "./Search";
 
 const MobileFiltering = ({
   advancedSearchOpen,
@@ -40,6 +41,10 @@ const MobileFiltering = ({
             bounce: 0
           }}
         >
+          <Search
+            mobileSidebar={true}
+            onHero={false}
+          />
           <Image
             src={xIcon}
             width={48}

@@ -79,6 +79,7 @@ export default function AlbinaCommArchive({ }) {
 
   return (
     <div className="page-wrapper">
+      <h3 className='comm-archive-title'>COMMUNITY ARCHIVE</h3>
       <section className="archive-wrapper">
         <div className="archive-content ">
           <MobileFiltering
@@ -99,7 +100,7 @@ export default function AlbinaCommArchive({ }) {
             advancedSearchOpenRef={advancedSearchOpenRef}
             exitAdvancedSearchOpenRef={exitAdvancedSearchOpenRef}
           />
-          {/* <button
+          <button
             onClick={() => {
               setAdvancedSearchOpen(!advancedSearchOpen)
             }}
@@ -113,12 +114,12 @@ export default function AlbinaCommArchive({ }) {
               className='mobile-filter-icon'
             />
             Show advanced search options
-          </button> */}
-          <AppliedFilters />
+          </button>
           {searchTerm && archiveResults.length > 0 &&
             <div className='search-results-for'>Search results for "{searchTerm}"</div>
           }
           <div id="archive-gallery" ref={archiveGalleryEl} className={`${advancedSearchOpen ? "advanced-search-open" : ""}`}>
+          <AppliedFilters />
             <ArchiveGallery
               isLoaded={isLoaded}
               isFiltering={isFiltering}
