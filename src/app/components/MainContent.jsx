@@ -30,10 +30,10 @@ const MainContent = ({ }) => {
         { params.size < 1 ?
           <HeroLanding />
           :
-          <>
+          <div className="archive-layout">
             <DesktopSidebar />
             <AlbinaCommArchive />
-          </>
+          </div>
         }
       </Suspense>
     </div>

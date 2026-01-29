@@ -6,7 +6,7 @@ import xIcon from "@/../public/images/x.svg"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Search = ({ onHero }) => {
+const Search = ({ onHero, mobileSidebar }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { push } = useRouter();
 
@@ -31,7 +31,7 @@ const Search = ({ onHero }) => {
       onSubmit={e => handleSearch(e)}
     >
       <input
-        placeholder="Search the archive"
+        placeholder="SEARCH THE ARCHIVE"
         onChange={(e) => setSearchTerm(e.target.value)}
         value={searchTerm}
       />
