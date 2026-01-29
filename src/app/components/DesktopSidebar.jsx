@@ -1,13 +1,13 @@
-import DesktopFiltering from "./DesktopFiltering";
-import DesktopSearch from "./DesktopSearch";
+import Filtering from "./Filtering";
+import Search from "./Search";
 
 const DesktopSidebar = ({}) => {
 
 
   return (
     <div className="desktop-sidebar">
-      <DesktopSearch />
-      <DesktopFiltering />
+      <Search />
+      <Filtering />
     </div>
   )
 }

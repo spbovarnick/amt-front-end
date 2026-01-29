@@ -16,27 +16,33 @@
   }
 }
 
-.desktop-search {
+.search {
   display: flex;
   position: relative;
   margin-bottom: 2em;
+  width: 100%;
+  align-items: center;
 
   input {
     font-family: var(--font-sfPro), sans-serif;
     border: none;
-    border-radius: 10px;
-    padding: 0 5px;
-    width: 90%;
+    border-radius: 300px;
+    padding: 1em;
+    width: 100%;
   }
 
-  .desktop-search-icon {
-    transform: scaleX(-1);
-    cursor: pointer;
-  }
-
-  .desktop-clear-search {
+  .search-icon {
     position: absolute;
-    right: 35px;
+    right: 1.1em;
+    opacity: .85;
+    cursor: pointer;
+    height: 22px;
+    width: 22px;
+  }
+
+  .clear-search {
+    position: absolute;
+    right: 3.2em;
     height: 100%;
     cursor: pointer;
     background: none;

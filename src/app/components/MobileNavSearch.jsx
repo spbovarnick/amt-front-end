@@ -24,7 +24,7 @@ const MobileNavSearch = ({
     const params = new URLSearchParams();
     params.set("search", searchTerm);
 
-    push(`/archive?${params.toString()}`);
+    push(`/?${params.toString()}`);
 
     setSearchOpen(false);
   }

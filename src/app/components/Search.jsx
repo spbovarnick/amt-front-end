@@ -1,12 +1,12 @@
 "use client";
 
-import searchIcon from "@/../public/images/search-icon.svg";
+import searchIcon from "@/../public/images/magnifying_glass.png";
 import Image from "next/image";
 import xIcon from "@/../public/images/x.svg"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const DesktopSearch = ({}) => {
+const Search = ({ onHero }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { push } = useRouter();
 
@@ -17,7 +17,7 @@ const DesktopSearch = ({}) => {
     const params = new URLSearchParams();
     params.set("search", searchTerm);
 
-    push(`/archive?${params.toString()}`);
+    push(`/?${params.toString()}`);
   }
 
   const clearTerm = (e) => {
@@ -27,7 +27,7 @@ const DesktopSearch = ({}) => {
 
   return (
     <form
-      className="desktop-search"
+      className={`search ${onHero && "on-hero"}`}
       onSubmit={e => handleSearch(e)}
     >
       <input
@@ -36,7 +36,7 @@ const DesktopSearch = ({}) => {
         value={searchTerm}
       />
       { searchTerm?.length > 0 &&
-        <button className="desktop-clear-search">
+        <button className="clear-search">
           <Image
             src={xIcon.src}
             width={20}
@@ -48,7 +48,7 @@ const DesktopSearch = ({}) => {
         <Image
             src={searchIcon.src}
             alt="Magnifying glass icon for search"
-            className="desktop-search-icon"
+            className="search-icon"
             width={30}
             height={30}
             onClick={e => handleSearch(e)}
@@ -57,4 +57,4 @@ const DesktopSearch = ({}) => {
   )
 }
 
-export default DesktopSearch
+export default Search

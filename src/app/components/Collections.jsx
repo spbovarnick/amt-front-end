@@ -25,7 +25,7 @@ const Collections = ({ collections }) => {
                   className="collections-li"
                 >
                   <Link
-                    href={`/archive?collections=${encodeURIComponent(c.name)}`}
+                    href={`/?collections=${encodeURIComponent(c.name)}`}
                   >
                     {c.name}
                   </Link>

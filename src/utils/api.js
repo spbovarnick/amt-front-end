@@ -173,7 +173,7 @@ export async function updateArchiveItems(
 }
 
 export async function getItem(id) {
-
+  console.log('fuck',id)
   const res = await axios.get(`${rootURL}/api/v1/archive_items/${id}`);
   const data = await res.data;
   return data;
