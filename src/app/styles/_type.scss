@@ -20,10 +20,7 @@ h3 {
   letter-spacing: .01em;
   text-transform: uppercase;
   margin: 2rem 0;
-
-  @media (max-width: variables.$bp-md) {
-    font-size: calc(3 * calc(.012 * min(100vh, 900px)) + 1rem);
-  }
+  font-size: calc(3 * calc(.012 * min(100vh, 900px)) + 1rem);
 }
 
 .heading {

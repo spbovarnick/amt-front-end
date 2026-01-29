@@ -27,7 +27,7 @@ const Search = ({ onHero, mobileSidebar }) => {
 
   return (
     <form
-      className={`search ${onHero && "on-hero"}`}
+      className={`search ${onHero ? "on-hero" : ""}`}
       onSubmit={e => handleSearch(e)}
     >
       <input

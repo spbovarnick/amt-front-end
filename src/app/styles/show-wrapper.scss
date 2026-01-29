@@ -2,11 +2,12 @@
 
 .show-wrapper {
   display: grid;
-  padding: 20px;
+  margin-top: 2em;
 
   @media (min-width: variables.$bp-lg) {
     grid-template-columns: minmax(280px, 1fr) 4fr;
-    padding: 0 10vw;
+    padding-left: calc(6vw - 11px);
+    padding-right: calc(6vw - 11px);
     gap: 5vw;
   }
 
