@@ -76,7 +76,7 @@ const Nav = ({}) => {
                   <Link href={"/"}>Community Archive</Link>
                 </div>
                 <div className="header-nav-item">
-                  <Link href={"albinamusictrust.org/projects"}>Projects</Link>
+                  <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
                 </div>
                 <div className="header-nav-item">
                   <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Events</Link>
