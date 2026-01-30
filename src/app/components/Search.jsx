@@ -3,18 +3,20 @@
 import searchIcon from "@/../public/images/magnifying_glass.png";
 import Image from "next/image";
 import xIcon from "@/../public/images/x.svg"
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { startTransition, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const Search = ({ onHero, mobileSidebar }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Search = ({ onHero }) => {
   const { push } = useRouter();
+  const sP = useSearchParams();
+  const activeSearchTerm = sP.get("search")
+  const params = new URLSearchParams(sP);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();
 
     if (!searchTerm || searchTerm.length < 1) return;
-    const params = new URLSearchParams();
     params.set("search", searchTerm);
 
     push(`/?${params.toString()}`);
@@ -23,6 +25,11 @@ const Search = ({ onHero, mobileSidebar }) => {
   const clearTerm = (e) => {
     e.preventDefault();
     setSearchTerm("")
+    params.delete("search")
+    const newParams = params.toString();
+    startTransition(() => {
+      push(`/?${newParams}`, { scroll: false });
+    });
   }
 
   return (
@@ -33,9 +40,9 @@ const Search = ({ onHero, mobileSidebar }) => {
       <input
         placeholder="SEARCH THE ARCHIVE"
         onChange={(e) => setSearchTerm(e.target.value)}
-        value={searchTerm}
+        value={sP.get("search") ?? searchTerm}
       />
-      { searchTerm?.length > 0 &&
+      { searchTerm?.length > 0 || activeSearchTerm?.length > 0 &&
         <button className="clear-search">
           <Image
             src={xIcon.src}

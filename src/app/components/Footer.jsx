@@ -43,9 +43,9 @@ const Footer = ({  }) => {
                                 <br />
                                 Address
                                 <br />
-                                2125 N. Vancouver Ave
+                                2828 NE Alberta St.
                                 <br />
-                                Portland, Oregon 97227
+                                Portland, Oregon 97211
                             </p>
                         </div>
 
