@@ -37,7 +37,7 @@ const MobileHeaderMenu = ({ isOpen }) => {
               <div className="header-menu-nav-folder-content">
                 <div className="header-menu-nav-wrapper">
                   <div className="header-menu-nav-item">
-                    <Link href={"/"}>Archive</Link>
+                    <Link href={"/"}>Community Archive</Link>
                   </div>
                   <div className="header-menu-nav-item">
                     <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
@@ -46,7 +46,7 @@ const MobileHeaderMenu = ({ isOpen }) => {
                     <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Events</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"https://www.albinamusictrust.org/our-records"}>Record Label</Link>
+                    <Link href={"https://www.albinamusictrust.org/our-records"}>Records</Link>
                   </div>
                   <div className="header-menu-nav-item">
                     <Link href={"https://www.albinamusictrust.org/about-us"}>About</Link>

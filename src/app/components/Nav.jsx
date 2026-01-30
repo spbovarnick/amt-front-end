@@ -73,7 +73,7 @@ const Nav = ({}) => {
             <nav className="header-nav-list">
               <div className="header-nav-list">
                 <div className="header-nav-item">
-                  <Link href={"/"}>Archive</Link>
+                  <Link href={"/"}>Community Archive</Link>
                 </div>
                 <div className="header-nav-item">
                   <Link href={"albinamusictrust.org/projects"}>Projects</Link>
@@ -82,7 +82,7 @@ const Nav = ({}) => {
                   <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Events</Link>
                 </div>
                 <div className="header-nav-item">
-                  <Link href={"https://www.albinamusictrust.org/our-records"}>Record Label</Link>
+                  <Link href={"https://www.albinamusictrust.org/our-records"}>Records</Link>
                 </div>
                 <div className="header-nav-item">
                   <Link href={"https://www.albinamusictrust.org/about-us"}>About</Link>
