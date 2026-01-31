@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useRef, useEffect, memo, useCallback} from "react";
+import React, { useRef, memo, useCallback} from "react";
 const TransformWrapper = dynamic(
     () => import('react-zoom-pan-pinch').then(m => m.TransformWrapper),
     { ssr: false }
