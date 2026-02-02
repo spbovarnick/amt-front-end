@@ -16,7 +16,6 @@
   .page-btn{
     height: 40px;
     width: 40px;
-    border: solid white 2px;
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
@@ -36,14 +35,13 @@
     justify-content: center;
 
     .current_page {
-      background-color: variables.$purple-6;
+      border: solid white 2px;
       pointer-events: none;
+      border-radius: 20px;
     }
 
     .numEl {
-      border: solid white 2px;
       padding: 5px;
-      border-radius: 5px;
       height: 40px;
       width: 40px;
       display: flex;

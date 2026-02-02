@@ -1,0 +1,7 @@
+@use "variables";
+
+.main-content-wrap {
+  padding-left: calc(6vw - 11px);
+  padding-right: calc(6vw - 11px);
+  min-height: 100vh;
+}

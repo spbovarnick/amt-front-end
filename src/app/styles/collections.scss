@@ -1,0 +1,37 @@
+@use "variables";
+
+.collections-layout {
+  margin: 2em auto;
+  padding-left: calc(6vw - 11px);
+  padding-right: calc(6vw - 11px);
+
+  .collections.heading {
+    margin-bottom: 2em;
+  }
+
+  .collections-alpha-group {
+    list-style: none;
+    padding: 0;
+    margin: 1em 0 2em 0;
+
+    @media (min-width: variables.$bp-md) {
+      padding-left: 20px;
+      font-size: 24px;
+
+    }
+  }
+
+  @media (min-width: variables.$bp-md) {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10vw;
+  }
+}
+
+@media (min-width: variables.$bp-md) {
+  .collections-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10%;
+  }
+}

@@ -1,0 +1,43 @@
+@use "variables";
+
+.mobile-filter-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+}
+.mobile-filter {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 70px 30px 30px 30px;
+  overflow-x: clip;
+  top: 62px;
+  background: variables.$charc;
+  z-index: 999;
+
+  .mobile-filter__x-icon {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+  }
+
+
+  @media (min-width: variables.$bp-md) {
+    display: none;
+  }
+
+}
+
+.advanced-filter-underlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  background-color: #00000045;
+  z-index: 998;
+}

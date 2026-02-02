@@ -1,165 +1,161 @@
-import React, {useState, useRef, useEffect} from "react";
-import { getCloudfrontUrl } from "@/utils/helpers";
-import { TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
+"use client";
+
+import dynamic from "next/dynamic";
+import React, { useRef, memo, useCallback} from "react";
+const TransformWrapper = dynamic(
+    () => import('react-zoom-pan-pinch').then(m => m.TransformWrapper),
+    { ssr: false }
+);
+const TransformComponent = dynamic(
+    () => import('react-zoom-pan-pinch').then(m => m.TransformComponent),
+    { ssr: false }
+)
+// import { TransformWrapper, TransformComponent, } from 'react-zoom-pan-pinch';
 import zoomInIcon from 'public/images/zoom-in.svg';
 import zoomOutIcon from 'public/images/zoom-out.svg';
 import zoomResetIcon from 'public/images/zoom-reset.svg';
-import chevronRight from 'public/images/chevron-right_fs.svg'
-import chevronLeft from 'public/images/chevron-left_fs.svg'
 import Image from "next/image";
 
-const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex }) => {
-    const [isFullscreen, setIsFullscreen] = useState(false);
-    const [containerWidth, setContainerWidth] = useState(0);
-    const [err, setErr] = useState();
-    const fullScreenRef = useRef();
-    const imgRef = useRef();
+const ControlPanel = memo(function ControlPanel({
+    isFullscreen,
+    zoomIn,
+    zoomOut,
+    resetTransform,
+    exitFullscreen,
+}){
+    const handleExitFullScreen = (e) => {
+        e.preventDefault();
+        resetTransform();
+        exitFullscreen();
+    }
 
-    useEffect(() => {
-        if(isFullscreen) {
-            // set container width to window width when entering fullscreen
-            setContainerWidth(window.innerWidth);
-        }
-    }, [isFullscreen]);
-
-    // updates state based on UI feedback
-    const handleFullscreen = () => {
-        if (fullScreenRef.current) {
-            if (isFullscreen) {
-                document.exitFullscreen();
-            } else {
-                fullScreenRef.current.requestFullscreen()
-                    .catch((err) => {
-                    alert(
-                      `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
-                    );
-                  });
-            }
-            setIsFullscreen(!isFullscreen);
-        }
-    };
-
-     // functional declaration gives access to zoom-pan-pinch controls
-    const Component = ({zoomIn, zoomOut, resetTransform}) => {
-        // event listener updates isFullscreen state if user exits with esc key
-        useEffect(() => {
-            if (fullScreenRef.current) {
-                fullScreenRef.current.addEventListener("fullscreenchange", fullscreenChanged);
-            }
-            return(() => {
-                fullScreenRef.current?.removeEventListener("fullscreenchange", fullscreenChanged);
-            });
-        }, []);
-
-        const resetPromise = () => {
-            return new Promise((resolve) => {
-                resetTransform();
-                resolve();
-            })
-        }
-
-        async function fullscreenChanged() {
-            if (!document.fullscreenElement) {
-                    await setIsFullscreen(false);
-                    await resetPromise();
-                }
-        }
-
-        return (
-            <>
-                <>
-                    <div className={`zoom-actions fullscreen-controls ${isFullscreen ? "fullscreen" : ""}`}>
+    return (
+        <>
+            <div className={`zoom-actions fullscreen-controls ${isFullscreen ? "fullscreen" : ""}`}>
+                <button
+                    type="button"
+                    className='zoom-button_fs button-round'
+                    onClick={() => zoomIn()}
+                >
+                    <Image src={zoomInIcon.src} width={24} height={24} alt="Zoom in icon" />
+                </button>
+                <button
+                    type="button"
+                    className='zoom-button_fs button-round'
+                    onClick={() => zoomOut()}
+                >
+                    <Image src={zoomOutIcon.src} width={24} height={24} alt="Zoom out icon" />
+                </button>
+                <button
+                    type="button"
+                    className="zoom-button_fs button-round"
+                    onClick={() => resetTransform()}
+                >
+                    <Image src={zoomResetIcon.src} width={24} height={24} alt="Zoom reset icon" />
+                </button>
+                {/* old logic for navigating carousel while in fullscreen, reach feature */}
+                {/* {multiple &&
+                    <>
                         <button
                             type="button"
-                            className='zoom-button_fs button-round'
-                            onClick={() => zoomIn()}
+                            className="zoom-button_fs button-round"
+                            onClick={prevImg}
                         >
-                            <Image src={zoomInIcon.src} width={24} height={24} alt="Zoom in icon" />
-                            {err}
-                        </button>
-                        <button
-                            type="button"
-                            className='zoom-button_fs button-round'
-                            onClick={() => zoomOut()}
-                        >
-                            <Image src={zoomOutIcon.src} width={24} height={24} alt="Zoom out icon" />
+                            <Image src={chevronLeft.src} width={24} height={24} alt="Chevron left icon" />
                         </button>
                         <button
                             type="button"
                             className="zoom-button_fs button-round"
-                            onClick={() => resetTransform()}
+                            onClick={nextImg}
                         >
-                            <Image src={zoomResetIcon.src} width={24} height={24} alt="Zoom reset icon" />
+                            <Image src={chevronRight.src} width={24} height={24} alt="Chevron right icon" />
                         </button>
-                        { carouselItems.length > 1 && 
-                            <>
-                            <button
-                                type="button"
-                                className="zoom-button_fs button-round"
-                                onClick={prevImg}
-                            >
-                                <Image src={chevronLeft.src} width={24} height={24} alt="Chevron left icon" />
-                            </button>
-                            <button
-                                type="button"
-                                className="zoom-button_fs button-round"
-                                onClick={nextImg}
-                            >
-                                <Image src={chevronRight.src} width={24} height={24} alt="Chevron right icon"/>
-                            </button>
-                            </>
-                        }
-                    </div>
-                    {isFullscreen &&
-                        <button
-                            type='button'
-                            className="fullscreenBtn exitFullscreen"
-                            onClick={async() => {
-                                await resetPromise();
-                                handleFullscreen();
-                            }}
-                            onTouchStart={async() => {
-                                await resetPromise();
-                                handleFullscreen();
-                            }}
-                            style={{
-                                opacity: isFullscreen ? "1" : "0"
-                            }}
-                        ></button>
-                   }
-                </>
-                <TransformComponent
-                    wrapperStyle={{
-                        height: "100%",
-                        width: "100%",
+                    </>
+                } */}
+            </div>
+            {isFullscreen &&
+                <button
+                    type='button'
+                    className="fullscreenBtn exitFullscreen"
+                    onClick={handleExitFullScreen}
+                    onTouchStart={handleExitFullScreen}
+                    style={{
+                        opacity: isFullscreen ? "1" : "0"
                     }}
-                >
-                    <img
-                        ref={imgRef}
-                        className='modalImage'
-                        src={getCloudfrontUrl(carouselItems[fileIndex], isFullscreen ? containerWidth * 2 : defaultWidth)}
-                    />
+                ></button>
+            }
+        </>
+    )
+})
 
-                </TransformComponent>
-            </>
-        )
-    }
+const FullscreenImg = memo(function FullscreenImg({
+    isFullscreen,
+    src,
+}) {
+    const fullScreenRef = useRef(null);
+    const imgRef = useRef();
+
+    const exitFullscreen = useCallback(() => {
+        if (typeof document === "undefined") return;
+
+        if (document.fullscreenElement) document.exitFullscreen();
+    }, []);
+
+    const toggleFullscreen = useCallback(() => {
+        if (typeof document === "undefined") return;
+
+        if (!isFullscreen) {
+            fullScreenRef.current?.requestFullscreen();
+        } else {
+            exitFullscreen();
+        };
+    }, [isFullscreen, exitFullscreen]);
 
     return (
         <>
             <div className='zpp-container' ref={fullScreenRef}>
                 <TransformWrapper
-                    disabled={isFullscreen ? false : true}
+                    disabled={!isFullscreen}
+                    // panning={{ disabled: !isFullscreen }}
+                    // wheel={{ disabled: !isFullscreen }}
+                    // pinch={{ disabled: !isFullscreen }}
                     wrapperClass="magnify-wrapper"
                 >
-                   {(params) => <Component {...params} />}
+                    {({ zoomIn, zoomOut, resetTransform}) => (
+                        <>
+                            <ControlPanel
+                                isFullscreen={isFullscreen}
+                                zoomIn={zoomIn}
+                                zoomOut={zoomOut}
+                                resetTransform={resetTransform}
+                                // prevImg={prevImg}
+                                // nextImg={nextImg}
+                                exitFullscreen={exitFullscreen}
+                                // multiple={carouselItems.length > 1}
+                            />
+                            <TransformComponent
+                                wrapperStyle={{
+                                    height: "100%",
+                                    width: "100%",
+                                }}
+                            >
+                                <img
+                                    ref={imgRef}
+                                    className='modalImage'
+                                    src={src}
+                                    alt=""
+                                />
+
+                            </TransformComponent>
+                        </>
+                    )}
                 </TransformWrapper>
             </div>
             {!isFullscreen &&
                 <button
                     type='button'
                     className="fullscreenBtn enterFullscreen"
-                    onClick={handleFullscreen}
+                    onClick={toggleFullscreen}
                     style={{
                         opacity: isFullscreen ? "0" : "1",
                     }}
@@ -167,6 +163,6 @@ const FullscreenImg =({ defaultWidth, prevImg, nextImg, carouselItems, fileIndex
             }
         </>
     )
-}
+})
 
 export default FullscreenImg;

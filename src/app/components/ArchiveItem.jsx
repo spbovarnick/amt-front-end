@@ -1,31 +1,17 @@
 import { getCloudfrontUrl } from "@/utils/helpers";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import audioIcon from 'public/images/audio-icon-2.svg';
 import videoIcon from 'public/images/video-icon.svg';
 import pdfIcon from 'public/images/pdf-icon.svg';
 import printedMaterialIcon from 'public/images/printed-material-icon.svg'
 import Image from "next/image";
+import Link from "next/link";
 
 const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
-    const pathname = usePathname();
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const params = new URLSearchParams(searchParams);
-    const modalParams = `?modal=true&id=${item.id}&${params.toString()}`;
-
 
     function get_url_extension( url ) {
         return url.split(/[#?]/)[0].split('.').pop().trim();
     }
     const validFormats = ["jpg", "jpeg", "png"];
-
-    function handleClick(e) {
-        e.preventDefault();
-        const url = `${pathname}${modalParams}`
-
-        router.push(url, {scroll: false})
-        setIsFocused(item.id)
-    }
 
     return (
         <>
@@ -34,10 +20,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                 !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase())) &&
 
             <div className="cmpt-archive-item" ref={isFocused === item.id ? focusedRef : null}>
-                <button type="button"
-                className="cmpt-archive-item__button"
-                // modals are opened via effect hook in ArchiveItemModal.jsx: when id params changes, modal opens
-                onClick={(e) => handleClick(e)}>
+                <Link href={`/${item.id.toString()}`}>
                     {item.medium === "photo" && item.content_file_urls[0] && (
                         <div className="cmpt-archive-item__thumb">
                             <Image
@@ -181,7 +164,7 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                         {item.year && <div className={"cmpt-archive-item__year"}>{item.year}</div>}
 
                     </div>
-                </button>
+                </Link>
             </div>
             }
         </>

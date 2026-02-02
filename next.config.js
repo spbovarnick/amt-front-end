@@ -4,6 +4,7 @@ const path = require('path');
 
 const nextConfig = {
   images: {
+    dangerouslyAllowLocalIP: true, // Only for private networks,
     remotePatterns: [
       {
         protocol: 'https',

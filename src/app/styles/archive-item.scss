@@ -66,7 +66,7 @@
 .modalMetaItem {
   line-height: 1.5em;
   font-weight: 300;
-  
+
   a {
     font-weight: 300;
 
@@ -130,7 +130,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: variables.$purple-6;
+  background-color: white;
 }
 
 .pulse-bubble-1 {
@@ -170,7 +170,7 @@
     flex-direction: column;
     overflow: auto;
   }
-  
+
   .modalMetaInfo {
     margin: 0;
     font-size: 12px;

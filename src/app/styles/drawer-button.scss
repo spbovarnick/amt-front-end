@@ -1,52 +1,35 @@
 @use "variables";
 
 .cmpt-drawer-button {
-    background: variables.$white-1;
-    color: variables.$black-1;
-    border: none;
-    padding: 10px 14px 10px 30px;
+    background: variables.$black-1;
+    color: variables.$white-1;
+    border: solid variables.$white-1 2px;
+    padding: 10px 14px;
     border-radius: 33px;
     font-size: 12px;
     margin-right: 6px;
     position: relative;
     cursor: pointer;
     margin-bottom: 5px;
+    display: inline-flex;
+    align-items: center;
 
     &:hover {
         background: variables.$white-2;
     }
 
-    &:before {
-        content: "";
-        width: 20px;
-        height: 20px;
-        background: url("../../../public/images/tag-dot.svg") center center no-repeat;
-        position: absolute;
-        left: 8px;
-        top: 50%;
-        transform: translateY(-50%);
+    &.active {
+        background: variables.$white-1;
+        color: variables.$black-1;
     }
 
-    &.active {
-        background: variables.$black-4;
-        color: variables.$white-1;
-
-        &:before {
-            background: url("../../../public/images/close.svg") center center no-repeat;
-        }
-
+    .cmpt-btn-label {
+        margin-left: 4px;
     }
 }
 
 @media (max-width: variables.$bp-sm) {
     .cmpt-drawer-button {
-        padding: 10px 14px 10px 26px;
         font-size: 14px;
-
-        &:before {
-            width: 10px;
-            height: 10px;
-            left: 10px;
-        }
     }
 }

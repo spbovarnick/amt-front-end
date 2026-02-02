@@ -4,25 +4,6 @@
   background: variables.$black-7;
 }
 
-.cmpt-gallery__wrapper, .cmpt-gallery-staff {
-  .swiper-wrapper {
-    width: 5000%;
-
-      &:hover {
-        // cursor: url("../../../public/cursor-drag.svg") 45 45, grab;
-        cursor: url("../../../public//images/cursor-drag.svg") 45 45, grab;
-      }
-    }
-
-        .cmpt-gallery__button {
-          padding: 0;
-          border: 0;
-
-          &:hover {
-            cursor: url("../../../public/images/cursor-view.svg") 45 45, grab;
-          }
-        }
-}
 
 .swiper {
   width: 100%;
@@ -33,7 +14,7 @@
   align-items: center;
 
   @media (min-width: variables.$bp-md) {
-    padding: 160px 0;
+    // padding: 160px 0;
   }
 }
 
@@ -241,28 +222,8 @@
   align-items: center;
 }
 
-.modal-carousel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
 
-.modal-carousel-btns {
-  width: 40px;
-  height: auto;
-  cursor: pointer;
-  transition: transform .2s ease-in-out;
 
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(.9);
-  }
-}
 
 .modalArticle {
   width: 100%;
@@ -323,7 +284,7 @@
 }
 
 .redirect-frame {
-  position: absolute;
+  position: relative;
 
   .redirect-bg {
     object-fit: contain;
@@ -337,17 +298,27 @@
     height: 100%;
     position: absolute;
     z-index: 100;
-    display: flex;
     justify-content: center;
-    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: repeat(9, 1fr);
 
     .redirect-list {
       color: white;
       width: fit-content;
       padding: 0;
+      grid-area: 6 / 2 / 9 / 3;
+      width: fit-content;
+      height: 100%;
+      align-content: center;
+      justify-self: center;
+      margin: 0;
 
       li {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1.5;
         text-decoration: underline;
         background-color: #00000099;
@@ -355,6 +326,10 @@
         padding: 4px;
         border-radius: 4px;
         list-style-type: none;
+
+        @media (min-width: variables.$bp-md) {
+          font-size: 20px;
+        }
       }
 
       a:hover {

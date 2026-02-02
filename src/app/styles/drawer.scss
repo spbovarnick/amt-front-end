@@ -29,34 +29,76 @@
     }
 }
 
-@media (max-width: variables.$bp-sm) {
-    .archive__label {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.show-all-drawerBtns {
+    text-decoration: underline;
+    margin: 8px 0;
+    color: white;
+}
 
-        .cmpt-drawer-toggle {
-            display: block;
-            background: none;
-            border: none;
-        }
+.archive__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    color: white;
+}
+.cmpt-drawer {
+    margin-bottom: 8px;
+
+    .cmpt-drawer-separator {
+        display: block;
+        background: variables.$black-3;
+        height: 1px;
     }
-    .cmpt-drawer {
-        margin-bottom: 8px;
+}
 
-        .button-scroll {
-            display: none;
-        }
-
-        .button-scroll.open-drawer {
-            display: block;
-            max-height: none;
-        }
-
-        .cmpt-drawer-separator {
-            display: block;
-            background: variables.$black-3;
-            height: 1px;
-        }
+@media (min-width: variables.$bp-md) {
+    .button-scroll.open-drawer {
+        max-height: 400px;
     }
+}
+
+.drawer-outer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 420ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.drawer-outer.open-drawer {
+    grid-template-rows: 1fr;
+}
+
+.drawer-inner {
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+        opacity 240ms ease,
+        transform 320ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.drawer-outer.open-drawer .drawer-inner {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* stagger */
+.drawer-inner>* {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+        opacity 220ms ease,
+        transform 280ms cubic-bezier(.4, 0, .2, 1);
+    transition-delay: calc(var(--i) * 28ms);
+}
+
+.drawer-outer.open-drawer .drawer-inner>* {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* scrolling AFTER open */
+.drawer-outer.open-drawer .drawer-inner {
+    max-height: 155px;
+    overflow-y: auto;
 }

@@ -1,10 +1,9 @@
 @use "variables";
 
 .page-wrapper {
-  &.--is-dark {
-    background: variables.$black-1;
-    color: variables.$white-1;
-  }
+  background: variables.$charc;
+  color: variables.$white-1;
+  min-height: 100vh;
 }
 
 .global-container {

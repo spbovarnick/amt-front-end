@@ -1,7 +1,8 @@
 @use "variables";
 
 body {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-sfPro), sans-serif;
+  color: white;
 }
 
 h1,
@@ -12,8 +13,35 @@ h5 {
   margin: 0;
 }
 
+h3 {
+  font-family: var(--font-martinXBold);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  margin: 2rem 0;
+  font-size: calc(3 * calc(.012 * min(100vh, 900px)) + 1rem);
+}
+
+.heading {
+  font-family: var(--font-martinXBold), sans-serif;
+  font-size: 18px;
+
+  &.xl {
+    font-size: 32px;
+  }
+
+  @media (min-width: variables.$bp-md) {
+    font-size: 24px;
+
+    &.xl {
+      font-size: 42px;
+    }
+  }
+}
+
 .heading-xl {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-sfPro), sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 42px;
@@ -31,7 +59,7 @@ h5 {
 }
 
 .heading-l {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-sfPro), sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
@@ -54,10 +82,23 @@ h5 {
 }
 
 .heading-m2 {
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-sfPro), sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
   line-height: 80%;
   letter-spacing: -0.01em;
+}
+
+.footer-small {
+  line-height: 1.5rem;
+  opacity: .92;
+
+  @media (max-width: variables.$bp-md) {
+    font-size: calc(0 * calc(.012 * min(100vh, 900px)) + 1rem);
+  }
+}
+
+footer a {
+  text-decoration: underline !important;
 }
