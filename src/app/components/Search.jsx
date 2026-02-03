@@ -11,7 +11,8 @@ const Search = ({ onHero }) => {
   const sP = useSearchParams();
   const activeSearchTerm = sP.get("search")
   const params = new URLSearchParams(sP);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState(activeSearchTerm || "");
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -25,12 +26,15 @@ const Search = ({ onHero }) => {
   const clearTerm = (e) => {
     e.preventDefault();
     setSearchTerm("")
-    params.delete("search")
-    const newParams = params.toString();
-    startTransition(() => {
-      push(`/?${newParams}`, { scroll: false });
-    });
+    if (activeSearchTerm) {
+      params.delete("search")
+      const newParams = params.toString();
+      startTransition(() => {
+        push(`/?${newParams}`, { scroll: false });
+      });
+    }
   }
+
 
   return (
     <form
@@ -40,9 +44,9 @@ const Search = ({ onHero }) => {
       <input
         placeholder="SEARCH THE ARCHIVE"
         onChange={(e) => setSearchTerm(e.target.value)}
-        value={sP.get("search") ?? searchTerm}
+        value={searchTerm}
       />
-      { searchTerm?.length > 0 || activeSearchTerm?.length > 0 &&
+      { searchTerm?.length > 0 &&
         <button className="clear-search">
           <Image
             src={xIcon.src}
