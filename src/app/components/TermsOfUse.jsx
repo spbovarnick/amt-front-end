@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import useHeaderHeight from "@/utils/useHeaderHeight";
 
-const DevelopmentPolicy = ({ }) => {
+const TermsOfUse = ({ }) => {
   const headerHeight = useHeaderHeight();
 
   return (
@@ -10,6 +11,31 @@ const DevelopmentPolicy = ({ }) => {
       className="main-content-wrap"
       style={{ paddingTop: `${headerHeight}px`}}
     >
+      <h3>Terms of Use</h3>
+      <p>Materials in The Albina Community Archive are available for purposes of education, historical research, and other "fair use" as defined by <Link href="https://www.copyright.gov/title17/" target="_blank">U.S. Copyright Law.</Link></p>
+      <p>While the archive houses an item, it does not necessarily hold the copyright on the item, nor may it be able to determine if the item is protected under copyright law. Unless specific terms of use are noted in the metadata attached to content on this site, users must make their own assessments of rights in light of their intended use. Users are solely responsible for determining the copyright status of items, for obtaining necessary permissions, and paying associated fees that may be necessary for an item's intended use. The Albina Community Archive does not assign rights or license materials.
+      </p>
+      <br />
+
+
+      <h3>Copyright</h3>
+      <p>The Albina Community Archive requires that the following credit line accompany all reproductions of our items used in publications, productions, and websites: "Courtesy of Albina Music Trust." If space is available, metadata associated with an item may be included. For further citation guidelines for papers and articles, see <Link href="https://guides.lib.purdue.edu/c.php?g=352889&p=2378064" target="_blank">Citing Electronic Primary Sources on Purdue's LibGuide</Link>.</p>
+      <p>If using items from The Albina Community Archive on your social media, the archive requires the following credit lines:</p>
+      <ul>
+        <li>Instagram: Courtesy of <Link target="_blank" href="https://www.instagram.com/albinamusictrust/">@albinamusictrust</Link> (link to account)</li>
+        <li>Facebook: Courtesy of <Link target="_blank" href="https://www.facebook.com/groups/albinamusictrust/">Albina Music Trust</Link> (link to account)</li>
+        <li>All other social media: Courtesy of @albinamusictrust</li>
+      </ul>
+      <br />
+
+      <h3>Redaction</h3>
+      <p>Unless otherwise noted, the Albina Community Archive is not responsible for the content of any materials on this site. If you are the copyright owner or have any information about the copyright status of an item you've seen on our website, we want to hear from you. Please contact us and make sure to include your contact information, a link to the relevant content, as well as a statement of the issue.</p>
+      <br />
+
+      <h3>Disclaimer</h3>
+      <p>The Abina Community Archive includes historical materials that reflect the beliefs and perspectives of their subjects and times, some of which may be offensive to users. The Albina Community Archive does not endorse the views expressed in these materials.</p>
+      <br />
+
       <h3>Development Policy</h3>
       <p><strong>An Arts & Culture Community Archive</strong></p>
       <p><i>Preserving Black Creativity, History, and Identity in Portland, Oregon</i></p>
@@ -122,4 +148,4 @@ const DevelopmentPolicy = ({ }) => {
   )
 }
 
-export default DevelopmentPolicy;
+export default TermsOfUse;

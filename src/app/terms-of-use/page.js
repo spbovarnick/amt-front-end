@@ -1,4 +1,4 @@
-import DevelopmentPolicy from "../components/DevelopmentPolicy"
+import TermsOfUse from "../components/TermsOfUse"
 
 export const metadata = {
   title: "Development Policy | Albina Community Archive",
@@ -6,12 +6,12 @@ export const metadata = {
   metadataBase: 'https://albinacommunityarchive.org/terms-of-use',
 }
 
-export default function DevelopmentPolicyPage() {
+export default function TermsOfUsePage() {
 
 
   return (
     <>
-      <DevelopmentPolicy />
+      <TermsOfUse />
     </>
   )
 }
