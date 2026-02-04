@@ -43,7 +43,7 @@ const MobileHeaderMenu = ({ isOpen }) => {
                     <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
                   </div>
                   <div className="header-menu-nav-item">
-                    <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Events</Link>
+                    <Link href={"https://www.albinamusictrust.org/events"}>Events</Link>
                   </div>
                   <div className="header-menu-nav-item">
                     <Link href={"https://www.albinamusictrust.org/our-records"}>Records</Link>
