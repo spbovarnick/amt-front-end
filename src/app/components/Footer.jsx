@@ -74,7 +74,7 @@ const Footer = ({  }) => {
                             <p className='footer-small'>
                                 <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
                                 <br />
-                                <Link href={"https://www.albinamusictrust.org/upcoming-events"}>Upcoming Events</Link>
+                                <Link href={"https://www.albinamusictrust.org/events"}>Upcoming Events</Link>
                                 <br />
                                 <Link href={"https://www.albinamusictrust.org/our-records"}>Our Records</Link>
                                 <br />

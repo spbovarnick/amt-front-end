@@ -79,6 +79,7 @@ const useArchiveQuery = ({
     searchTerm,
     currentPage,
     itemsPerLoad,
+    filters
   ]);
 
   return {

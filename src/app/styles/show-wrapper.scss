@@ -15,6 +15,10 @@
     padding: 20px;
     margin-top: 20px;
 
+    .dev-policy-link {
+      text-decoration: underline;
+    }
+
     @media (min-width: variables.$bp-lg) {
       order: 3;
       grid-column: span 2;
