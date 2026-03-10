@@ -33,7 +33,7 @@ const TermsOfUse = ({ }) => {
       <br />
 
       <h3>Disclaimer</h3>
-      <p>The Abina Community Archive includes historical materials that reflect the beliefs and perspectives of their subjects and times, some of which may be offensive to users. The Albina Community Archive does not endorse the views expressed in these materials.</p>
+      <p>The Albina Community Archive includes historical materials that reflect the beliefs and perspectives of their subjects and times, some of which may be offensive to users. The Albina Community Archive does not endorse the views expressed in these materials.</p>
       <br />
 
       <h3>Development Policy</h3>
@@ -62,7 +62,7 @@ const TermsOfUse = ({ }) => {
         <li>Contemporary Black arts and culture in Portland</li>
       </ul>
       <h5>3.3 Subject Areas</h5>
-      <p>The collection emphasiezes:</p>
+      <p>The collection emphasizes:</p>
       <ul>
         <li>Visual arts, music, dance, literature, and performance rooted in the Black Albina experience</li>
         <li>Cultural institutions (e.g., churches, galleries, theaters, schools)</li>
@@ -76,16 +76,11 @@ const TermsOfUse = ({ }) => {
         <li>Photographs, prints, and visual artworks</li>
         <li>Oral histories and interviews</li>
         <li>Manuscripts and letters</li>
-        <li>Manuscripts and letters</li>
-        <li>Manuscripts and letters</li>
-        <li>Manuscripts and letters</li>
-        <li>Manuscripts and letters</li>
-        <li>Digital media and born-digital content</li>
         <li>Digital media and born-digital content</li>
       </ul>
 
       <h4>4. Collection Priorities</h4>
-      <h5>4.1 Community-Centered Collecting</h5>
+      <h5>4.1 Community Centered Collecting</h5>
       <p>We prioritize materials created by or in collaboration with community members, and seek to elevate underrepresented voices within Albina’s historically Black community.</p>
       <h5>4.2 Significance and Uniqueness</h5>
       <p>Preference is given to:</p>
