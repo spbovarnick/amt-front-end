@@ -19,20 +19,24 @@ export async function fetchAssociatedData() {
     "page_carousel_slides",
     "collections"
   ];
-  const dataObj = {};
-  for (const tagNameString of tags) {
-    let url = `${rootURL}/api/v1/${tagNameString}/index`;
 
-    try {
-      const res = await axios.get(url);
-      const data = await res.data;
-      dataObj[tagNameString] = await data;
-    } catch (error) {
-      console.log(error);
-      throw new Error("Error fetching associated data:", error);
-    }
-  }
-  return dataObj;
+  const entries = await Promise.all(
+    tags.map(async (tag) => {
+      try {
+        const res = await axios.get(`${rootURL}/api/v1/${tag}/index`, {
+          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+        });
+
+        return [tag, res.data];
+      } catch (error) {
+        console.error(`Failed fetching ${tag}`, error);
+
+        return [tag, null];
+      }
+    })
+  );
+
+  return Object.fromEntries(entries);
 };
 
 export async function getData(url, itemsPerLoad, ) {
