@@ -36,8 +36,6 @@ export async function fetchAssociatedData() {
     })
   );
 
-  console.log(entries)
-
   return Object.fromEntries(entries);
 };
 
