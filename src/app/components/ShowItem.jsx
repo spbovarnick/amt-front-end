@@ -20,7 +20,7 @@ export default function ShowItem({ itemData }){
       <div className="copyright-wrapper">
         <div>
           <div>For all rights holder inquiries, please contact us <Link href={"mailto:albinacommunityarchive@gmail.com"} target="_blank">here.</Link></div>
-          <div>See <Link className="dev-policy-link" href={`/development-policy`}>Copyright, Terms of Use & Policies </Link>for more information. </div>
+          <div>See <Link className="dev-policy-link" href={`/terms-of-use`}>Copyright, Terms of Use & Policies </Link>for more information. </div>
         </div>
       </div>
     </div>
