@@ -22,10 +22,17 @@ export async function fetchAssociatedData() {
 
   const entries = await Promise.all(
     tags.map(async (tag) => {
-      const res = await axios.get(`${rootURL}/api/v1/${tag}/index`, {
-        headers: { 'Cache-Control': 'no-cache' }
-      });
-      return [tag, res.data];
+      try {
+        const res = await axios.get(`${rootURL}/api/v1/${tag}/index`, {
+          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+        });
+
+        return [tag, res.data];
+      } catch (error) {
+        console.error(`Failed fetching ${tag}`, error);
+
+        return [tag, null];
+      }
     })
   );
 
