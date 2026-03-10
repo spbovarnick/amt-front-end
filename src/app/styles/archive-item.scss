@@ -145,6 +145,16 @@
   animation: pulse .4s ease .4s infinite alternate;
 }
 
+.cmpt-archive-item {
+  animation: fadeIn .4s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes pulse {
   from {
     opacity: 1;
@@ -156,6 +166,7 @@
     transform: scale(.75);
   }
 }
+
 
 .no-results {
   display: flex;

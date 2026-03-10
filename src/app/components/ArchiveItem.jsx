@@ -6,7 +6,7 @@ import printedMaterialIcon from 'public/images/printed-material-icon.svg'
 import Image from "next/image";
 import Link from "next/link";
 
-const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
+const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
 
     function get_url_extension( url ) {
         return url.split(/[#?]/)[0].split('.').pop().trim();
@@ -19,7 +19,11 @@ const ArchiveItem = ({item, isFocused, setIsFocused, focusedRef}) => {
                 // prevent broken images when file type is not image format
                 !(item.medium === "photo" && item.content_file_urls[0] && !validFormats.includes(get_url_extension(item.content_file_names[0]).toLowerCase())) &&
 
-            <div className="cmpt-archive-item" ref={isFocused === item.id ? focusedRef : null}>
+            <div
+                className="cmpt-archive-item"
+                ref={isFocused === item.id ? focusedRef : null}
+                style={{ animationDelay: `${index * 60}ms` }}
+            >
                 <Link href={`/${item.id.toString()}`}>
                     {item.medium === "photo" && item.content_file_urls[0] && (
                         <div className="cmpt-archive-item__thumb">
