@@ -1,5 +1,7 @@
 'use server'
 
+import logger from "@/app/lib/logger";
+
 const rootURL = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_API_URL : process.env.NEXT_PUBLIC_PROD_API_URL
 
 import axios from "axios";
@@ -35,6 +37,8 @@ export async function fetchAssociatedData() {
       }
     })
   );
+
+  logger.info(Object.fromEntries(entries))
 
   return Object.fromEntries(entries);
 };
