@@ -25,14 +25,18 @@ export async function fetchAssociatedData() {
   const entries = await Promise.all(
     tags.map(async (tag) => {
       try {
-        const res = await axios.get(`${rootURL}/api/v1/${tag}/index`, {
-          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+        const res = await fetch(`${rootURL}/api/v1/${tag}/index`, {
+          cache: "no-store",
         });
 
-        return [tag, res.data];
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        return [tag, data];
       } catch (error) {
         console.error(`Failed fetching ${tag}`, error);
-
         return [tag, null];
       }
     })
