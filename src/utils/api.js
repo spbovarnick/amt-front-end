@@ -1,7 +1,5 @@
 'use server'
 
-import logger from "@/app/lib/logger";
-
 const rootURL = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_API_URL : process.env.NEXT_PUBLIC_PROD_API_URL
 
 import axios from "axios";
@@ -17,16 +15,17 @@ export async function fetchAssociatedData() {
     "tags",
     "comm_groups",
     "people",
-    "carousel_slides",
-    "page_carousel_slides",
     "collections"
   ];
 
   const entries = await Promise.all(
-    tags.map(async (tag) => {
+    tags.map(async (resource) => {
       try {
-        const res = await fetch(`${rootURL}/api/v1/${tag}/index`, {
-          cache: "no-store",
+        const res = await fetch(`${rootURL}/api/v1/${resource}/index`, {
+          next: {
+            revalidate: 300,
+            tags: [resource],
+          }
         });
 
         if (!res.ok) {
@@ -34,15 +33,13 @@ export async function fetchAssociatedData() {
         }
 
         const data = await res.json();
-        return [tag, data];
+        return [resource, data];
       } catch (error) {
-        console.error(`Failed fetching ${tag}`, error);
-        return [tag, null];
+        console.error(`Failed fetching ${resource}`, error);
+        return [resource, null];
       }
     })
   );
-
-  logger.info(Object.fromEntries(entries))
 
   return Object.fromEntries(entries);
 };

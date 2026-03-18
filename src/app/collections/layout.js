@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { Suspense } from "react";
 
 const CollectionsLayout = ({ children }) => {
