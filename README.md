@@ -61,3 +61,7 @@ React implementation of the Intersection Observer API. Used within the `Timeline
 **_zoom-pan-pinch_** <br/>
 Used to give users greater access to image file types in the archive modal. <br/>
 [https://github.com/BetterTyped/react-zoom-pan-pinch/tree/master](https://github.com/BetterTyped/react-zoom-pan-pinch/tree/master)
+
+**_winston_** <br/>
+Universal logging library for production environment debugging.<br/>
+[https://github.com/winstonjs/winston](https://github.com/winstonjs/winston)

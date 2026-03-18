@@ -18,13 +18,14 @@ const ArchiveGallery = ({ isLoaded, isFiltering, isSearching, archiveResults, sh
                 >
                     <Masonry gutter={"20px"}>
                         {archiveResults.map((item, index) => (
-                        <ArchiveItem
-                            key={item.id}
-                            item={item}
-                            isFocused={isFocused}
-                            setIsFocused={setIsFocused}
-                            focusedRef={focusedRef}
-                        />
+                            <ArchiveItem
+                                key={item.id}
+                                item={item}
+                                isFocused={isFocused}
+                                setIsFocused={setIsFocused}
+                                focusedRef={focusedRef}
+                                index={index}
+                            />
                     ))}
                     </Masonry>
                 </ResponsiveMasonry>
