@@ -15,23 +15,28 @@ export async function fetchAssociatedData() {
     "tags",
     "comm_groups",
     "people",
-    "carousel_slides",
-    "page_carousel_slides",
     "collections"
   ];
 
   const entries = await Promise.all(
-    tags.map(async (tag) => {
+    tags.map(async (resource) => {
       try {
-        const res = await axios.get(`${rootURL}/api/v1/${tag}/index`, {
-          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+        const res = await fetch(`${rootURL}/api/v1/${resource}/index`, {
+          next: {
+            revalidate: 300,
+            tags: [resource],
+          }
         });
 
-        return [tag, res.data];
-      } catch (error) {
-        console.error(`Failed fetching ${tag}`, error);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
 
-        return [tag, null];
+        const data = await res.json();
+        return [resource, data];
+      } catch (error) {
+        console.error(`Failed fetching ${resource}`, error);
+        return [resource, null];
       }
     })
   );
