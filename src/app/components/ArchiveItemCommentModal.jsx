@@ -1,15 +1,11 @@
 'use client'
 
 import Modal from "react-modal"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ContactForm from "./ContactForm";
 
 export default function ArchiveItemCommentModal({ id, uid }) {
   const [modalState, setModalState] = useState(false);
-
-  useEffect(() => {
-    Modal.setAppElement("body");
-  }, []);
 
   const openModal = (e) => {
     e.preventDefault();
@@ -30,6 +26,7 @@ export default function ArchiveItemCommentModal({ id, uid }) {
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}
         overlayClassName="comment-modal-overlay"
+        ariaHideApp={false}
       >
           <button className="close-modal" onClick={(e)=>closeModal(e)}>X</button>
           <ContactForm
