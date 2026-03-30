@@ -72,7 +72,6 @@ export default function MultiPane({
         <ArchiveItemCommentModal
           id={id}
           uid={uid}
-          title={title}
         />
       </div>
     </div>
