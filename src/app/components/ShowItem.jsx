@@ -2,8 +2,10 @@
 
 import useHeaderHeight from "@/utils/useHeaderHeight"
 import InfoBox from "./InfoBox"
-import MediaCarousel from "./MediaCarousel"
+import dynamic from "next/dynamic"
 import Link from "next/link"
+
+const MediaCarousel = dynamic(() => import("./MediaCarousel"), { ssr: false })
 
 export default function ShowItem({ itemData }){
   const headerHeight = useHeaderHeight();
