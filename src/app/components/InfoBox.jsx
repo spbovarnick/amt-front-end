@@ -4,7 +4,7 @@ import { Fragment } from "react"
 import MultiPane from "./MultiPane"
 
 export default function InfoBox({ item }){
-  const cleanNotes = sanitizeHtml(item.content_notes.body)
+  const cleanNotes = item.content_notes?.body ? sanitizeHtml(item.content_notes.body) : ""
 
   return (
     <div className="info-box">
