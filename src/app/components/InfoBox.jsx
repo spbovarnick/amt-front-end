@@ -14,7 +14,7 @@ export default function InfoBox({ item }){
           {item.title}
         </div>
       }
-      {item.people.length > 0 &&
+      {item.people?.length > 0 &&
         <div className="top-info-set">
           <div className="is-label">PEOPLE:</div>
           {item.people.map((i, idx) => (
@@ -24,7 +24,7 @@ export default function InfoBox({ item }){
           ))}
         </div>
       }
-      {item.collections.length > 0 &&
+      {item.collections?.length > 0 &&
         <div className="top-info-set">
           <div className="is-label">COURTESY OF:</div>
           {item.collections.map((i, idx) => (
