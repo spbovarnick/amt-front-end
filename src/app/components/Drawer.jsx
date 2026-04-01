@@ -21,7 +21,6 @@ const Drawer = ({
     const selected = sp.getAll(filterCateogry)
 
     const [isOpen, setIsOpen] = useState(false);
-    const [btnOffset, setBtnOffset] = useState(0)
 
     const onToggle = (name) => {
         const next = toggleFilterParam(sp, filterCateogry, name)
