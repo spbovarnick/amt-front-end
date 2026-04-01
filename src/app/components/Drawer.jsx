@@ -28,14 +28,6 @@ const Drawer = ({
         router.push(`${pathname}?${next}`, { scroll: false })
     }
 
-    const visibleItems = data.slice(0, 25 + btnOffset * 25);
-
-
-    const updateOffset = (e) => {
-        e.preventDefault();
-        data?.length < 50 + (25 * (btnOffset - 1)) ? setBtnOffset(0) : setBtnOffset(btnOffset + 1);
-    }
-
     return (
         <div className="cmpt-drawer">
             <div className="archive__label" onClick={() => { setIsOpen(!isOpen) }}>
@@ -49,7 +41,7 @@ const Drawer = ({
             </div>
             <div className={`drawer-outer button-scroll ${isOpen ? "open-drawer" : ""}`}>
                 <div className="drawer-inner">
-                    {visibleItems.map((item, i) => (
+                    {data.map((item, i) => (
                         <DrawerButton
                             key={item.id + item.name}
                             item={item}
@@ -60,14 +52,6 @@ const Drawer = ({
                             style={{ "--i": i}}
                         />
                     ))}
-                    {data?.length > 25 &&
-                        <div
-                            className={`show-all-drawerBtns`}
-                            onClick={(e) => updateOffset(e)}
-                        >
-                            {data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}
-                        </div>
-                    }
                 </div>
             </div>
             { label !== "Collections" && <span className="cmpt-drawer-separator"></span>}
