@@ -8,9 +8,11 @@ export default async function ItemIdPage({ params }){
 
   return (
     <div className="page-wrapper">
-      <ShowItem
-        itemData={item}
-      />
+      { item &&
+        <ShowItem
+          itemData={item}
+        />
+      }
     </div>
   )
 }

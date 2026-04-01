@@ -1,19 +1,11 @@
 'use client'
 
-import toast from "react-hot-toast";
 import Modal from "react-modal"
 import { useState } from "react";
-import { sendArchiveItemFeedback } from "@/utils/api";
 import ContactForm from "./ContactForm";
 
-export default function ArchiveItemCommentModal({ id, uid, title, archiveComment }) {
+export default function ArchiveItemCommentModal({ id, uid }) {
   const [modalState, setModalState] = useState(false);
-  const [commentValue, setCommentValue] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailAddy, setEmailAddy] = useState("");
-  const [subjectLine, setSubjectLine] = useState("");
-  Modal.setAppElement("body");
 
   const openModal = (e) => {
     e.preventDefault();
@@ -25,22 +17,6 @@ export default function ArchiveItemCommentModal({ id, uid, title, archiveComment
     setModalState(!modalState)
   }
 
-  async function handleCommentSubmission(e) {
-    e.preventDefault();
-    const result = await sendArchiveItemFeedback(title, id, uid, firstName, lastName, emailAddy, subjectLine, commentValue)
-      if (result.status === "success") {
-          toast("✅ Message sent!")
-      } else {
-        alert("❌ There was a problem sending your message. Please try again or contact us another way.")
-      }
-      setFirstName("");
-      setLastName("");
-      setCommentValue('');
-      setEmailAddy("");
-      setSubjectLine("");
-      setModalState(false);
-  }
-
   return(
     <>
       <Modal
@@ -50,6 +26,7 @@ export default function ArchiveItemCommentModal({ id, uid, title, archiveComment
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}
         overlayClassName="comment-modal-overlay"
+        ariaHideApp={false}
       >
           <button className="close-modal" onClick={(e)=>closeModal(e)}>X</button>
           <ContactForm
