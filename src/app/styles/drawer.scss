@@ -97,3 +97,18 @@
 .drawer-outer.open-drawer .drawer-inner {
     overflow-y: auto;
 }
+
+.search_assoc-data {
+    position: relative;
+}
+
+.drawer-search {
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px 14px;
+    margin: 4px 4px 10px 4px;
+}
+
+.drawer-search-clear {
+    position: absolute;
+}
