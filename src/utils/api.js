@@ -98,7 +98,7 @@ export async function getPageCount({
     : "";
 
   // always request one more than will be shown to check if more are available
-  url = `/api/v1/archive_items/${endpoint}?${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
+  url = `/api/v1/archive_items/${endpoint}?${searchString}${tagString}${locationString}${yearString}${mediumString}${commGroupString}${peopleString}${collectionString}`;
 
   try {
     const res = await axios.get(rootURL + url)
