@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import DrawerButton from "./DrawerButton";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import xIcon from "@/../public/images/x.svg"
 import chevronDown from 'public/images/chevron-down.svg'
 import chevronUp from 'public/images/chevron-up.svg'
 import Image from "next/image";
@@ -21,19 +22,32 @@ const Drawer = ({
     const selected = sp.getAll(filterCateogry)
 
     const [isOpen, setIsOpen] = useState(false);
-    const [btnOffset, setBtnOffset] = useState(0)
+    const [filteredData, setFilteredData] = useState(data)
+    const [inputVal, setInputVal] = useState("")
 
     const onToggle = (name) => {
         const next = toggleFilterParam(sp, filterCateogry, name)
         router.push(`${pathname}?${next}`, { scroll: false })
     }
 
-    const visibleItems = data.slice(0, 25 + btnOffset * 25);
+    const handleInputChange = (event) => {
+        const val = event.target.value;
+        setInputVal(val);
+        setFilteredData(data.filter(item => item.name.toLowerCase().includes(val.toLowerCase())));
+    }
 
-
-    const updateOffset = (e) => {
+    const clearInput = (e) => {
         e.preventDefault();
-        data?.length < 50 + (25 * (btnOffset - 1)) ? setBtnOffset(0) : setBtnOffset(btnOffset + 1);
+        setInputVal("");
+        setFilteredData(data);
+    }
+
+    const placeholder = (label) => {
+        if (label.toLowerCase() === "community groups") return "communities"
+        if (label.toLowerCase() === "tagged with") return "tags"
+        if (label.toLowerCase() === "location") return "locations"
+        return label.toLowerCase()
+
     }
 
     return (
@@ -49,7 +63,28 @@ const Drawer = ({
             </div>
             <div className={`drawer-outer button-scroll ${isOpen ? "open-drawer" : ""}`}>
                 <div className="drawer-inner">
-                    {visibleItems.map((item, i) => (
+                    { label !== "Year" && label !== "Media" &&
+                        <form className="search_assoc-data">
+                            <input
+                                className="drawer-search"
+                                placeholder={`Search ${placeholder(label)}`}
+                                onChange={e => handleInputChange(e)}
+                                value={inputVal}
+                            />
+                            <button
+                                className="drawer-search-clear"
+                                onClick={e => clearInput(e)}
+                            >
+                                <Image
+                                    src={xIcon.src}
+                                    width={20}
+                                    height={20}
+                                    alt="X icon to clear search terms"
+                                />
+                            </button>
+                        </form>
+                    }
+                    {filteredData.map((item, i) => (
                         <DrawerButton
                             key={item.id + item.name}
                             item={item}
@@ -60,14 +95,6 @@ const Drawer = ({
                             style={{ "--i": i}}
                         />
                     ))}
-                    {data?.length > 25 &&
-                        <div
-                            className={`show-all-drawerBtns`}
-                            onClick={(e) => updateOffset(e)}
-                        >
-                            {data?.length > 50 + (25 * (btnOffset - 1)) ? "Show more" : "Show less"}
-                        </div>
-                    }
                 </div>
             </div>
             { label !== "Collections" && <span className="cmpt-drawer-separator"></span>}
