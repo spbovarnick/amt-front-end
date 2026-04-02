@@ -23,28 +23,31 @@ const Drawer = ({
 
     const [isOpen, setIsOpen] = useState(false);
     const [filteredData, setFilteredData] = useState(data)
+    const [inputVal, setInputVal] = useState("")
 
     const onToggle = (name) => {
         const next = toggleFilterParam(sp, filterCateogry, name)
         router.push(`${pathname}?${next}`, { scroll: false })
     }
 
-    const filterButtons = (event) => {
-        const wrapperEl = event.target.parentNode.parentNode;
-        console.log(wrapperEl)
-        const btns = wrapperEl.querySelectorAll(".cmpt-drawer-button")
+    const handleInputChange = (event) => {
+        const val = event.target.value;
+        setInputVal(val);
+        setFilteredData(data.filter(item => item.name.toLowerCase().includes(val.toLowerCase())));
+    }
 
-        Array.from(btns).forEach((btn) => {
-            if (
-                btn.textContent
-                    .toLowerCase()
-                    .includes(event.target.value.toLowerCase())
-            ) {
-                btn.style.display = "block";
-            } else {
-                btn.style.display = "none";
-            }
-        })
+    const clearInput = (e) => {
+        e.preventDefault();
+        setInputVal("");
+        setFilteredData(data);
+    }
+
+    const placeholder = (label) => {
+        if (label.toLowerCase() === "community groups") return "communities"
+        if (label.toLowerCase() === "tagged with") return "tags"
+        if (label.toLowerCase() === "location") return "locations"
+        return label.toLowerCase()
+
     }
 
     return (
@@ -64,16 +67,19 @@ const Drawer = ({
                         <form className="search_assoc-data">
                             <input
                                 className="drawer-search"
-                                placeholder={`Search for ${label.toLowerCase()}`}
-                                onChange={e => filterButtons(e)}
+                                placeholder={`Search ${placeholder(label)}`}
+                                onChange={e => handleInputChange(e)}
+                                value={inputVal}
                             />
-                            <button className="drawer-search-clear">
+                            <button
+                                className="drawer-search-clear"
+                                onClick={e => clearInput(e)}
+                            >
                                 <Image
                                     src={xIcon.src}
                                     width={20}
                                     height={20}
                                     alt="X icon to clear search terms"
-                                    onClick={e => clearTerm(e)}
                                 />
                             </button>
                         </form>

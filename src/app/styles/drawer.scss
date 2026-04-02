@@ -104,11 +104,16 @@
 
 .drawer-search {
     border-radius: 20px;
-    width: 80%;
+    width: 90%;
     padding: 10px 14px;
     margin: 4px 4px 10px 4px;
 }
 
 .drawer-search-clear {
     position: absolute;
+    border: none;
+    background: none;
+    right: 31px;
+    top: 15px;
+    display: flex;
 }
