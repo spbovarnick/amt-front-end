@@ -40,6 +40,11 @@
     }
   }
 
+  .swiper-wrapper,
+  .swiper-slide {
+    height: 100%;
+  }
+
   @media (min-width: variables.$bp-lg) {
     padding: 20;
     order: 2;
