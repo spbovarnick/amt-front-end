@@ -4,10 +4,9 @@ import heroPic from "@/../public/images/Archive-Hero.jpg"
 import { useState } from "react";
 import Image from "next/image";
 import Search from "./Search";
-import HeroFilter from "./HeroFilters";
 import useHeaderHeight from "@/utils/useHeaderHeight";
 
-const HeroLanding = ({}) => {
+const HeroLanding = ({ handleInteraction }) => {
   const [cabinetOpen, setCabinetOpen] = useState(false)
   const headerHeight = useHeaderHeight();
 
@@ -29,30 +28,17 @@ const HeroLanding = ({}) => {
           <Search
             onHero={true}
           />
-          { !cabinetOpen &&
-            <>
-              <div
-                className="hero-filter-toggle"
-                onClick={() => setCabinetOpen(v => !v)}
-              >
-                ADVANCED SEARCH
-              </div>
-              <div className="mission-text">
-                Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over 13,000 archived items, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
-              </div>
-            </>
-          }
-          { cabinetOpen &&
           <>
-            <HeroFilter />
             <div
-              className="hero-filter-toggle hide"
-              onClick={() => setCabinetOpen(v => !v)}
+              className="hero-filter-toggle"
+              onClick={() => handleInteraction()}
             >
-              HIDE ADVANCED SEARCH
+              ADVANCED SEARCH
+            </div>
+            <div className="mission-text">
+              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over 13,000 archived items, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
             </div>
           </>
-          }
         </div>
       </div>
     </div>
