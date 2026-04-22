@@ -14,7 +14,7 @@
     "classnames": "^2.5.1",
     "google-map-react": "^2.2.5",
     "motion": "^12.23.26",
-    "next": "16.0.7",
+    "next": "16.2.4",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-hot-toast": "^2.6.0",
