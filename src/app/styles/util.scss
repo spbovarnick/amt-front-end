@@ -6,6 +6,25 @@
   min-height: 100vh;
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 500ms cubic-bezier(.4, 0, .2, 1),
+    transform 500ms cubic-bezier(.4, 0, .2, 1);
+
+  &.reveal--visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .global-container {
   width: 100%;
   max-width: variables.$content-width;
