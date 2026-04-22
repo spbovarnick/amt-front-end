@@ -8,6 +8,7 @@ const toggleFilterParam = (
   const existing = params.getAll(key);
 
   params.delete(key);
+  params.delete("page");
 
   if (!existing.includes(value)) {
     [...existing, value].forEach(v => params.append(key, v));

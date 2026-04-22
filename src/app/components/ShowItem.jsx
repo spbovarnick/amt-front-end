@@ -2,6 +2,7 @@
 
 import useHeaderHeight from "@/utils/useHeaderHeight"
 import InfoBox from "./InfoBox"
+import Reveal from "./Reveal"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 
@@ -19,12 +20,12 @@ export default function ShowItem({ itemData }){
       <InfoBox
         item={itemData}
       />
-      <div className="copyright-wrapper">
+      <Reveal className="copyright-wrapper">
         <div>
           <div>For all rights holder inquiries, please contact us <Link href={"mailto:albinacommunityarchive@gmail.com"} target="_blank">here.</Link></div>
           <div>See <Link className="dev-policy-link" href={`/terms-of-use`}>Copyright, Terms of Use & Policies </Link>for more information. </div>
         </div>
-      </div>
+      </Reveal>
     </div>
   )
 }

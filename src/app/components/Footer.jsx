@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import footerLogo from "@/../public/images/AMT-footer-logo.png"
+import Reveal from './Reveal'
 
 const Footer = ({  }) => {
 
@@ -14,7 +15,7 @@ const Footer = ({  }) => {
                         </div>
                     </div>
 
-                    <div className='contact-block'>
+                    <Reveal className='contact-block' delay={150}>
                         <div className='sqs-block bottom-blocks'>
                             <h3>CONTACT</h3>
                             <div className='socials-wrapper'>
@@ -49,9 +50,9 @@ const Footer = ({  }) => {
                             </p>
                         </div>
 
-                    </div>
+                    </Reveal>
 
-                    <div className='archive-block'>
+                    <Reveal className='archive-block' delay={100}>
                         <div className='sqs-block bottom-blocks'>
                             <h3>ARCHIVE</h3>
                             <br />
@@ -64,9 +65,9 @@ const Footer = ({  }) => {
                                 <Link href={"https://www.albinamusictrust.org/about-the-archive"}>About The Archive</Link>
                             </p>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className='explore-block'>
+                    <Reveal className='explore-block' delay={50}>
                         <div className='sqs-block bottom-blocks'>
                             <h3>EXPLORE</h3>
                             <br />
@@ -82,9 +83,9 @@ const Footer = ({  }) => {
                                 <br />
                             </p>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className='support-block'>
+                    <Reveal className='support-block'>
                         <div className='sqs-block bottom-blocks'>
                             <h3>SUPPORT</h3>
                             <br/>
@@ -98,9 +99,9 @@ const Footer = ({  }) => {
                                 <br/>
                             </p>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className='footer-logo-block'>
+                    <Reveal className='footer-logo-block' delay={200}>
                         <div className='sqs-block'>
                             <div className='footer-logo-wrapper'>
                                 <Image
@@ -113,7 +114,7 @@ const Footer = ({  }) => {
                                 />
                             </div>
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </footer>
