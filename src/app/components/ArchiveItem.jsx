@@ -35,6 +35,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -48,6 +51,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -61,6 +67,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 className="cmpt-archive-item__icon"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -74,6 +83,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 alt={"Pdf icon"}
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -89,6 +101,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -102,6 +117,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 className="cmpt-archive-item__icon"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -117,6 +135,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -130,6 +151,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 className="cmpt-archive-item__icon"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -145,6 +169,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
@@ -160,6 +187,9 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 loading="lazy"
                                 draggable="false"
                             />
+                            <div className="cmpt-archive-item-pag">
+                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                            </div>
                         </div>
                     )}
 
