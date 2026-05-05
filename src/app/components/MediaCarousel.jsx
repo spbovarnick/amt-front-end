@@ -14,7 +14,6 @@ import "swiper/css/pagination";
 
 
 const MediaCarousel = ({item}) => {
-    const [fileIndex, setFileIndex] = useState(0);
     const [carouselWidth, setCarouselWidth] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef();
@@ -214,7 +213,6 @@ const MediaCarousel = ({item}) => {
                         {/* ------------ VIDEO MEDIUM ------------ */}
                         {type === "video" &&
                             <video
-                            key={fileIndex}
                             controls controlsList="nodownload"
                             className="modalVideo"
                             >
