@@ -13,9 +13,6 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
     }
     const validFormats = ["jpg", "jpeg", "png"];
 
-    console.log(item)
-
-    console.log(item.content_file_urls.length + item.medium_photo_urls.length)
     return (
         <>
             {
