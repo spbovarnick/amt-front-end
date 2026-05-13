@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
-    "axios": "^1.15.0",
+    "axios": "^1.15.2",
     "classnames": "^2.5.1",
     "google-map-react": "^2.2.5",
     "motion": "^12.23.26",
-    "next": "16.2.4",
+    "next": "16.2.6",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-hot-toast": "^2.6.0",
@@ -29,6 +29,9 @@
     "swiper": "^12.1.2",
     "use-supercluster": "^1.2.0",
     "winston": "^3.19.0"
+  },
+  "overrides": {
+    "postcss": ">=8.5.10"
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.10.21",
