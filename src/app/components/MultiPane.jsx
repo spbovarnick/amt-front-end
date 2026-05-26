@@ -1,18 +1,12 @@
-import ArchiveItemCommentModal from "./ArchiveItemCommentModal"
 import Link from "next/link"
 import { Fragment } from "react"
 
 export default function MultiPane({
   year,
-  notes,
   locations,
   tags,
   commGroups,
   credit,
-  cleanNotes,
-  id,
-  uid,
-  title
 }) {
 
   return (
@@ -28,36 +22,6 @@ export default function MultiPane({
             ))}
           </div>
         }
-        {notes.body &&
-          <div className="info-set">
-            <div className="is-label">NOTES:</div>
-            <div dangerouslySetInnerHTML={{ __html: cleanNotes }} />
-          </div>
-        }
-        {tags?.length > 0 &&
-          <div className="info-set">
-            <div className="is-label">TAG{tags.length > 1 ? "S" : ""}:</div>
-            {tags.map((i, idx) => (
-              <Fragment key={i.id} >
-                <Link href={`/?tags=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < tags.length - 1 ? ", " : ""}
-              </Fragment>
-            ))}
-          </div>
-        }
-        {year &&
-          <div className="info-set">
-            <div className="is-label">YEAR:</div>
-            {year}
-          </div>
-        }
-      </div>
-      <div className="right-col-info">
-        {credit?.length > 0 &&
-          <div className="info-set">
-            <div className="is-label">CREDIT:</div>
-            <span>{credit}</span>
-          </div>
-        }
         {locations?.length > 0 &&
           <div className="info-set">
             <div className="is-label">LOCATION{locations.length > 1 ? "S" : ""}:</div>
@@ -69,10 +33,20 @@ export default function MultiPane({
             ))}
           </div>
         }
-        <ArchiveItemCommentModal
-          id={id}
-          uid={uid}
-        />
+      </div>
+      <div className="right-col-info">
+        {credit?.length > 0 &&
+          <div className="info-set">
+            <div className="is-label">CREDIT:</div>
+            <span>{credit}</span>
+          </div>
+        }
+        {year &&
+          <div className="info-set">
+            <div className="is-label">YEAR:</div>
+            {year}
+          </div>
+        }
       </div>
     </div>
   )

@@ -1,3 +1,4 @@
+import ArchiveItemCommentModal from './ArchiveItemCommentModal'
 import sanitizeHtml from 'sanitize-html'
 import Link from "next/link"
 import { Fragment } from "react"
@@ -36,15 +37,34 @@ export default function InfoBox({ item }){
       }
       <MultiPane
         year={item.year}
-        notes={item.content_notes}
         locations={item.locations}
         tags={item.tags}
         commGroups={item.comm_groups}
         credit={item.credit}
-        cleanNotes={cleanNotes}
+      />
+      {item.content_notes.body &&
+        <div className='info-pane-wide'>
+          <div className="info-set">
+            <div className="is-label">NOTES:</div>
+            <div dangerouslySetInnerHTML={{ __html: cleanNotes }} />
+          </div>
+        </div>
+      }
+      {item.tags?.length > 0 &&
+        <div className='info-pane-wide'>
+          <div className="info-set">
+            <div className="is-label">TAG{item.tags.length > 1 ? "S" : ""}:</div>
+            {item.tags.map((i, idx) => (
+              <Fragment key={i.id} >
+                <Link href={`/?tags=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < item.tags.length - 1 ? ", " : ""}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      }
+      <ArchiveItemCommentModal
         id={item.id}
         uid={item.uid}
-        title={item.title}
       />
     </div>
   )

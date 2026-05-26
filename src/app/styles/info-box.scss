@@ -27,20 +27,24 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     border: solid white 1px;
+  }
 
-    .info-set {
-      margin-bottom: 8px;
-      padding: 10px 15px;
-      font-size: 10px;
+  .info-pane-wide {
+    border: solid white 1px;
+  }
 
-      @media (min-width: variables.$bp-lg) {
-        font-size: 12px;
-      }
+  .info-set {
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    font-size: 10px;
 
-      .is-label{
-        // font-size: 10px;
-        margin-bottom: 4px;
-      }
+    @media (min-width: variables.$bp-lg) {
+      font-size: 12px;
+    }
+
+    .is-label{
+      // font-size: 10px;
+      margin-bottom: 4px;
     }
   }
 
