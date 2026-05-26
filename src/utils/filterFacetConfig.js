@@ -1,6 +1,6 @@
 export const filterFacets = {
   medium: {
-    label: "Media",
+    label: "Format",
     format: v => {
       v
       const up = v.charAt(0).toUpperCase() + v.slice(1);

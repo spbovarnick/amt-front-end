@@ -63,7 +63,7 @@ const Drawer = ({
             </div>
             <div className={`drawer-outer button-scroll ${isOpen ? "open-drawer" : ""}`}>
                 <div className="drawer-inner">
-                    { label !== "Year" && label !== "Media" &&
+                    { label !== "Year" && label !== "Format" &&
                         <form className="search_assoc-data">
                             <input
                                 className="drawer-search"

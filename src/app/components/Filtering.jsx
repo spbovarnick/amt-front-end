@@ -20,7 +20,7 @@ const Filtering = ({ }) => {
   return (
     <div className={`desktop-drawer-set on-route}`}>
       <Drawer
-        label="Media"
+        label="Format"
         data={mediumOptions}
         filterCateogry="medium"
         filterSearchParams={searchParams.getAll("medium")}

@@ -55,7 +55,7 @@ const MobileFiltering = ({
             ref={exitAdvancedSearchOpenRef}
           />
           <Drawer
-            label="Media"
+            label="Format"
             data={mediumOptions}
             filterCateogry="medium"
             filterSearchParams={mediumSearchParams}
