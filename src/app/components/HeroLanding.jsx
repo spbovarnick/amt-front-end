@@ -36,7 +36,7 @@ const HeroLanding = ({ handleInteraction }) => {
               ADVANCED SEARCH
             </div>
             <div className="mission-text">
-              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over 13,000 archived items, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
+              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over 15,000 archived items, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
             </div>
           </>
         </div>
