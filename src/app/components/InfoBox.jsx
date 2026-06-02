@@ -3,9 +3,15 @@ import sanitizeHtml from 'sanitize-html'
 import Link from "next/link"
 import { Fragment } from "react"
 import MultiPane from "./MultiPane"
+import dynamic from 'next/dynamic'
 
-export default function InfoBox({ item }){
+const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false })
+
+
+export default function InfoBox({ item, allLocs }){
   const cleanNotes = item.content_notes?.body ? sanitizeHtml(item.content_notes.body) : ""
+
+  console.log(item.locations[0])
 
   return (
     <div className="info-box">
@@ -37,11 +43,27 @@ export default function InfoBox({ item }){
       }
       <MultiPane
         year={item.year}
-        locations={item.locations}
         tags={item.tags}
         commGroups={item.comm_groups}
         credit={item.credit}
       />
+      {item.locations?.length > 0 &&
+        <div className='info-pane-wide'>
+          <div className='info-set'>
+          <div className="is-label">LOCATION{item.locations.length > 1 ? "S" : ""}:</div>
+            {item.locations.map((i, idx) => (
+              <Fragment key={i.id}>
+                <Link href={`/?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
+                {idx < item.locations.length - 1 ? ", " : ""}
+              </Fragment>
+            ))}
+            <LeafletMap
+              allLocs={allLocs}
+              centeredLoc={item.locations}
+            />
+          </div>
+        </div>
+      }
       {item.content_notes.body &&
         <div className='info-pane-wide'>
           <div className="info-set">
