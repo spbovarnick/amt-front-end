@@ -197,6 +197,9 @@ const MediaCarousel = ({item}) => {
             >
             {carouselItems.map((slide, idx) => {
                 const rawFilename = carouselFileNames[idx];
+
+                console.log(rawFilename)
+
                 const type = Array.isArray(slide) ? "group" : getFileType(rawFilename);
 
                 return(
