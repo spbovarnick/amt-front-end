@@ -87,8 +87,6 @@ const MediaCarousel = ({item}) => {
             content_redirect,
         } = item || {};
 
-        const slideOffset = medium_photo_urls.length || 0;
-
         let items = [];
         let filenames = [];
 
@@ -106,7 +104,7 @@ const MediaCarousel = ({item}) => {
                 const slides = divideSlides(content_file_urls);
                 items = [...items, ...slides];
 
-                const dividedNames = divideSlides(content_file_names, slideOffset)
+                const dividedNames = divideSlides(content_file_names)
                 filenames = [...medium_photos_file_names, ...dividedNames]
             }
         } else {
