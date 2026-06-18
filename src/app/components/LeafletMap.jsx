@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef, useMemo } from "react";
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -17,16 +19,36 @@ L.Icon.Default.mergeOptions({
 
 
 const LeafletMap = ({ centeredLoc, allLocs }) => {
+  const markerRef = useRef();
+
+  const eventHandlers = useMemo(
+    () => ({
+      mouseover() {
+        if (markerRef.current) markerRef.current.openPopup();
+      },
+      mouseout() {
+        if (markerRef.current) markerRef.current.closePopup();
+      },
+      click() {
+        if (markerRef.current) markerRef.current.togglePopup();
+      }
+    }),
+    []
+  )
 
   return (
     <div className="map-div">
-    <MapContainer className="map" center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+      <MapContainer className="map" center={[centeredLoc[0].lat, centeredLoc[0].lng]} zoom={13} scrollWheelZoom={true}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+        <Marker
+          ref={markerRef}
+          position={[centeredLoc[0].lat, centeredLoc[0].lng]}
+          eventHandlers={eventHandlers}
+        >
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          {centeredLoc[0].name}
         </Popup>
       </Marker>
     </MapContainer>

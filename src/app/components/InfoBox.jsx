@@ -11,8 +11,6 @@ const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false })
 export default function InfoBox({ item, allLocs }){
   const cleanNotes = item.content_notes?.body ? sanitizeHtml(item.content_notes.body) : ""
 
-  console.log(item.locations[0])
-
   return (
     <div className="info-box">
       {item.title &&
