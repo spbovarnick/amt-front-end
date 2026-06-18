@@ -110,3 +110,15 @@
     }
   }
 }
+
+.leaflet-container .leaflet-popup-content a {
+  color: black;
+}
+
+.loc-popup-link {
+  color: black;
+
+  &:hover {
+    color: #adadad;
+  }
+}
