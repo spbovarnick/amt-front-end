@@ -33,6 +33,12 @@
     border: solid white 1px;
   }
 
+  .map-info-pane {
+    .loc-desc {
+      padding: .5em 0 0 .5em;
+    }
+  }
+
   .info-set {
     margin-bottom: 8px;
     padding: 10px 15px;

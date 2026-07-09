@@ -46,7 +46,7 @@ export default function InfoBox({ item, allLocs }){
         credit={item.credit}
       />
       {item.locations?.length > 0 &&
-        <div className='info-pane-wide'>
+        <div className='info-pane-wide map-info-pane'>
           <div className='info-set'>
           <div className="is-label">LOCATION{item.locations.length > 1 ? "S" : ""}:</div>
             {item.locations.map((i, idx) => (
@@ -55,6 +55,7 @@ export default function InfoBox({ item, allLocs }){
                 {idx < item.locations.length - 1 ? ", " : ""}
               </Fragment>
             ))}
+            <div className='loc-desc'>{item.locations[0].description}</div>
             <LeafletMap
               allLocs={allLocs}
               centeredLoc={item.locations}
