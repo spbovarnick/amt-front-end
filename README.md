@@ -42,14 +42,6 @@ Pushes to `staging` automatically deploys to the staging environment on Vercel. 
 Used for API queries. <br/>
 [https://github.com/axios/axios](https://github.com/axios/axios)
 
-**_google-map-react_** <br/>
-Used to render custom Google Maps and markers. <br/>
-[https://github.com/google-map-react/google-map-react](https://github.com/google-map-react/google-map-react)
-
-**_use-supercluster_** <br/>
-Used with peer dependency [supercluster](https://github.com/mapbox/supercluster) to render marker clusters within the google-map-react component.<br/>
-[https://github.com/leighhalliday/use-supercluster](https://github.com/leighhalliday/use-supercluster)
-
 **_react-window_** <br/>
 Used to create a custom built timeline. react-window virtualizes the large array of rendered timeline items without crashing the browser during interaction.<br/>
 [https://github.com/bvaughn/react-window](https://github.com/bvaughn/react-window)
