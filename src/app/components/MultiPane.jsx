@@ -36,22 +36,6 @@ export default function MultiPane({
           </div>
         }
       </div>
-      {/* {locations?.length > 0 &&
-        <div className="info-set">
-          <div className="is-label">LOCATION{locations.length > 1 ? "S" : ""}:</div>
-          {locations.map((i, idx) => (
-            <Fragment key={i.id}>
-              <Link href={`/?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
-              {idx < locations.length - 1 ? ", " : ""}
-            </Fragment>
-          ))}
-
-          <LeafletMap
-            centeredLoc={locations}
-            allLocs={allLocs}
-          />
-        </div>
-      } */}
     </div>
   )
 }
