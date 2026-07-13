@@ -5,6 +5,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/app/styles/map.scss";
 import popout from "public/images/icons/popout.png";
+import minimize from "public/images/icons/minimize.png"
 import Image from "next/image";
 
 import L from "leaflet";
@@ -47,6 +48,15 @@ const LeafletMap = ({ centeredLoc, allLocs }) => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [fullscreen]);
 
+  useEffect(() => {
+    if (!fullscreen) return;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = overflow;
+    }
+  }, [fullscreen])
+
   const fullscreenClass = fullscreen ? "fullscreen" : "";
 
   return (
@@ -62,7 +72,7 @@ const LeafletMap = ({ centeredLoc, allLocs }) => {
           <div className="popout-icon-wrapper">
             <Image
               className="popout-icon"
-              src={popout}
+              src={fullscreen ? minimize : popout}
               width={15}
               height={15}
               alt="Popout Icon"

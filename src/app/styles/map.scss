@@ -11,7 +11,7 @@
     width: 98vw;
     height: 98vh;
     margin-top: 0;
-    z-index: 1000;
+    z-index: 80;
   }
 
   .leaflet-container .leaflet-popup-content a {
@@ -24,6 +24,10 @@
     border-radius: 10px;
     overflow: hidden;
     position: relative;
+
+    .leaflet-pane {
+      z-index: 99 !important;
+    }
 
     .loc-popup-link {
       color: black;
@@ -72,6 +76,10 @@
       height: 100%;
       background-color: white;
       border-radius: 2px;
+
+      &:hover {
+        background-color: #f4f4f4;
+      }
 
       .popout-icon {
         position: absolute;
