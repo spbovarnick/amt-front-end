@@ -5,6 +5,15 @@
   height: 300px;
   margin-top: .5em;
 
+  &.fullscreen {
+    position: fixed;
+    inset: 1vh 1vw;
+    width: 98vw;
+    height: 98vh;
+    margin-top: 0;
+    z-index: 1000;
+  }
+
   .leaflet-container .leaflet-popup-content a {
     color: black;
   }
@@ -56,6 +65,7 @@
     border: 2px solid #0003;
     margin: 0 10px 10px 0;
     border-radius: 4px;
+    cursor: pointer;
 
     .popout-icon-wrapper {
       width: 100%;

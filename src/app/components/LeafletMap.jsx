@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "@/app/styles/map.scss";
@@ -14,6 +14,9 @@ import Clusters from "./Clusters";
 import CenteredMarker from "./CenteredMarker";
 
 const LeafletMap = ({ centeredLoc, allLocs }) => {
+  const [fullscreen, setFullscreen] = useState(false);
+  const mapRef = useRef(null);
+
   const centeredLocIcon = useMemo(() => L.icon({
     iconUrl: redMarker.src,
     iconSize: [36, 36],
@@ -22,13 +25,40 @@ const LeafletMap = ({ centeredLoc, allLocs }) => {
     shadowUrl: "",
   }), []);
 
+  const toggleFullscreen = (e) => {
+    e.preventDefault();
+    setFullscreen(!fullscreen)
+  }
+
+  const filteredLocs = useMemo(() => {
+    return allLocs.filter((loc) => loc.id !== centeredLoc[0].id)
+  }, [allLocs, centeredLoc])
+
+  useEffect(() => {
+    mapRef.current?.invalidateSize();
+  }, [fullscreen]);
+
+  useEffect(() => {
+    if (!fullscreen) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setFullscreen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [fullscreen]);
+
+  const fullscreenClass = fullscreen ? "fullscreen" : "";
+
   return (
-    <div className="map-div">
-      <MapContainer className="map" center={[centeredLoc[0].lat, centeredLoc[0].lng]} zoom={13} scrollWheelZoom={true}>
+    <div className={`map-div ${fullscreenClass}`}>
+      <MapContainer ref={mapRef} className="map" center={[centeredLoc[0].lat, centeredLoc[0].lng]} zoom={13} scrollWheelZoom={true}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Clusters allLocs={allLocs} />
+        <Clusters allLocs={filteredLocs} />
         <CenteredMarker centeredLoc={centeredLoc} icon={centeredLocIcon} />
-        <button className="map-popout-btn">
+        <button
+          className="map-popout-btn"
+          onClick={toggleFullscreen}
+        >
           <div className="popout-icon-wrapper">
             <Image
               className="popout-icon"
