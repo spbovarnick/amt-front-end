@@ -5,22 +5,28 @@ import InfoBox from "./InfoBox"
 import Reveal from "./Reveal"
 import dynamic from "next/dynamic"
 import Link from "next/link"
+import MusicPlayer from "./MusicPlayer";
 
 const MediaCarousel = dynamic(() => import("./MediaCarousel"), { ssr: false })
 
 export default function ShowItem({ itemData, allLocs }){
   const headerHeight = useHeaderHeight();
 
+  console.log(itemData)
+
   return(
     <div
       className="show-wrapper"
       style={{ paddingTop: headerHeight }}
     >
-      <MediaCarousel item={itemData} />
+      { itemData.medium === "audio" ?
+        <MusicPlayer /> :
+        <MediaCarousel item={itemData} />
+      }
       <InfoBox
         allLocs={allLocs}
         item={itemData}
-      />
+        />
       <Reveal className="copyright-wrapper">
         <div>
           <div>For all rights holder inquiries, please contact us <Link href={"mailto:albinacommunityarchive@gmail.com"} target="_blank">here.</Link></div>

@@ -1,0 +1,46 @@
+@use "variables";
+
+.audio-track {
+  background-color: lightgray;
+  grid-auto-flow: column;
+  border: white solid 2px;
+  justify-content: normal;
+
+  .track-play-btn-wrapper {
+    display: flex;
+    align-items: center;
+
+    .track-play-btn {
+      background-color: white;
+      border-radius: calc(infinity * 1px);
+      padding: 1em;
+      // margin: 2em;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  .track-title-wrapper {
+    display: grid;
+    grid-column: span 12 / span 12;
+    grid-auto-flow: column;
+    align-items: center;
+
+    .track-title {
+      grid-row: span 6 / span 6;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  &:hover {
+    background-color: gray;
+  }
+
+  @media (min-width: variables.$bp-lg) {
+    order: 2;
+  }
+}
