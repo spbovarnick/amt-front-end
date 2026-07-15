@@ -3,7 +3,6 @@ import { Fragment } from "react"
 
 export default function MultiPane({
   year,
-  locations,
   tags,
   commGroups,
   credit,
@@ -18,17 +17,6 @@ export default function MultiPane({
             {commGroups.map((i, idx) => (
               <Fragment key={i.id}>
                 <Link href={`/?comm_groups=${encodeURIComponent(i.name)}`}>{i.name}</Link>{idx < commGroups.length - 1 ? ", " : ""}
-              </Fragment>
-            ))}
-          </div>
-        }
-        {locations?.length > 0 &&
-          <div className="info-set">
-            <div className="is-label">LOCATION{locations.length > 1 ? "S" : ""}:</div>
-            {locations.map((i, idx) => (
-              <Fragment key={i.id}>
-                <Link href={`/?locations=${encodeURIComponent(i.name)}`}>{i.name}</Link>
-                {idx < locations.length - 1 ? ", " : ""}
               </Fragment>
             ))}
           </div>

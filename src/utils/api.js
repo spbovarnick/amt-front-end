@@ -1,6 +1,8 @@
 'use server'
 
-const rootURL = process.env.NODE_ENV === "development" ? process.env.NEXT_PUBLIC_DEV_API_URL : process.env.NEXT_PUBLIC_PROD_API_URL
+const rootURL = process.env.NODE_ENV === "development"
+  ? (typeof window === "undefined" ? process.env.DEV_API_URL : process.env.NEXT_PUBLIC_DEV_API_URL)
+  : process.env.NEXT_PUBLIC_PROD_API_URL
 
 import axios from "axios";
 

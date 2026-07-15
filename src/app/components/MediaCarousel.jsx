@@ -49,7 +49,7 @@ const MediaCarousel = ({item}) => {
 
     useEffect(() => {
         const handler = () => {
-            if (!document.fullscreenElement) {
+            if (!document.fullscreenElement || document.fullscreenElement.tagName === "VIDEO") {
                 setIsFullscreen(false)
             } else {
                 setIsFullscreen(true)

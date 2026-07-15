@@ -3,6 +3,7 @@ const { hostname } = require('os');
 const path = require('path');
 
 const nextConfig = {
+  allowedDevOrigins: ['10.0.0.153'],
   images: {
     dangerouslyAllowLocalIP: true, // Only for private networks,
     remotePatterns: [

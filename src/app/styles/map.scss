@@ -1,106 +1,96 @@
 @use "variables";
 
-.map {
+.map-div {
   width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-}
+  height: 300px;
+  margin-top: .5em;
 
-.cluster-marker {
-  color: #fff;
-  background: variables.$purple-6;
-  border-radius: 50%;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  transition: transform .2s ease-in-out;
-  
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-}
-
-.pin {
-  position: absolute;
-  transform: translate(-50%, -90%);
-  white-space: nowrap;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--font-poppins), sans-serif;
-  font-weight: bold;
-  -webkit-text-stroke: .3px white;
-
-  span.pin-heading {
-    position: absolute;
-    transform: translate(0, -52px);
-    font-size: 14px;
-    padding: 3px 6px;
-    border-radius: 6px;
-    background: #ffffffdb;
-    
-    &:hover {
-      font-size: 14px;
-      cursor: pointer;
-    }
+  &.fullscreen {
+    position: fixed;
+    inset: 1vh 1vw;
+    width: 98vw;
+    height: 98vh;
+    margin-top: 0;
+    z-index: 80;
   }
 
-  svg.location-marker-icon {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 24px;
-    fill: black;
-
-    &:hover {
-      cursor: pointer;
-    }
+  .leaflet-container .leaflet-popup-content a {
+    color: black;
   }
 
-  .info-window {
-    width: 220px;
-    background-color: white;
-    padding: 8px;
+  .map {
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: normal;
+    overflow: hidden;
+    position: relative;
 
-    button {
-      position: absolute;
-      top: 3px;
-      right: 3px;
-      background: none;
-      border: none;
-      font-size: 12px;
-      font-weight: 500;
+    .leaflet-pane {
+      z-index: 99 !important;
+    }
+
+    .loc-popup-link {
+      color: black;
 
       &:hover {
-        cursor: pointer;
-        opacity: 0.6;
+        color: #adadad;
       }
     }
 
-    h3.info-window-title {
-      font-size: 14px;
+    .cluster-marker {
+      color: #fff;
+      background: variables.$purple-6;
+      border-radius: 50%;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      transition: transform .2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
     }
 
-    p.info-window-content {
-      font-size: 12px;
-      font-weight: 500;
-      overflow-wrap: break-word;
-      text-align: left;
-      margin: 6px;
+  }
+
+  .map-popout-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background-clip: padding-box;
+    border: 2px solid #0003;
+    margin: 0 10px 10px 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    .popout-icon-wrapper {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: #f4f4f4;
+      }
+
+      .popout-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 2px;
+      }
     }
+
   }
 }
+
+

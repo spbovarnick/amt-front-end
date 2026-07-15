@@ -8,7 +8,7 @@ import Link from "next/link"
 
 const MediaCarousel = dynamic(() => import("./MediaCarousel"), { ssr: false })
 
-export default function ShowItem({ itemData }){
+export default function ShowItem({ itemData, allLocs }){
   const headerHeight = useHeaderHeight();
 
   return(
@@ -18,6 +18,7 @@ export default function ShowItem({ itemData }){
     >
       <MediaCarousel item={itemData} />
       <InfoBox
+        allLocs={allLocs}
         item={itemData}
       />
       <Reveal className="copyright-wrapper">
