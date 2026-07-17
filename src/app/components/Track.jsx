@@ -10,12 +10,13 @@ const Track = ({
   setIsPlaying,
   selectedMusic,
   setSelectedMusic,
-  setTrackDetail,
+  setTrackTitle,
 }) => {
+
   const handleToggle = () => {
     if (!music) return;
 
-    setTrackDetail(trackTitle);
+    setTrackTitle(trackTitle);
 
     if (music.playing()) {
       music.pause();

@@ -18,34 +18,59 @@ const MusicBox = ({trackList}) => {
   const [trackTitle, setTrackTitle] = useState("");
 
   const howlsRef = useRef({});
+  const retriesRef = useRef({});
 
   useEffect(() => {
     const isInitialLoad = Object.keys(howlsRef.current).length === 0;
+    const currentUrls = new Set(trackList.map((track) => track.url));
+    const maxRetries = 3;
 
-    trackList.forEach(({ url }) => {
-      if (howlsRef.current[url]) return;
+    Object.keys(howlsRef.current).forEach((url) => {
+      if (currentUrls.has(url)) return;
 
+      howlsRef.current[url].unload();
+      delete howlsRef.current[url];
+      delete retriesRef.current[url];
+    });
+
+    const createHowl = (url) => {
       const howl = new Howl({
         src: [url],
         html5: true,
         onload: () => {
           setDuration((prev) => ({ ...prev, [url]: howl.duration() }));
         },
+        onloaderror: (_id, error) => {
+          const attempt = (retriesRef.current[url] || 0) + 1;
+          retriesRef.current[url] = attempt;
+
+          if (attempt <= maxRetries) {
+            console.warn(`Retrying audio load (${attempt}/${maxRetries}) for ${url}:`, error);
+            setTimeout(() => {
+              howlsRef.current[url] = createHowl(url);
+              setHowls({ ...howlsRef.current });
+            }, 500 * attempt);
+          } else {
+            console.error(`Failed to load audio duration for ${url} after ${maxRetries} retries:`, error);
+          }
+        },
       });
 
-      howlsRef.current[url] = howl;
+      return howl;
+    };
+
+    trackList.forEach(({ url }) => {
+      if (howlsRef.current[url]) return;
+
+      howlsRef.current[url] = createHowl(url);
     });
 
     setHowls({ ...howlsRef.current });
 
     if (isInitialLoad && trackList[0]) {
       setSelectedMusic(howlsRef.current[trackList[0].url]);
+      setTrackTitle(trackList[0].title);
     }
-
-    return () => {
-      Object.values(howlsRef.current).forEach((howl) => howl.unload());
-      howlsRef.current = {};
-    };
   }, [trackList]);
 
   return (
@@ -61,7 +86,7 @@ const MusicBox = ({trackList}) => {
               setIsPlaying={setIsPlaying}
               selectedMusic={selectedMusic}
               setSelectedMusic={setSelectedMusic}
-              setTrackDetail={setTrackTitle}
+              setTrackTitle={setTrackTitle}
             />
           </li>
         ))}

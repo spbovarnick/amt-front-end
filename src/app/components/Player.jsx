@@ -11,10 +11,14 @@ const Player = ({
   trackTitle
 }) => {
   const [currentTime, setCurrentTime] = useState(0);
+  const [trackedMusic, setTrackedMusic] = useState(selectedMusic);
 
-  useEffect(() => {
+  if (selectedMusic !== trackedMusic) {
+    setTrackedMusic(selectedMusic);
     setCurrentTime(0);
-  }, [selectedMusic, setCurrentTime]);
+  }
+
+  console.log(selectedMusic)
 
   useEffect(() => {
     let timerInterval;
@@ -70,7 +74,7 @@ const Player = ({
   return (
     <div className="player">
       <div className="player-inner">
-        <div className="active-title">Title</div>
+        <div className="active-title">{selectedMusic && trackTitle}</div>
         <div className="music-control-center">
           <label
             htmlFor="durationController"
