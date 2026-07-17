@@ -5,14 +5,24 @@ import InfoBox from "./InfoBox"
 import Reveal from "./Reveal"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import MusicPlayer from "./MusicPlayer";
+import MusicBox from "./MusicBox";
+import { useMemo } from "react";
 
 const MediaCarousel = dynamic(() => import("./MediaCarousel"), { ssr: false })
 
 export default function ShowItem({ itemData, allLocs }){
   const headerHeight = useHeaderHeight();
 
-  console.log(itemData)
+  const trackList = useMemo(() => {
+    if (!itemData.content_file_names) return [];
+
+    return itemData.content_file_names.map((title, i) => ({
+      title,
+      url: itemData.content_file_urls[i],
+    }));
+  }, [itemData]);
+
+  console.log(trackList)
 
   return(
     <div
@@ -20,8 +30,12 @@ export default function ShowItem({ itemData, allLocs }){
       style={{ paddingTop: headerHeight }}
     >
       { itemData.medium === "audio" ?
-        <MusicPlayer /> :
-        <MediaCarousel item={itemData} />
+        <MusicBox
+          trackList={trackList}
+        /> :
+        <MediaCarousel
+          item={itemData}
+        />
       }
       <InfoBox
         allLocs={allLocs}
