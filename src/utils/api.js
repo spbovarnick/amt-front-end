@@ -269,7 +269,7 @@ export async function sendArchiveItemFeedback(title=undefined, id=undefined, uid
       subject: subject,
       comment: comment,
     })
-    const respone = await fetch(`${rootURL}/api/v1/comments`, {
+    const response = await fetch(`${rootURL}/api/v1/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -287,7 +287,7 @@ export async function sendArchiveItemFeedback(title=undefined, id=undefined, uid
       })
     });
 
-    return await respone.json();
+    return await response.json();
   } catch (error) {
     return { status: "error", error: error.message}
   }
