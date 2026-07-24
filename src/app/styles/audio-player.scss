@@ -100,9 +100,10 @@
           cursor: pointer;
         }
 
-        .play-btn {
+        .play-btn, .howl-next-btn, .howl-prev-btn {
           background-color: lightgray;
           border-radius: calc(infinity * 1px);
+          cursor: pointer;
 
           &:hover {
             background-color: gray;

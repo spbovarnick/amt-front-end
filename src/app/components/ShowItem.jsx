@@ -22,8 +22,6 @@ export default function ShowItem({ itemData, allLocs }){
     }));
   }, [itemData]);
 
-  console.log(trackList)
-
   return(
     <div
       className="show-wrapper"

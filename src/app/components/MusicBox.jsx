@@ -73,6 +73,31 @@ const MusicBox = ({trackList}) => {
     }
   }, [trackList]);
 
+  const selectTrack = (music, title) => {
+    if (!music) return;
+
+    selectedMusic?.playing() && selectedMusic.pause();
+    if (selectedMusic !== music) music.seek(0);
+    music.play();
+    setSelectedMusic(music);
+    setIsPlaying(true);
+    setTrackTitle(title);
+  };
+
+  const currentIndex = trackList.findIndex((track) => howls[track.url] === selectedMusic);
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentIndex >= 0 && currentIndex < trackList.length - 1;
+
+  const onPrevious = () => {
+    const track = trackList[currentIndex - 1];
+    selectTrack(howls[track.url], track.title);
+  };
+
+  const onNext = () => {
+    const track = trackList[currentIndex + 1];
+    selectTrack(howls[track.url], track.title);
+  };
+
   return (
     <div className="music-box">
       <ul>
@@ -85,8 +110,7 @@ const MusicBox = ({trackList}) => {
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
               selectedMusic={selectedMusic}
-              setSelectedMusic={setSelectedMusic}
-              setTrackTitle={setTrackTitle}
+              selectTrack={selectTrack}
             />
           </li>
         ))}
@@ -96,6 +120,10 @@ const MusicBox = ({trackList}) => {
         setIsPlaying={setIsPlaying}
         selectedMusic={selectedMusic}
         trackTitle={trackTitle}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        hasPrevious={hasPrevious}
+        hasNext={hasNext}
       />
     </div>
   );

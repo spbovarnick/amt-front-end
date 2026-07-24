@@ -1,10 +1,17 @@
 import Image from "next/image";
 import { Howler } from "howler";
-import play from "public/images/icons/play.png";
-import pause from "public/images/icons/pause.png";
 import { useEffect, useState } from "react";
 
+import play from "public/images/icons/play.png";
+import pause from "public/images/icons/pause.png";
+import next from "public/images/icons/next.png"
+import previous from "public/images/icons/previous.png"
+
 const Player = ({
+  onPrevious,
+  onNext,
+  hasPrevious,
+  hasNext,
   isPlaying,
   selectedMusic,
   setIsPlaying,
@@ -17,8 +24,6 @@ const Player = ({
     setTrackedMusic(selectedMusic);
     setCurrentTime(0);
   }
-
-  console.log(selectedMusic)
 
   useEffect(() => {
     let timerInterval;
@@ -89,6 +94,18 @@ const Player = ({
           ></input>
           <div>{formattedTime}</div>
           <button
+            className="howl-prev-btn"
+            onClick={onPrevious}
+            disabled={!hasPrevious}
+          >
+            <Image
+              src={previous}
+              width={20}
+              height={20}
+              alt="Previous track"
+            />
+          </button>
+          <button
             className="play-btn"
             onClick={togglePlay}
           >
@@ -97,6 +114,18 @@ const Player = ({
               width={20}
               height={20}
               alt="Play button"
+            />
+          </button>
+          <button
+            className="howl-next-btn"
+            onClick={onNext}
+            disabled={!hasNext}
+          >
+            <Image
+              src={next}
+              width={20}
+              height={20}
+              alt="Next track"
             />
           </button>
           <label htmlFor="volumeController">Volume</label>

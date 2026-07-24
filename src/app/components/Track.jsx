@@ -9,25 +9,19 @@ const Track = ({
   isPlaying,
   setIsPlaying,
   selectedMusic,
-  setSelectedMusic,
-  setTrackTitle,
+  selectTrack,
 }) => {
 
   const handleToggle = () => {
     if (!music) return;
-
-    setTrackTitle(trackTitle);
 
     if (music.playing()) {
       music.pause();
       setIsPlaying(false);
       return;
     }
-    selectedMusic?.playing() && selectedMusic.pause();
-    if (selectedMusic !== music) music.seek(0);
-    music.play();
-    setSelectedMusic(music);
-    setIsPlaying(true);
+
+    selectTrack(music, trackTitle);
   }
 
   return (
