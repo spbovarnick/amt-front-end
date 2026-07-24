@@ -29,6 +29,7 @@
   background-color: variables.$charc;
   width: 90%;
   height: 90%;
+  max-width: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,6 +98,7 @@
     width: fit-content;
     padding: 8px 16px;
     align-self: end;
+    cursor: pointer;
   }
 }
 
