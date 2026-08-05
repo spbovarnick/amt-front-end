@@ -18,6 +18,7 @@ const Search = ({ onHero }) => {
     e.preventDefault();
 
     if (!searchTerm || searchTerm.length < 1) return;
+    params.delete("page")
     params.set("search", searchTerm);
 
     push(`/?${params.toString()}`);
@@ -25,7 +26,8 @@ const Search = ({ onHero }) => {
 
   const clearTerm = (e) => {
     e.preventDefault();
-    setSearchTerm("")
+    setSearchTerm("");
+    params.delete("page");
     if (activeSearchTerm) {
       params.delete("search")
       const newParams = params.toString();
