@@ -27,18 +27,14 @@ export default function ShowItem({ itemData, allLocs }){
       className="show-wrapper"
       style={{ paddingTop: headerHeight }}
     >
-      { itemData.medium === "audio" ?
-        <MusicBox
-          trackList={trackList}
-        /> :
-        <MediaCarousel
-          item={itemData}
-        />
-      }
+      <MediaCarousel
+        item={itemData}
+      />
       <InfoBox
         allLocs={allLocs}
         item={itemData}
-        />
+        trackList={trackList}
+      />
       <Reveal className="copyright-wrapper">
         <div>
           <div>For all rights holder inquiries, please contact us <Link href={"mailto:albinacommunityarchive@gmail.com"} target="_blank">here.</Link></div>

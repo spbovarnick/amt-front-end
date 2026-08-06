@@ -1,8 +1,5 @@
 import Image from "next/image";
-import { Howler } from "howler";
 import { useEffect, useState } from "react";
-
-import play from "public/images/icons/play.png";
 import pause from "public/images/icons/pause.png";
 import next from "public/images/icons/next.png"
 import previous from "public/images/icons/previous.png"
@@ -53,10 +50,6 @@ const Player = ({
     }
   }
 
-  const handleVolumeChange = (e) => {
-    Howler.volume(parseInt(e.target.value, 10) / 100);
-  }
-
   const handleSeekChange = (e) => {
     let seekTime = 0;
     seekTime = parseInt(e.target.value, 10);
@@ -78,67 +71,65 @@ const Player = ({
 
   return (
     <div className="player">
-      <div className="player-inner">
-        <div className="active-title">{selectedMusic && trackTitle}</div>
-        <div className="music-control-center">
-          <label
-            htmlFor="durationController"
-          >Duration</label>
-          <input
-            className="duration-controller"
-            type="range"
-            min="0"
-            max={selectedMusic ? selectedMusic.duration() : 0}
-            value={currentTime}
-            onChange={handleSeekChange}
-          ></input>
-          <div>{formattedTime}</div>
-          <button
-            className="howl-prev-btn"
-            onClick={onPrevious}
-            disabled={!hasPrevious}
-          >
-            <Image
-              src={previous}
-              width={20}
-              height={20}
-              alt="Previous track"
-            />
-          </button>
-          <button
-            className="play-btn"
-            onClick={togglePlay}
-          >
-            <Image
-              src={isPlaying ? pause : play}
-              width={20}
-              height={20}
-              alt="Play button"
-            />
-          </button>
-          <button
-            className="howl-next-btn"
-            onClick={onNext}
-            disabled={!hasNext}
-          >
-            <Image
-              src={next}
-              width={20}
-              height={20}
-              alt="Next track"
-            />
-          </button>
-          <label htmlFor="volumeController">Volume</label>
-          <input
-            className="volume-controller"
-            onChange={handleVolumeChange}
-            name="volumeController"
-            type="range"
-            max="100"
-            defaultValue="100"
-          ></input>
-        </div>
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td className="play-cell" rowSpan={2}>
+              <button
+                className={`play-btn ${isPlaying ? "is-playing" : ""}`}
+                onClick={togglePlay}
+              ></button>
+            </td>
+            <td className="track-cell" colSpan={3}>
+              <div className="active-track-info">
+                <span className="active-title">{selectedMusic && trackTitle}</span>
+                <span className="player-time">{formattedTime}</span>
+              </div>
+
+            </td>
+          </tr>
+          <tr>
+            <td className="duration-cell">
+              <input
+                className="duration-controller"
+                type="range"
+                min="0"
+                max={selectedMusic ? selectedMusic.duration() : 0}
+                value={currentTime}
+                onChange={handleSeekChange}
+              ></input>
+            </td>
+            <td className="prev-cell">
+              <button
+                className="howl-prev-btn"
+                onClick={onPrevious}
+                disabled={!hasPrevious}
+              >
+                <Image
+                  src={previous}
+                  width={20}
+                  height={20}
+                  alt="Previous track"
+                />
+              </button>
+            </td>
+            <td className="next-cell">
+              <button
+                className="howl-next-btn"
+                onClick={onNext}
+                disabled={!hasNext}
+              >
+                <Image
+                  src={next}
+                  width={20}
+                  height={20}
+                  alt="Next track"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

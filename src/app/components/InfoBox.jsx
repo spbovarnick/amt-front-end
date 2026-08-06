@@ -4,15 +4,21 @@ import Link from "next/link"
 import { Fragment } from "react"
 import MultiPane from "./MultiPane"
 import dynamic from 'next/dynamic'
+import MusicBox from './MusicBox'
 
 const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false })
 
 
-export default function InfoBox({ item, allLocs }){
+export default function InfoBox({ item, allLocs, trackList }){
   const cleanNotes = item.content_notes?.body ? sanitizeHtml(item.content_notes.body) : ""
 
   return (
     <div className="info-box">
+      {(item.medium === "audio" && trackList.length > 0) &&
+        <MusicBox
+          trackList={trackList}
+        />
+      }
       {item.title &&
         <div className="top-info-set">
           <div className="is-label"><span>TITLE:</span></div>

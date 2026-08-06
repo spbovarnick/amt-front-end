@@ -100,21 +100,10 @@ const MusicBox = ({trackList}) => {
 
   return (
     <div className="music-box">
-      <ul>
-        {trackList.map((track, i) =>(
-          <li key={track.title + i}>
-            <Track
-              trackTitle={track.title}
-              music={howls[track.url]}
-              duration={formatDuration(duration[track.url])}
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-              selectedMusic={selectedMusic}
-              selectTrack={selectTrack}
-            />
-          </li>
-        ))}
-      </ul>
+      <div className="album-info">
+        <div className="artist-name-hl">ARTIST</div>
+        <div className="album-title-hl">ALBUM</div>
+      </div>
       <Player
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
@@ -125,6 +114,24 @@ const MusicBox = ({trackList}) => {
         hasPrevious={hasPrevious}
         hasNext={hasNext}
       />
+      <table className="track-table">
+        <tbody>
+        {trackList.map((track, i) =>(
+          <tr className="track-row" key={track.title + i}>
+            <Track
+              trackTitle={track.title}
+              music={howls[track.url]}
+              duration={formatDuration(duration[track.url])}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+              selectedMusic={selectedMusic}
+              selectTrack={selectTrack}
+              trackNumber={i+1}
+            />
+          </tr>
+        ))}
+        </tbody>
+      </table>
     </div>
   );
 }

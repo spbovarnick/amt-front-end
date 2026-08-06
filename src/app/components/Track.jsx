@@ -10,6 +10,7 @@ const Track = ({
   setIsPlaying,
   selectedMusic,
   selectTrack,
+  trackNumber
 }) => {
 
   const handleToggle = () => {
@@ -25,38 +26,21 @@ const Track = ({
   }
 
   return (
-    <div className="audio-track">
-      <div className="track-play-btn-wrapper">
-        <button
-          className="track-play-btn"
+    <>
+      <td className="play-col">
+        <div
+          className={`track-play-btn ${selectedMusic === music && isPlaying ? "is-playing" : ""}`}
           onClick={handleToggle}
-        >
-          { selectedMusic === music && isPlaying ?
-            <Image
-              src={pause}
-              width={20}
-              height={20}
-              alt="Play button"
-            />
-            :
-            <Image
-              src={play}
-              width={20}
-              height={20}
-              alt="Play button"
-            />
-          }
-        </button>
-      </div>
-      <div className="track-title-wrapper">
-        <div className="track-title">
-          {trackTitle}
-        </div>
-      </div>
-      <div className="track-length">
-        {duration}
-      </div>
-    </div>
+        ></div>
+      </td>
+      <td className="track-num-col">
+        <div className="track-num">{trackNumber}.</div>
+      </td>
+      <td className="title-col">
+        <div className="track-title">{trackTitle}</div>
+        <span className="runtime">{duration}</span>
+      </td>
+    </>
   );
 }
 
