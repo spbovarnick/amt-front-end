@@ -22,6 +22,8 @@ const MusicBox = ({trackList}) => {
   const howlsRef = useRef({});
   const retriesRef = useRef({});
 
+  console.log(trackList)
+
   useEffect(() => {
     const isInitialLoad = Object.keys(howlsRef.current).length === 0;
     const currentUrls = new Set(trackList.map((track) => track.url));
@@ -127,7 +129,7 @@ const MusicBox = ({trackList}) => {
             <Track
               trackTitle={track.title}
               music={howls[track.url]}
-              duration={formatDuration(duration[track.url])}
+              duration={formatDuration(track.duration)}
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
               selectedMusic={selectedMusic}
