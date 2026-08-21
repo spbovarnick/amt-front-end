@@ -16,6 +16,8 @@ const MusicBox = ({trackList}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedMusic, setSelectedMusic] = useState();
   const [trackTitle, setTrackTitle] = useState("");
+  const [trackArtist, setTrackArtist] = useState("");
+  const [trackAlbum, setTrackAlbum] = useState("");
 
   const howlsRef = useRef({});
   const retriesRef = useRef({});
@@ -70,10 +72,12 @@ const MusicBox = ({trackList}) => {
     if (isInitialLoad && trackList[0]) {
       setSelectedMusic(howlsRef.current[trackList[0].url]);
       setTrackTitle(trackList[0].title);
+      setTrackAlbum(trackList[0].album);
+      setTrackArtist(trackList[0].artist);
     }
   }, [trackList]);
 
-  const selectTrack = (music, title) => {
+  const selectTrack = (music, title, album, artist) => {
     if (!music) return;
 
     selectedMusic?.playing() && selectedMusic.pause();
@@ -82,6 +86,8 @@ const MusicBox = ({trackList}) => {
     setSelectedMusic(music);
     setIsPlaying(true);
     setTrackTitle(title);
+    setTrackAlbum(album);
+    setTrackArtist(artist);
   };
 
   const currentIndex = trackList.findIndex((track) => howls[track.url] === selectedMusic);
@@ -90,19 +96,19 @@ const MusicBox = ({trackList}) => {
 
   const onPrevious = () => {
     const track = trackList[currentIndex - 1];
-    selectTrack(howls[track.url], track.title);
+    selectTrack(howls[track.url], track.title, track.album, track.artist);
   };
 
   const onNext = () => {
     const track = trackList[currentIndex + 1];
-    selectTrack(howls[track.url], track.title);
+    selectTrack(howls[track.url], track.title, track.album, track.artist);
   };
 
   return (
     <div className="music-box">
       <div className="album-info">
-        <div className="artist-name-hl">ARTIST</div>
-        <div className="album-title-hl">ALBUM</div>
+        <div className="artist-name-hl">{selectedMusic && trackArtist}</div>
+        <div className="album-title-hl">{selectedMusic && trackAlbum}</div>
       </div>
       <Player
         isPlaying={isPlaying}
