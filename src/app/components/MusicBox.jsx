@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Howl } from "howler";
+import { Howl, Howler } from "howler";
 import Track from "./Track";
 import Player from "./Player";
 
@@ -11,7 +11,6 @@ const formatDuration = (seconds) => {
 };
 
 const MusicBox = ({trackList}) => {
-  const [duration, setDuration] = useState({});
   const [howls, setHowls] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedMusic, setSelectedMusic] = useState();
@@ -21,8 +20,6 @@ const MusicBox = ({trackList}) => {
 
   const howlsRef = useRef({});
   const retriesRef = useRef({});
-
-  console.log(trackList)
 
   useEffect(() => {
     const isInitialLoad = Object.keys(howlsRef.current).length === 0;
@@ -41,9 +38,6 @@ const MusicBox = ({trackList}) => {
       const howl = new Howl({
         src: [url],
         html5: true,
-        onload: () => {
-          setDuration((prev) => ({ ...prev, [url]: howl.duration() }));
-        },
         onloaderror: (_id, error) => {
           const attempt = (retriesRef.current[url] || 0) + 1;
           retriesRef.current[url] = attempt;
@@ -55,7 +49,7 @@ const MusicBox = ({trackList}) => {
               setHowls({ ...howlsRef.current });
             }, 500 * attempt);
           } else {
-            console.error(`Failed to load audio duration for ${url} after ${maxRetries} retries:`, error);
+            console.error(`Failed to load audio for ${url} after ${maxRetries} retries:`, error);
           }
         },
       });
@@ -73,11 +67,17 @@ const MusicBox = ({trackList}) => {
 
     if (isInitialLoad && trackList[0]) {
       setSelectedMusic(howlsRef.current[trackList[0].url]);
-      setTrackTitle(trackList[0].title);
+      setTrackTitle(trackList[0].title ? trackList[0].title : trackList[0].filename);
       setTrackAlbum(trackList[0].album);
       setTrackArtist(trackList[0].artist);
     }
   }, [trackList]);
+
+  useEffect(() => {
+    return () => {
+      Howler.unload();
+    };
+  }, [])
 
   const selectTrack = (music, title, album, artist) => {
     if (!music) return;
@@ -125,9 +125,9 @@ const MusicBox = ({trackList}) => {
       <table className="track-table">
         <tbody>
         {trackList.map((track, i) =>(
-          <tr className="track-row" key={track.title + i}>
+          <tr className="track-row" key={track.title ? track.title : track.filename + i}>
             <Track
-              trackTitle={track.title}
+              trackTitle={track.title ? track.title : track.filename}
               music={howls[track.url]}
               duration={formatDuration(track.duration)}
               isPlaying={isPlaying}
