@@ -20,6 +20,7 @@ const MusicBox = ({trackList}) => {
 
   const howlsRef = useRef({});
   const retriesRef = useRef({});
+  const retryTimeoutsRef = useRef({});
 
   useEffect(() => {
     const isInitialLoad = Object.keys(howlsRef.current).length === 0;
@@ -32,19 +33,21 @@ const MusicBox = ({trackList}) => {
       howlsRef.current[url].unload();
       delete howlsRef.current[url];
       delete retriesRef.current[url];
+      clearTimeout(retryTimeoutsRef.current[url]);
     });
 
     const createHowl = (url) => {
       const howl = new Howl({
         src: [url],
         html5: true,
+        preload: false,
         onloaderror: (_id, error) => {
           const attempt = (retriesRef.current[url] || 0) + 1;
           retriesRef.current[url] = attempt;
 
           if (attempt <= maxRetries) {
             console.warn(`Retrying audio load (${attempt}/${maxRetries}) for ${url}:`, error);
-            setTimeout(() => {
+            retryTimeoutsRef.current[url] = setTimeout(() => {
               howlsRef.current[url] = createHowl(url);
               setHowls({ ...howlsRef.current });
             }, 500 * attempt);
@@ -75,6 +78,9 @@ const MusicBox = ({trackList}) => {
 
   useEffect(() => {
     return () => {
+      Object.values(retryTimeoutsRef.current).forEach(id => {
+        clearTimeout(id)
+      })
       Howler.unload();
     };
   }, [])
@@ -125,7 +131,7 @@ const MusicBox = ({trackList}) => {
       <table className="track-table">
         <tbody>
         {trackList.map((track, i) =>(
-          <tr className="track-row" key={track.title ? track.title : track.filename + i}>
+          <tr className="track-row" key={`${track.title || track.filename}-${i}`}>
             <Track
               trackTitle={track.title ? track.title : track.filename}
               music={howls[track.url]}

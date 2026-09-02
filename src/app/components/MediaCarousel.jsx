@@ -181,7 +181,7 @@ const MediaCarousel = ({item}) => {
                 slidesPerView={1}
                 spaceBetween={20}
                 className='carousel-content'
-                loop={true}
+                loop={carouselItems.length > 1}
                 allowTouchMove={!isFullscreen}
                 simulateTouch={!isFullscreen}
                 touchStartPreventDefault={false}
@@ -280,7 +280,6 @@ const MediaCarousel = ({item}) => {
                 <div className='carousel-ctrls'>
                     <button className='media-carousel-btn media-prev-btn'>
                     <Image
-
                         src={chevronLeft.src}
                         width={24} height={24}
                         alt="Previous image icon"
@@ -291,12 +290,10 @@ const MediaCarousel = ({item}) => {
                         style={{
                             bottom: "10px",
                             width: "fit-content",
-
                         }}
                     ></span>
                     <button className='media-carousel-btn media-next-btn'>
                     <Image
-
                         src={chevronRight.src}
                         width={24}
                         height={24}

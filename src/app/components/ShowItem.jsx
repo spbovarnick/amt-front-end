@@ -15,6 +15,7 @@ export default function ShowItem({ itemData, allLocs }){
     <div
       className="show-wrapper"
       style={{ paddingTop: headerHeight }}
+      key={itemData.id}
     >
       <MediaCarousel
         item={itemData}

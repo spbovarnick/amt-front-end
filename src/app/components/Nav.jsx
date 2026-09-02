@@ -67,6 +67,7 @@ const Nav = ({}) => {
               src={Logo}
               alt="AMT Logo"
               className="amt-logo-icon"
+              priority
             />
           </Link>
           <div className="header-nav-wrapper">
