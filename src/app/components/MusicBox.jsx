@@ -104,12 +104,14 @@ const MusicBox = ({trackList}) => {
 
   const onPrevious = () => {
     const track = trackList[currentIndex - 1];
-    selectTrack(howls[track.url], track.title, track.album, track.artist);
+    const title = track.title ? track.title : track.filename
+    selectTrack(howls[track.url], title , track.album, track.artist);
   };
 
   const onNext = () => {
     const track = trackList[currentIndex + 1];
-    selectTrack(howls[track.url], track.title, track.album, track.artist);
+    const title = track.title ? track.title : track.filename
+    selectTrack(howls[track.url], title, track.album, track.artist);
   };
 
   return (
