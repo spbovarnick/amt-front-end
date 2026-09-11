@@ -1,0 +1,246 @@
+@use "variables";
+
+.music-box {
+  padding: 1em;
+  font-size: small;
+  border-bottom: 2px solid white;
+
+  .album-info {
+    margin-bottom: 1em;
+
+    .artist-name-hl {
+      font-size: 2em !important;
+    }
+
+    .album-title-hl{
+      font-size: 1.5em !important;
+    }
+
+    .artist-name-hl, .album-title-hl {
+      font-weight: 600;
+    }
+  }
+
+  .player {
+    display: block;
+    max-height: 500px;
+    position: relative;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    .play-cell {
+      vertical-align: bottom;
+
+      .play-btn {
+        background: #fff;
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        cursor: pointer;
+        min-height: 50px;
+        min-width: 54px;
+        padding: 0;
+
+        &::after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 11px inset transparent;
+          border-bottom: 11px inset transparent;
+          border-left: 20px solid #222;
+          border-right: 0;
+          margin: 0 0 0 18px;
+        }
+
+        &.is-playing::after {
+          border: none;
+          width: 4px;
+          height: 20px;
+          background: #222;
+          box-shadow: 10px 0 0 #222;
+          margin: 0 0 0 18px;
+        }
+      }
+    }
+
+    .track-cell {
+      height: 32px;
+      vertical-align: bottom;
+
+      .active-track-info {
+        min-height: 18px;
+        min-width: 262px;
+        max-width: 320px;
+        margin: 0.16666666666667em 0.83333333333333em 0.5em;
+        white-space: normal;
+
+        .active-title {
+          padding-right: .5em;
+        }
+      }
+    }
+
+    .duration-cell {
+      position: relative;
+
+      .duration-controller {
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        width: 100%;
+        height: 8px;
+        padding: 0 10px;
+        background: transparent;
+        // margin: 1px 0.83333em 0;
+        position: relative;
+
+        &:focus {
+          outline: none;
+        }
+
+        // Chrome / Safari / Edge
+        &::-webkit-slider-runnable-track {
+          height: 3px;
+          background: variables.$black-4;
+          height: 8px;
+          border: solid 1px variables.$black-5;
+        }
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 10px;
+          width: 22px;
+          border-radius: 1%;
+          background: variables.$white-1;
+          border: none;
+          margin-top: -2px;
+          transition: transform 150ms ease;
+        }
+
+        &:hover::-webkit-slider-thumb,
+        &:active::-webkit-slider-thumb {
+          transform: scale(1.25);
+        }
+
+        // Firefox
+        &::-moz-range-track {
+          height: 3px;
+          background: variables.$black-4;
+          height: 8px;
+          border: solid 1px variables.$black-5;
+        }
+
+        &::-moz-range-thumb {
+          height: 10px;
+          width: 22px;
+          border-radius: 1%;
+          background: variables.$white-1;
+          border: none;
+          transition: transform 150ms ease;
+        }
+
+        &:hover::-moz-range-thumb,
+        &:active::-moz-range-thumb {
+          transform: scale(1.2);
+        }
+      }
+    }
+
+    .prev-cell {
+      border: none;
+      padding: 0;
+    }
+
+    .howl-next-btn {
+      margin-right: 5px;
+    }
+
+    .howl-next-btn {
+      margin-left: 5px;
+    }
+
+    .howl-next-btn, .howl-prev-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: 220ms cubic-bezier(.2, .6, .3, 1);
+      padding: 0;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
+  }
+
+  .track-table {
+
+    margin-top: 1em;
+
+    td {
+      padding: 6px 2px;
+      vertical-align: top;
+    }
+
+    .track-row {
+
+      .play-col {
+        padding: 4px 0 0;
+
+        .track-play-btn {
+          background: #fff;
+          border: 1px solid #d9d9d9;
+          border-radius: 2px;
+          box-sizing: border-box;
+          height: 17px;
+          width: 17px;
+          cursor: pointer;
+
+          &::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 4px inset transparent;
+            border-bottom: 4px inset transparent;
+            border-left: 7px solid #222;
+            border-right: 0;
+            margin: 4px 0 0 5px;
+          }
+
+          &.is-playing::after {
+            border: none;
+            width: 1px;
+            content: "";
+            border-left: 3px solid #222;
+            border-right: 3px solid #222;
+            height: 8px;
+            margin: 4px 0 0 4px;
+          }
+        }
+      }
+      .title-col {
+        width: 100%;
+        padding-left: .5em;
+
+        .track-title {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .runtime {
+          margin-left: 1em;
+        }
+      }
+    }
+  }
+}

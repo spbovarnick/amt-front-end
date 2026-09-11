@@ -15,11 +15,15 @@ export default function ShowItem({ itemData, allLocs }){
     <div
       className="show-wrapper"
       style={{ paddingTop: headerHeight }}
+      key={itemData.id}
     >
-      <MediaCarousel item={itemData} />
+      <MediaCarousel
+        item={itemData}
+      />
       <InfoBox
         allLocs={allLocs}
         item={itemData}
+        trackList={itemData.content_files_id3_tags}
       />
       <Reveal className="copyright-wrapper">
         <div>

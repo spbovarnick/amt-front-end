@@ -8,9 +8,12 @@ import chevronRight from 'public/images/chevron-right-black.svg'
 import chevronLeft from 'public/images/chevron-left-black.svg'
 import FullscreenImg from './FullscreenImg';
 import Image from 'next/image';
+import musicAlbumPlaceholder from 'public/images/icons/music-album-thin.png';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
+const AUDIO_PLACEHOLDER_SLIDE = "audio-placeholder";
 
 
 const MediaCarousel = ({item}) => {
@@ -97,15 +100,10 @@ const MediaCarousel = ({item}) => {
             filenames = [...content_file_names];
         }
 
-        if (medium === "audio" && !content_redirect && content_file_urls.length > 0) {
-            if (content_file_urls.length <= 5) {
-                items = [...items, content_file_urls];
-            } else {
-                const slides = divideSlides(content_file_urls);
-                items = [...items, ...slides];
-
-                const dividedNames = divideSlides(content_file_names)
-                filenames = [...medium_photos_file_names, ...dividedNames]
+        if (medium === "audio") {
+            if (items.length === 0 && !content_redirect) {
+                items = [AUDIO_PLACEHOLDER_SLIDE];
+                filenames = ["music-album-thin.png"];
             }
         } else {
             items = [...items, ...content_file_urls];
@@ -136,6 +134,7 @@ const MediaCarousel = ({item}) => {
     const processedUrls = useMemo(() => {
         return carouselItems.map((urlOrArray) => {
             if (Array.isArray(urlOrArray)) return urlOrArray;
+            if (urlOrArray === AUDIO_PLACEHOLDER_SLIDE) return musicAlbumPlaceholder.src;
             return getCloudfrontUrl(urlOrArray, 2000);
         })
     }, [carouselItems])
@@ -151,12 +150,6 @@ const MediaCarousel = ({item}) => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     },[containerRef]);
-
-    const audioClipTitle = (idx, clipIdx) => {
-        const nameEntry = carouselFileNames[idx];
-        if (Array.isArray(nameEntry)) return nameEntry[clipIdx];
-        return carouselFileNames[idx + clipIdx];
-    }
 
     if (!carouselItems.length) {
         return (
@@ -188,7 +181,7 @@ const MediaCarousel = ({item}) => {
                 slidesPerView={1}
                 spaceBetween={20}
                 className='carousel-content'
-                loop={true}
+                loop={carouselItems.length > 1}
                 allowTouchMove={!isFullscreen}
                 simulateTouch={!isFullscreen}
                 touchStartPreventDefault={false}
@@ -224,30 +217,6 @@ const MediaCarousel = ({item}) => {
                             className="modalArticle"
                             src={`${item?.content_file_urls[0]}#toolbar=0`}
                             />
-                        }
-                        {/* ------------ AUDIO MEDIUM ------------ */}
-                        {item.medium === "audio" &&
-                            !item.content_redirect &&
-                            Array.isArray(slide)  &&
-                            <div className='audio-container'>
-                                {slide.map((clip, clipIdx) => {
-                                    return (
-                                        <div key={clip} className='clip-container'>
-                                            <span>
-                                                {audioClipTitle(idx, clipIdx)}
-                                            </span>
-                                            <audio
-                                                controls
-                                                controlsList="nodownload"
-                                                src={clip}
-                                            >
-                                                Your browser does not support the
-                                                <code>audio</code> element.
-                                            </audio>
-                                        </div>
-                                    )
-                                })}
-                            </div>
                         }
                         {/* ------------ REDIRECTS ------------ */}
                         {item.content_redirect && Array.isArray(slide) &&
@@ -311,7 +280,6 @@ const MediaCarousel = ({item}) => {
                 <div className='carousel-ctrls'>
                     <button className='media-carousel-btn media-prev-btn'>
                     <Image
-
                         src={chevronLeft.src}
                         width={24} height={24}
                         alt="Previous image icon"
@@ -322,12 +290,10 @@ const MediaCarousel = ({item}) => {
                         style={{
                             bottom: "10px",
                             width: "fit-content",
-
                         }}
                     ></span>
                     <button className='media-carousel-btn media-next-btn'>
                     <Image
-
                         src={chevronRight.src}
                         width={24}
                         height={24}
