@@ -1,16 +1,14 @@
-import Image from "next/image";
-import play from "public/images/icons/play.png";
-import pause from "public/images/icons/pause.png";
-
 const Track = ({
   music,
   trackTitle,
+  album,
+  artist,
   duration,
   isPlaying,
   setIsPlaying,
   selectedMusic,
   selectTrack,
-  trackNumber
+  trackNumber,
 }) => {
 
   const handleToggle = () => {
@@ -22,7 +20,7 @@ const Track = ({
       return;
     }
 
-    selectTrack(music, trackTitle);
+    selectTrack(music, trackTitle, album, artist);
   }
 
   return (
@@ -33,11 +31,15 @@ const Track = ({
           onClick={handleToggle}
         ></div>
       </td>
-      <td className="track-num-col">
+      {/* holding track number for now in case asked to return it */}
+      {/* <td className="track-num-col">
         <div className="track-num">{trackNumber}.</div>
-      </td>
-      <td className="title-col">
-        <div className="track-title">{trackTitle}</div>
+      </td> */}
+      <td
+        className="title-col"
+        onClick={handleToggle}
+      >
+        <span className="track-title">{trackTitle}</span>
         <span className="runtime">{duration}</span>
       </td>
     </>

@@ -8,8 +8,15 @@
   .album-info {
     margin-bottom: 1em;
 
-    .artist-name-hl, .album-title-hl {
+    .artist-name-hl {
+      font-size: 2em !important;
+    }
+
+    .album-title-hl{
       font-size: 1.5em !important;
+    }
+
+    .artist-name-hl, .album-title-hl {
       font-weight: 600;
     }
   }
@@ -174,6 +181,8 @@
 
   .track-table {
 
+    margin-top: 1em;
+
     td {
       padding: 6px 2px;
       vertical-align: top;
@@ -191,6 +200,7 @@
           box-sizing: border-box;
           height: 17px;
           width: 17px;
+          cursor: pointer;
 
           &::after {
             content: '';
@@ -214,11 +224,22 @@
             margin: 4px 0 0 4px;
           }
         }
-
       }
+      .title-col {
+        width: 100%;
+        padding-left: .5em;
 
-      .track-num-col {
-        margin-left: 5px;
+        .track-title {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        .runtime {
+          margin-left: 1em;
+        }
       }
     }
   }

@@ -137,6 +137,9 @@ const MusicBox = ({trackList}) => {
             <Track
               trackTitle={track.title ? track.title : track.filename}
               music={howls[track.url]}
+              album={track.album ? track.album : ""}
+              track={track}
+              artist={track.artist ? track.artist : ""}
               duration={formatDuration(track.duration)}
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
