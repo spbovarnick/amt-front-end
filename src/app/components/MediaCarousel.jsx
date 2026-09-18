@@ -19,8 +19,22 @@ const AUDIO_PLACEHOLDER_SLIDE = "audio-placeholder";
 const MediaCarousel = ({item}) => {
     const [carouselWidth, setCarouselWidth] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
     const containerRef = useRef();
-    const swiperRef = useRef(null)
+    const swiperRef = useRef(null);
+    const fullScreenRef = useRef(null);
+
+    const nextImg = useCallback(() => swiperRef.current?.slideNext(), []);
+    const prevImg = useCallback(() => swiperRef.current?.slidePrev(), []);
+
+    const enterFullscreen = useCallback(() => {
+        fullScreenRef.current?.requestFullscreen();
+    }, []);
+
+    const exitFullscreen = useCallback(() => {
+        if (typeof document === "undefined") return;
+        if (document.fullscreenElement) document.exitFullscreen();
+    }, []);
 
     const divideSlides = (files, offset = 0) => {
         let slideArr = []
@@ -139,6 +153,14 @@ const MediaCarousel = ({item}) => {
         })
     }, [carouselItems])
 
+    const activeFileType = getFileType(carouselFileNames[activeIndex]);
+
+    useEffect(() => {
+        if (isFullscreen && activeFileType !== "image") {
+            exitFullscreen();
+        }
+    }, [isFullscreen, activeFileType, exitFullscreen]);
+
     const pickLayoutOrEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
     useLayoutEffect(() => {
@@ -165,7 +187,9 @@ const MediaCarousel = ({item}) => {
             <Swiper
                 onSwiper={(swiper) => {
                     swiperRef.current = swiper;
+                    setActiveIndex(swiper.realIndex);
                 }}
+                onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
                 pagination={{
                     type: "fraction",
                     el: ".content-counter",
@@ -194,12 +218,18 @@ const MediaCarousel = ({item}) => {
                     <SwiperSlide key={idx}>
                         {/* ------------ PHOTO MEDIUM ------------ */}
                         {type === "image" &&
-                            <FullscreenImg
-                                key={"fullscreen"}
-                                src={processedUrls[idx]}
-                                defaultWidth={carouselWidth * 2}
-                                isFullscreen={isFullscreen}
-                            />
+                            <div className="zpp-container">
+                                <img
+                                    className="modalImage"
+                                    src={processedUrls[idx]}
+                                    alt=""
+                                />
+                                <button
+                                    type="button"
+                                    className="fullscreenBtn enterFullscreen"
+                                    onClick={enterFullscreen}
+                                ></button>
+                            </div>
                         }
                         {/* ------------ VIDEO MEDIUM ------------ */}
                         {type === "video" &&
@@ -275,6 +305,15 @@ const MediaCarousel = ({item}) => {
             })}
             </ Swiper>
 
+            <FullscreenImg
+                fullScreenRef={fullScreenRef}
+                isFullscreen={isFullscreen}
+                src={activeFileType === "image" ? processedUrls[activeIndex] : undefined}
+                exitFullscreen={exitFullscreen}
+                nextImg={nextImg}
+                prevImg={prevImg}
+                multiple={carouselItems.length > 1}
+            />
 
             {carouselItems.length > 1 &&
                 <div className='carousel-ctrls'>
