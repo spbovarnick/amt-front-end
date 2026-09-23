@@ -12,6 +12,16 @@ const LeafletMap = dynamic(() => import("./LeafletMap"), { ssr: false })
 export default function InfoBox({ item, allLocs, trackList }){
   const cleanNotes = item.content_notes?.body ? sanitizeHtml(item.content_notes.body) : ""
 
+  const regexCoord = /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+
+  const checkCoords = (locations) => {
+    let lat = locations?.lat;
+    let lng = locations?.lng;
+    if (lat || lng) return false;
+    let validCoords = regexCoord.test([lat, lng])
+    return validCoords;
+  }
+
   return (
     <div className="info-box">
       {(item.medium === "audio" && trackList.length > 0) &&
@@ -51,7 +61,7 @@ export default function InfoBox({ item, allLocs, trackList }){
         commGroups={item.comm_groups}
         credit={item.credit}
       />
-      {item.locations?.length > 0 &&
+      {item.locations?.length > 0 && checkCoords(item.locations[0]) &&
         <div className='info-pane-wide map-info-pane'>
           <div className='info-set'>
           <div className="is-label">LOCATION{item.locations.length > 1 ? "S" : ""}:</div>
