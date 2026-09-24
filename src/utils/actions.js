@@ -24,8 +24,8 @@ export function createSearchUrl({
   searchTerm ? searchString = searchTerm : searchString = search;
   const pageTagsArr = pageTag ? pageTag?.split(", ") : null;
   const pageTagString = pageTagsArr ? pageTagsArr.map((tag) => `&page_tags[]=${encodeURIComponent(tag)}`).join('') : '';
-  const yearString = filters.year ? `&year=${filters.year}` : '';
-  const mediumString = filters.medium ? `&medium=${filters.medium}` : '';
+  const yearString = filters.year ? filters.year.map((year) => `&year[]=${encodeURIComponent(year)}`).join('') : '';
+  const mediumString = filters.medium ? filters.medium.map((medium) => `&medium[]=${encodeURIComponent(medium)}`).join('') : '';
   const peopleString = filters.people ? filters.people.map((person) => `&people[]=${encodeURIComponent(person.name)}`).join('') : '';
   const locationString = filters.locations ? filters.locations.map((location) => `&locations[]=${encodeURIComponent(location.name)}`).join('') : '';
   const collectionString = filters.collections ? filters.collections.map((collection) => `&collections[]=${encodeURIComponent(collection.name)}`).join('') : '';
