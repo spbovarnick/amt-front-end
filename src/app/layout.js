@@ -7,13 +7,12 @@ import { AssociatedDataProvider } from "./context/AssociatedDataContext";
 import { fetchAssociatedData } from "@/utils/api";
 import { Suspense } from "react";
 import Nav from "./components/Nav";
+import { Inter } from "next/font/google";
 
-const sfPro = localFont({
-  src: [
-    { path: "../../public/fonts/SF-Pro-Italic.ttf" },
-    { path: "../../public/fonts/SF-Pro.ttf" },
-  ],
-  variable: "--font-sfPro",
+const inter = Inter({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-inter",
 });
 
 const martinXBold = localFont({
@@ -37,7 +36,7 @@ export default async function RootLayout({ children }) {
   const associatedData = await fetchAssociatedData();
 
   return (
-    <html lang="en" className={`${martinXBold.variable} ${sfPro.variable}`}>
+    <html lang="en" className={`${martinXBold.variable} ${inter.variable}`}>
       <body>
         <Nav />
         <Toaster />

@@ -292,3 +292,25 @@ export async function sendArchiveItemFeedback(title=undefined, id=undefined, uid
     return { status: "error", error: error.message}
   }
 }
+
+export async function getHeroCounts(){
+
+    try {
+      const res = await fetch(`${rootURL}/api/v1/archive_items/tally_counts`, {
+        next: {
+          revalidate: 300,
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const tallies = await res.json();
+      // console.log(tallies)
+      return tallies;
+    } catch (error) {
+      console.error(`Failed fetching tallies`, error);
+      return null;
+    }
+}

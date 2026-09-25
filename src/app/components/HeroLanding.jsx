@@ -1,13 +1,12 @@
 "use client";
 
 import heroPic from "@/../public/images/Archive-Hero.jpg"
-import { useState } from "react";
 import Image from "next/image";
 import Search from "./Search";
 import useHeaderHeight from "@/utils/useHeaderHeight";
+import TallyTicker from "./TallyTicker";
 
-const HeroLanding = ({ handleInteraction }) => {
-  const [cabinetOpen, setCabinetOpen] = useState(false)
+const HeroLanding = ({ handleInteraction, heroCounts }) => {
   const headerHeight = useHeaderHeight();
 
   return (
@@ -36,7 +35,7 @@ const HeroLanding = ({ handleInteraction }) => {
               ADVANCED SEARCH
             </div>
             <div className="mission-text">
-              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over 15,000 archived items, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
+              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over <TallyTicker count={heroCounts.items_count} /> archived items, and <TallyTicker count={heroCounts.files_count}/> media files, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
             </div>
           </>
         </div>
