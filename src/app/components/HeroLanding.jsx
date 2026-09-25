@@ -35,7 +35,11 @@ const HeroLanding = ({ handleInteraction, heroCounts }) => {
               ADVANCED SEARCH
             </div>
             <div className="mission-text">
-              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now totaling over <TallyTicker count={heroCounts.items_count} /> archived items, and <TallyTicker count={heroCounts.files_count}/> media files, making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
+              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
+              <div className="tallies">
+                <TallyTicker count={heroCounts.items_count} /> <span>Archive Items</span>
+                <TallyTicker count={heroCounts.files_count} /> <span>Media Files</span>
+              </div>
             </div>
           </>
         </div>

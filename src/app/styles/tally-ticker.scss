@@ -1,24 +1,40 @@
-.tally-container {
-  display: inline-block;
-  --slot: 1.4em;
+.tallies {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: .4em;
 
-  .tile {
-    background-color: white;
-    color: black;
-    display: inline-block;
-    height: var(--slot);
-    overflow: hidden;
-    font-weight: bold;
-    margin: 0 .1em;
-    padding: 0 .3em;
-    border-radius: .2em;
+  span {
+    line-height: 1;
+  }
 
-    .digit-container {
-      padding: 0;
+  .tally-container {
+    display: inline-flex;
+    --slot: 1.4em;
 
-      .digit {
-        height: var(--slot);
-        line-height: var(--slot);
+    &:last-of-type {
+      margin-left: 1em;
+    }
+
+    .tile {
+      background-color: white;
+      color: black;
+      display: inline-block;
+      height: var(--slot);
+      overflow: hidden;
+      font-weight: bold;
+      margin: 0 .1em;
+      padding: 0 .3em;
+      border-radius: .2em;
+
+      .digit-container {
+        padding: 0;
+
+        .digit {
+          height: var(--slot);
+          line-height: var(--slot);
+        }
       }
     }
   }
