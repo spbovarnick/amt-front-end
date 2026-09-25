@@ -10,7 +10,7 @@ import useHeaderHeight from "@/utils/useHeaderHeight";
 
 const EASE = [0.4, 0, 0.2, 1];
 
-const MainContent = ({ }) => {
+const MainContent = ({ heroCounts }) => {
   const [hasInteracted, setHasInteracted] = useState(false);
 
   const params = useSearchParams();
@@ -43,7 +43,10 @@ const MainContent = ({ }) => {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.18, ease: EASE }}
             >
-              <HeroLanding handleInteraction={handleInteraction} />
+              <HeroLanding
+                handleInteraction={handleInteraction}
+                heroCounts={heroCounts}
+              />
             </motion.div>
           ) : (
             <motion.div
