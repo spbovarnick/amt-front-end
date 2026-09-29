@@ -1,9 +1,19 @@
 .tallies {
   margin-top: 1em;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: .4em;
+
+  tr:first-child {
+    text-align: right;
+  }
+
+  td:last-of-type {
+    text-align: left;
+    // line-height: 1.5em;
+  }
 
   span {
     line-height: 1;
@@ -12,10 +22,7 @@
   .tally-container {
     display: inline-flex;
     --slot: 1.4em;
-
-    &:last-of-type {
-      margin-left: 1em;
-    }
+    margin-bottom: .5em;
 
     .tile {
       background-color: white;
