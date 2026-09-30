@@ -40,14 +40,6 @@ const HeroLanding = ({ handleInteraction, heroCounts }) => {
                 <tbody>
                   <tr>
                     <td>
-                      <TallyTicker count={heroCounts.items_count} />
-                    </td>
-                    <td>
-                      Archive Items
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
                         <TallyTicker count={heroCounts.files_count} />
                     </td>
                     <td>
