@@ -35,11 +35,25 @@ const HeroLanding = ({ handleInteraction, heroCounts }) => {
               ADVANCED SEARCH
             </div>
             <div className="mission-text">
-              Our Community Archive includes photographs, film, recordings, ephemera, and oral histories—now making it the largest archive dedicated to Black Oregonians’ cultural legacy in the state.
-              <div className="tallies">
-                <TallyTicker count={heroCounts.items_count} /> <span>Archive Items</span>
-                <TallyTicker count={heroCounts.files_count} /> <span>Media Files</span>
-              </div>
+              Our community archive includes photos, audio, film, print materials, articles, oral histories, and assorted ephemera documenting Albina's arts and cultural legacy.
+              <table className="tallies">
+                <tbody>
+                  <tr>
+                    <td>
+                        <TallyTicker count={heroCounts.files_count} />
+                    </td>
+                    <td>
+                      Media Files
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <TallyTicker count={heroCounts.collections_count} />
+                    </td>
+                      <td>Collections</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </>
         </div>
