@@ -35,7 +35,7 @@ const HeroLanding = ({ handleInteraction, heroCounts }) => {
               ADVANCED SEARCH
             </div>
             <div className="mission-text">
-              Our community archive includes photographs, film, audio recordings, oral histories, and ephemera documenting Albina's arts and cultural legacy.
+              Our community archive includes photos, audio, film, print materials, articles, oral histories, and assorted ephemera documenting Albina's arts and cultural legacy.
               <table className="tallies">
                 <tbody>
                   <tr>
