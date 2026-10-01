@@ -52,6 +52,8 @@ const MediaCarousel = ({item}) => {
         }
     }
 
+    console.log(item)
+
     useEffect(() => {
         if (!swiperRef.current) return;
 
@@ -102,6 +104,7 @@ const MediaCarousel = ({item}) => {
             content_file_urls = [],
             redirect_links = [],
             content_redirect,
+            poster_url,
         } = item || {};
 
         let items = [];
@@ -116,7 +119,7 @@ const MediaCarousel = ({item}) => {
 
         if (medium === "audio") {
             if (items.length === 0 && !content_redirect) {
-                items = [AUDIO_PLACEHOLDER_SLIDE];
+                items = poster_url ? [poster_url] : [AUDIO_PLACEHOLDER_SLIDE];
                 filenames = ["music-album-thin.png"];
             }
         } else {
@@ -124,7 +127,7 @@ const MediaCarousel = ({item}) => {
         }
 
         if (content_redirect) {
-            const bg = medium_photo_urls.length > 0 ? medium_photo_urls[0] : undefined;
+            const bg = medium_photo_urls.length > 0 ? medium_photo_urls[0] : poster_url;
             if (redirect_links.length <= 5) {
                 items = [...items, redirect_links]
             } else {

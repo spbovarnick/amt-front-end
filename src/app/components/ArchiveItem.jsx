@@ -188,7 +188,7 @@ const ArchiveItem = ({item, isFocused, focusedRef, index}) => {
                                 draggable="false"
                             />
                             <div className="cmpt-archive-item-pag">
-                                {item.content_file_urls?.length + item.medium_photo_urls?.length}
+                                {item.redirect_links?.length + item.medium_photo_urls?.length}
                             </div>
                         </div>
                     )}
