@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import pause from "public/images/icons/pause.png";
 import next from "public/images/icons/next.png"
 import previous from "public/images/icons/previous.png"
 
@@ -52,8 +51,6 @@ const Player = ({
     }
   }
 
-  // Only move the thumb while dragging; seek once on release so long files
-  // aren't hit with a burst of seeks (each one re-buffers the stream).
   const handleSeekChange = (e) => {
     isScrubbingRef.current = true;
     setCurrentTime(parseInt(e.target.value, 10));
