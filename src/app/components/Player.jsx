@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import pause from "public/images/icons/pause.png";
 import next from "public/images/icons/next.png"
 import previous from "public/images/icons/previous.png"
@@ -16,6 +16,7 @@ const Player = ({
 }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [trackedMusic, setTrackedMusic] = useState(selectedMusic);
+  const isScrubbingRef = useRef(false);
 
   if (selectedMusic !== trackedMusic) {
     setTrackedMusic(selectedMusic);
@@ -27,6 +28,7 @@ const Player = ({
 
     if (selectedMusic) {
       const updateTimer = () => {
+        if (isScrubbingRef.current) return;
         const seekTimer = Math.round(selectedMusic.seek());
         setCurrentTime(seekTimer);
       }
@@ -50,11 +52,17 @@ const Player = ({
     }
   }
 
+  // Only move the thumb while dragging; seek once on release so long files
+  // aren't hit with a burst of seeks (each one re-buffers the stream).
   const handleSeekChange = (e) => {
-    let seekTime = 0;
-    seekTime = parseInt(e.target.value, 10);
-    setCurrentTime(seekTime);
-    selectedMusic.seek(seekTime);
+    isScrubbingRef.current = true;
+    setCurrentTime(parseInt(e.target.value, 10));
+  }
+
+  const commitSeek = (e) => {
+    if (!isScrubbingRef.current || !selectedMusic) return;
+    isScrubbingRef.current = false;
+    selectedMusic.seek(parseInt(e.currentTarget.value, 10));
   }
 
   const formatTime = (timeInSeconds) => {
@@ -97,6 +105,8 @@ const Player = ({
                 max={selectedMusic ? selectedMusic.duration() : 0}
                 value={currentTime}
                 onChange={handleSeekChange}
+                onPointerUp={commitSeek}
+                onKeyUp={commitSeek}
               ></input>
             </td>
             <td className="prev-cell">
