@@ -36,9 +36,9 @@ const MediaCarousel = ({item}) => {
         if (document.fullscreenElement) document.exitFullscreen();
     }, []);
 
-    const divideSlides = (files, offset = 0) => {
+    const divideSlides = (files) => {
         let slideArr = []
-        for (let i = 0 + offset; i < files.length; i = i + 5) {
+        for (let i = 0; i < files.length; i = i + 5) {
             slideArr.push(files.slice(i, i + 5))
         }
         return slideArr
@@ -124,7 +124,6 @@ const MediaCarousel = ({item}) => {
         }
 
         if (content_redirect) {
-            // setRedirectLinks(redirect_links)
             const bg = medium_photo_urls.length > 0 ? medium_photo_urls[0] : undefined;
             if (redirect_links.length <= 5) {
                 items = [...items, redirect_links]
@@ -161,8 +160,6 @@ const MediaCarousel = ({item}) => {
         }
     }, [isFullscreen, activeFileType, exitFullscreen]);
 
-    const pickLayoutOrEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
     useLayoutEffect(() => {
         function handleResize(){
             setCarouselWidth(containerRef.current?.offsetWidth || 0)
@@ -194,7 +191,7 @@ const MediaCarousel = ({item}) => {
                     type: "fraction",
                     el: ".content-counter",
                     renderFraction: (currentClass, totalClass) => {
-                        return '<span class="' + currentClass + '"></span>' + '/' + '<span class="' + totalClass + '"span></span>';
+                        return '<span class="' + currentClass + '"></span>' + '/' + '<span class="' + totalClass + '"></span>';
                     },
                 }}
                 navigation={{
@@ -204,6 +201,7 @@ const MediaCarousel = ({item}) => {
                 modules={[Navigation, Pagination]}
                 slidesPerView={1}
                 spaceBetween={20}
+                autoHeight={true}
                 className='carousel-content'
                 loop={carouselItems.length > 1}
                 allowTouchMove={!isFullscreen}
@@ -234,8 +232,8 @@ const MediaCarousel = ({item}) => {
                         {/* ------------ VIDEO MEDIUM ------------ */}
                         {type === "video" &&
                             <video
-                            controls controlsList="nodownload"
-                            className="modalVideo"
+                                controls controlsList="nodownload"
+                                className="modalVideo"
                             >
                                 <source src={slide} type="video/mp4" />
                                 Sorry, your browser doesn't support embedded videos.
@@ -244,8 +242,8 @@ const MediaCarousel = ({item}) => {
                         {/* ------------ PDF MEDIUM ------------ */}
                         {type === "pdf" &&
                             <iframe
-                            className="modalArticle"
-                            src={`${item?.content_file_urls[0]}#toolbar=0`}
+                                className="modalArticle"
+                                src={`${item?.content_file_urls[0]}#toolbar=0`}
                             />
                         }
                         {/* ------------ REDIRECTS ------------ */}
