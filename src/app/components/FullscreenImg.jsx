@@ -33,6 +33,16 @@ const ControlPanel = memo(function ControlPanel({
         exitFullscreen();
     }
 
+    const handlePrevImg = () => {
+        resetTransform();
+        prevImg();
+    }
+
+    const handleNextImg = () => {
+        resetTransform();
+        nextImg();
+    }
+
     return (
         <>
             <div className={`zoom-actions fullscreen-controls ${isFullscreen ? "fullscreen" : ""}`}>
@@ -62,14 +72,14 @@ const ControlPanel = memo(function ControlPanel({
                         <button
                             type="button"
                             className="zoom-button_fs button-round"
-                            onClick={prevImg}
+                            onClick={handlePrevImg}
                         >
                             <Image src={chevronLeft.src} width={24} height={24} alt="Chevron left icon" />
                         </button>
                         <button
                             type="button"
                             className="zoom-button_fs button-round"
-                            onClick={nextImg}
+                            onClick={handleNextImg}
                         >
                             <Image src={chevronRight.src} width={24} height={24} alt="Chevron right icon" />
                         </button>
@@ -120,6 +130,10 @@ const FullscreenImg = memo(function FullscreenImg({
                         />
                         <TransformComponent
                             wrapperStyle={{
+                                height: "100%",
+                                width: "100%",
+                            }}
+                            contentStyle={{
                                 height: "100%",
                                 width: "100%",
                             }}
