@@ -17,7 +17,7 @@ export default function InfoBox({ item, allLocs, trackList }){
   const checkCoords = (locations) => {
     let lat = locations?.lat;
     let lng = locations?.lng;
-    if (lat || lng) return false;
+    if (lat == null|| lng == null) return false;
     let validCoords = regexCoord.test([lat, lng])
     return validCoords;
   }
@@ -79,7 +79,7 @@ export default function InfoBox({ item, allLocs, trackList }){
           </div>
         </div>
       }
-      {item.content_notes.body &&
+      {item?.content_notes?.body &&
         <div className='info-pane-wide'>
           <div className="info-set">
             <div className="is-label">NOTES:</div>
