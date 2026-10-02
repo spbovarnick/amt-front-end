@@ -52,8 +52,6 @@ const MediaCarousel = ({item}) => {
         }
     }
 
-    console.log(item)
-
     useEffect(() => {
         if (!swiperRef.current) return;
 
@@ -237,6 +235,7 @@ const MediaCarousel = ({item}) => {
                             <video
                                 controls controlsList="nodownload"
                                 className="modalVideo"
+                                onLoadedMetadata={() => swiperRef.current?.updateAutoHeight()}
                             >
                                 <source src={slide} type="video/mp4" />
                                 Sorry, your browser doesn't support embedded videos.
