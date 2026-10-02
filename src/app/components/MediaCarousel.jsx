@@ -171,6 +171,15 @@ const MediaCarousel = ({item}) => {
         return () => window.removeEventListener("resize", handleResize);
     },[containerRef]);
 
+    // a video can load its metadata before hydration, so onLoadedMetadata never fires;
+    // re-measure here for any video that already knows its size
+    useEffect(() => {
+        const videos = containerRef.current?.querySelectorAll("video") ?? [];
+        if ([...videos].some((video) => video.readyState >= 1)) {
+            swiperRef.current?.updateAutoHeight();
+        }
+    }, [carouselItems]);
+
     if (!carouselItems.length) {
         return (
             <span>Archive item loading...</span>
