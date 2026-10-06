@@ -102,6 +102,7 @@ const Nav = ({}) => {
       </header>
       <MobileHeaderMenu
         isOpen={isActive}
+        handleNav={setIsActive}
       />
     </>
   )
