@@ -11,6 +11,7 @@ import useFilters from '@/utils/useFilters';
 import AppliedFilters from './AppliedFilters';
 import useArchiveQuery from '@/utils/useArchiveQuery';
 import { useAssociatedData } from '../context/AssociatedDataContext';
+import Search from './Search';
 
 export default function AlbinaCommArchive({ }) {
   const {
@@ -79,7 +80,15 @@ export default function AlbinaCommArchive({ }) {
 
   return (
     <div className="page-wrapper">
-      <h3 className='comm-archive-title'>COMMUNITY ARCHIVE</h3>
+      <div className='archive-header-center'>
+        <div className='archive-header'>
+          <h3 className='comm-archive-title'>COMMUNITY ARCHIVE</h3>
+          <Search
+            onHero={false}
+            onMobile={true}
+          />
+        </div>
+      </div>
       <section className="archive-wrapper">
         <div className="archive-content ">
           <MobileFiltering

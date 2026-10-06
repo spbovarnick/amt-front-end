@@ -6,7 +6,7 @@ import xIcon from "@/../public/images/x.svg"
 import { startTransition, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Search = ({ onHero }) => {
+const Search = ({ onHero, onMobile }) => {
   const { push } = useRouter();
   const sP = useSearchParams();
   const activeSearchTerm = sP.get("search")
@@ -40,7 +40,7 @@ const Search = ({ onHero }) => {
 
   return (
     <form
-      className={`search ${onHero ? "on-hero" : ""}`}
+      className={`search ${onHero ? "on-hero" : ""} ${onMobile ? "on-mobile" : ""}`}
       onSubmit={e => handleSearch(e)}
     >
       <input

@@ -41,10 +41,6 @@ const MobileFiltering = ({
             bounce: 0
           }}
         >
-          <Search
-            mobileSidebar={true}
-            onHero={false}
-          />
           <Image
             src={xIcon}
             width={48}
