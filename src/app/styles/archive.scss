@@ -1,5 +1,18 @@
 @use "variables";
 
+.archive-header-center {
+  display: flex;
+  justify-content: center;
+
+  .archive-header {
+    width: fit-content;
+  }
+
+  @media (min-width: variables.$bp-md) {
+    display: block;
+  }
+}
+
 .archive-layout {
   @media (min-width: variables.$bp-md) {
     display: grid;
