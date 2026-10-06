@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const MobileHeaderMenu = ({ isOpen }) => {
+const MobileHeaderMenu = ({ isOpen, handleNav }) => {
   const [paddingTop, setPaddingTop] = useState(null);
   const padVal = paddingTop ?? "0px"
 
@@ -37,7 +37,10 @@ const MobileHeaderMenu = ({ isOpen }) => {
               <div className="header-menu-nav-folder-content">
                 <div className="header-menu-nav-wrapper">
                   <div className="header-menu-nav-item">
-                    <Link href={"/"}>Community Archive</Link>
+                    <Link
+                      href={"/"}
+                      onClick={() => handleNav(v => !v)}
+                    >Community Archive</Link>
                   </div>
                   <div className="header-menu-nav-item">
                     <Link href={"https://www.albinamusictrust.org/projects"}>Projects</Link>
