@@ -99,6 +99,12 @@ export default function InfoBox({ item, allLocs, trackList }){
           </div>
         </div>
       }
+      <div className='info-pane-wide'>
+        <div className='info-set'>
+          <div>For all rights holder inquiries, please contact us <Link href={"mailto:albinacommunityarchive@gmail.com"} target="_blank">here.</Link></div>
+          <div>See <Link className="dev-policy-link" href={`/terms-of-use`}>Copyright, Terms of Use & Policies </Link>for more information. </div>
+        </div>
+      </div>
       <ArchiveItemCommentModal
         id={item.id}
         uid={item.uid}
