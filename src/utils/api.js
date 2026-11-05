@@ -38,7 +38,8 @@ export async function fetchAssociatedData() {
         return [resource, data];
       } catch (error) {
         console.error(`Failed fetching ${resource}`, error);
-        return [resource, null];
+        // Rethrow so ISR keeps the last good page instead of caching one built from missing data.
+        throw error;
       }
     })
   );
@@ -311,6 +312,7 @@ export async function getHeroCounts(){
       return tallies;
     } catch (error) {
       console.error(`Failed fetching tallies`, error);
-      return null;
+      // Rethrow so ISR keeps the last good page instead of caching one built from missing data.
+      throw error;
     }
 }
