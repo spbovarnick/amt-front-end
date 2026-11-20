@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { Howl, Howler } from "howler";
 import Track from "./Track";
 import Player from "./Player";
@@ -22,6 +22,34 @@ const MusicBox = ({trackList}) => {
   const retriesRef = useRef({});
   const retryTimeoutsRef = useRef({});
 
+  const selectTrack = (music, title, album, artist) => {
+    if (!music) return;
+
+    selectedMusic?.playing() && selectedMusic.pause();
+    if (selectedMusic !== music) music.seek(0);
+    music.play();
+    setSelectedMusic(music);
+    setIsPlaying(true);
+    setTrackTitle(title);
+    setTrackAlbum(album);
+    setTrackArtist(artist);
+  };
+
+  // Howls are created once; an effect event always runs with the latest state.
+  const onTrackEnd = useEffectEvent((endedUrl) => {
+    const endedIndex = trackList.findIndex((track) => track.url === endedUrl);
+    const nextTrack = endedIndex >= 0 ? trackList[endedIndex + 1] : undefined;
+    const nextHowl = nextTrack && howlsRef.current[nextTrack.url];
+
+    if (!nextHowl) {
+      setIsPlaying(false);
+      return;
+    }
+
+    const title = nextTrack.title ? nextTrack.title : nextTrack.filename;
+    selectTrack(nextHowl, title, nextTrack.album, nextTrack.artist);
+  });
+
   useEffect(() => {
     const isInitialLoad = Object.keys(howlsRef.current).length === 0;
     const currentUrls = new Set(trackList.map((track) => track.url));
@@ -41,6 +69,7 @@ const MusicBox = ({trackList}) => {
         src: [url],
         html5: true,
         preload: false,
+        onend: () => onTrackEnd(url),
         onloaderror: (_id, error) => {
           const attempt = (retriesRef.current[url] || 0) + 1;
           retriesRef.current[url] = attempt;
@@ -84,19 +113,6 @@ const MusicBox = ({trackList}) => {
       Howler.unload();
     };
   }, [])
-
-  const selectTrack = (music, title, album, artist) => {
-    if (!music) return;
-
-    selectedMusic?.playing() && selectedMusic.pause();
-    if (selectedMusic !== music) music.seek(0);
-    music.play();
-    setSelectedMusic(music);
-    setIsPlaying(true);
-    setTrackTitle(title);
-    setTrackAlbum(album);
-    setTrackArtist(artist);
-  };
 
   const currentIndex = trackList.findIndex((track) => howls[track.url] === selectedMusic);
   const hasPrevious = currentIndex > 0;
